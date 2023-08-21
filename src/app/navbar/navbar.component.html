@@ -1,1 +1,27 @@
-<p>navbar works!</p>
+<nav id="nav">
+  <div class="container" [ngClass]="hamburguer ? 'open' : ''">
+    <div class="container-resposive">
+      <img src="/assets/main.png" alt="not found" routerLink="/" />
+      <div
+        class="container-hamb"
+        (click)="handleMenu()"
+        [ngClass]="hamburguer ? 'open' : ''"
+      >
+        <div class="hamburguer" id="one"></div>
+        <div class="hamburguer" id="two"></div>
+        <div class="hamburguer" id="three"></div>
+      </div>
+    </div>
+    <div class="item-container" [ngClass]="hamburguer ? 'open' : ''">
+      <div
+        id="item"
+        class="item"
+        *ngFor="let item of items"
+        [routerLink]="item.link"
+      >
+        {{ item.title }}
+        <label class="item-l" for="item"></label>
+      </div>
+    </div>
+  </div>
+</nav>
