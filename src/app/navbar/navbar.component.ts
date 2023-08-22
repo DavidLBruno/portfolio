@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router, NavigationEnd } from "@angular/router";
 
 @Component({
   selector: "app-navbar",
@@ -7,6 +8,7 @@ import { Component } from "@angular/core";
 })
 export class NavbarComponent {
   hamburguer: boolean = false;
+  routeActually = "";
   items = [
     {
       title: "Home",
@@ -29,6 +31,14 @@ export class NavbarComponent {
       icon: "",
     },
   ];
+
+  constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.routeActually = this.router.url;
+      }
+    });
+  }
 
   ngOninit() {}
 

@@ -1,12 +1,19 @@
 <footer id="footer">
   <div class="container">
     <div class="column" *ngFor="let item of columns">
-      <div class="item">
-        <h1>{{ item.title }}</h1>
-        <div class="subItem" *ngFor="let subItem of item.subColumns">
+      <h1>{{ item.title }}</h1>
+      <a
+        class="subItem"
+        *ngFor="let subItem of item.subColumns"
+        [href]="subItem.link"
+        target="_blank"
+      >
+        <fa-icon [icon]="subItem.icon"></fa-icon>
+        <p>
           {{ subItem.title }}
-        </div>
-      </div>
+        </p>
+      </a>
     </div>
   </div>
+  <p>v1.0.0</p>
 </footer>

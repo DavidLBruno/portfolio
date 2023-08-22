@@ -1,4 +1,16 @@
 import { Component } from "@angular/core";
+import {
+  faLinkedin,
+  faInstagram,
+  faWhatsapp,
+  faTelegram,
+} from "@fortawesome/free-brands-svg-icons";
+import {
+  faChessKnight,
+  faCode,
+  faEnvelope,
+  faSignature,
+} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "app-footer",
@@ -11,7 +23,9 @@ export class FooterComponent {
       title: "Sobre mi",
       subColumns: [
         {
-          title: "",
+          title: "Bruno David",
+          link: "",
+          icon: faSignature,
         },
       ],
     },
@@ -20,19 +34,23 @@ export class FooterComponent {
       subColumns: [
         {
           title: "Linkedin",
-          link: "",
+          link: "https://www.linkedin.com/in/bruno-developer/",
+          icon: faLinkedin,
         },
         {
           title: "Instagram",
-          link: "",
+          link: "https://www.instagram.com/brunod.01/",
+          icon: faInstagram,
         },
         {
           title: "CODEFORCES",
-          link: "",
+          link: "https://codeforces.com/profile/DevidB",
+          icon: faCode,
         },
         {
           title: "LICHESS",
-          link: "",
+          link: "https://lichess.org/@/DeividL",
+          icon: faChessKnight,
         },
       ],
     },
@@ -41,19 +59,18 @@ export class FooterComponent {
       subColumns: [
         {
           title: "WhatsApp",
-          link: "",
+          link: "https://wa.me/543412705762",
+          icon: faWhatsapp,
         },
         {
           title: "Telegram",
-          link: "",
+          link: "https://t.me/brunodavidl",
+          icon: faTelegram,
         },
         {
           title: "Mail",
-          link: "",
-        },
-        {
-          title: "",
-          link: "",
+          link: "mailto:bruno.david9914@gmail.com?",
+          icon: faEnvelope,
         },
       ],
     },
