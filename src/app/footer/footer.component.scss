@@ -1,0 +1,15 @@
+@import "../../styles.scss";
+
+#footer {
+  height: 20rem;
+  width: 100%;
+  background-color: $color-primary;
+  color: $color-secondary;
+  .container {
+    height: 20rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}

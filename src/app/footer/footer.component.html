@@ -1,1 +1,12 @@
-<p>footer works!</p>
+<footer id="footer">
+  <div class="container">
+    <div class="column" *ngFor="let item of columns">
+      <div class="item">
+        <h1>{{ item.title }}</h1>
+        <div class="subItem" *ngFor="let subItem of item.subColumns">
+          {{ subItem.title }}
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
