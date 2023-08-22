@@ -30,6 +30,8 @@ export class NavbarComponent {
     },
   ];
 
+  ngOninit() {}
+
   handleMenu() {
     this.hamburguer = !this.hamburguer;
   }
