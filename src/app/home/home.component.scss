@@ -1,0 +1,24 @@
+@import "../../styles.scss";
+
+#home {
+  .container {
+    padding: 0 5rem;
+    .presentacion {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      img {
+        width: 10rem;
+        border-radius: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  #home {
+    .container {
+    }
+  }
+}

@@ -4,12 +4,15 @@ import {
   faInstagram,
   faWhatsapp,
   faTelegram,
+  faDiscord,
+  faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 import {
   faChessKnight,
   faCode,
   faEnvelope,
   faSignature,
+  faFile,
 } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
@@ -27,6 +30,11 @@ export class FooterComponent {
           link: "",
           icon: faSignature,
         },
+        {
+          title: "Mi cv",
+          link: "",
+          icon: faFile,
+        },
       ],
     },
     {
@@ -36,6 +44,16 @@ export class FooterComponent {
           title: "Linkedin",
           link: "https://www.linkedin.com/in/bruno-developer/",
           icon: faLinkedin,
+        },
+        {
+          title: "GitHub",
+          link: "https://github.com/DavidLBruno",
+          icon: faGithub,
+        },
+        {
+          title: "Discord",
+          link: "https://www.linkedin.com/in/bruno-developer/",
+          icon: faDiscord,
         },
         {
           title: "Instagram",

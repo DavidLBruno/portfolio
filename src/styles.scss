@@ -10,4 +10,18 @@ body {
 
 * {
   font-family: "Bebas Neue", sans-serif;
+  animation: fadeIn 0.5s;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

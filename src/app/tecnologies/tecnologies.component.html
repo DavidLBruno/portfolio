@@ -1,1 +1,12 @@
-<p>tecnologies works!</p>
+<div id="tecnologies">
+  <div class="container">
+    <div *ngFor="let item of tecnologies" class="item" [ngClass]="item.title">
+      <h1>{{ item.title }}</h1>
+      <div class="subItem">
+        <div class="tecnology" *ngFor="let subItem of item.items">
+          <p>{{ subItem.title }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

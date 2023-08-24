@@ -1,1 +1,30 @@
-<p>projects works!</p>
+<div id="projects">
+  <section id="laboral">
+    <h1>Experiencia Laboral</h1>
+    <div class="container">
+      <div class="container">
+        <div class="card" *ngFor="let card of works">
+          <h1>{{ card.title }}</h1>
+          <p>{{ card.subtitle }}</p>
+          <p>{{ card.desciption }}</p>
+          <div *ngFor="let item of card.tecnologias">
+            <p>{{ item.title }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="proyectos">
+    <h1>Proyectos</h1>
+    <div class="container">
+      <div class="card" *ngFor="let card of projects">
+        <h1>{{ card.title }}</h1>
+        <p>{{ card.desciption }}</p>
+        <div *ngFor="let item of card.tecnologias">
+          <p>{{ item.title }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -39,6 +39,11 @@
           right: 0;
         }
       }
+      .item.active {
+        .item-l {
+          right: 0;
+        }
+      }
     }
   }
 }

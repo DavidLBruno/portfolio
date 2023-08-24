@@ -1,1 +1,21 @@
-<p>about works!</p>
+<div id="about">
+  <div class="container">
+    <h1>Estudios</h1>
+
+    <div class="container-card">
+      <div class="card" *ngFor="let card of estudios">
+        <div class="first">
+          <h1>{{ card.title }}</h1>
+          <a [href]="card.subTitle.link" target="_blank">{{
+            card.subTitle.title
+          }}</a>
+          <p>{{ card.fecha }}</p>
+        </div>
+        <div class="second">
+          <p>{{ card.descripcion }}</p>
+        </div>
+        <p>{{ card.descripcion }}</p>
+      </div>
+    </div>
+  </div>
+</div>

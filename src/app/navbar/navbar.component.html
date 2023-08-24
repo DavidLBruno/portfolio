@@ -19,6 +19,7 @@
         *ngFor="let item of items"
         [routerLink]="item.link"
         (click)="handleMenu()"
+        [ngClass]="'/' + item.link == routeActually ? 'active' : 'none'"
       >
         {{ item.title }}
         <label class="item-l" for="item"></label>
