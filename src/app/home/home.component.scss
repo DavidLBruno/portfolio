@@ -2,15 +2,36 @@
 
 #home {
   .container {
-    padding: 0 5rem;
+    padding: 1rem 5rem;
     .presentacion {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       width: 100%;
-      img {
-        width: 10rem;
-        border-radius: 100%;
+
+      .card {
+        display: flex;
+        justify-content: space-between;
+        padding: 2rem;
+        align-items: center;
+        width: 100%;
+        .first {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 50%;
+
+          img {
+            width: 10rem;
+            border-radius: 100%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          }
+        }
+        .second {
+          width: 50%;
+        }
       }
     }
   }

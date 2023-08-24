@@ -18,8 +18,8 @@ export class ProjectsComponent {
       ],
     },
     {
-      title: "Freelance",
-      subtitle: "FullStack",
+      title: "FullStack",
+      subtitle: "Freelance",
 
       desciption: "",
       tecnologias: [
