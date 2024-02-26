@@ -1,3 +1,7 @@
-<app-navbar></app-navbar>
+<app-toasts></app-toasts>
+
+<app-navbar
+  [currentUrl]="routeAct"
+  *ngIf="routeAct !== '/login' && routeAct !== '/'"
+></app-navbar>
 <router-outlet></router-outlet>
-<app-footer></app-footer>
