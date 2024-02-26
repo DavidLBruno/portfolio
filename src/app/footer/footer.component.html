@@ -2,12 +2,7 @@
   <div class="container">
     <div class="column" *ngFor="let item of columns">
       <h1>{{ item.title }}</h1>
-      <a
-        class="subItem"
-        *ngFor="let subItem of item.subColumns"
-        [href]="subItem.link"
-        target="_blank"
-      >
+      <a class="subItem" *ngFor="let subItem of item.subColumns" [href]="subItem.link" target="_blank">
         <fa-icon [icon]="subItem.icon"></fa-icon>
         <p>
           {{ subItem.title }}

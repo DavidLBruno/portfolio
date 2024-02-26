@@ -1,40 +1,43 @@
-import { Component } from "@angular/core";
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "app-projects",
-  templateUrl: "./projects.component.html",
-  styleUrls: ["./projects.component.scss"],
+  selector: 'app-projects',
+  templateUrl: './projects.component.html',
+  styleUrls: ['./projects.component.scss'],
+  imports: [CommonModule],
+  standalone: true,
 })
 export class ProjectsComponent {
   works = [
     {
-      title: "Backend NodeJs",
-      subtitle: "TheLabIT",
-      desciption: "",
+      title: 'Backend NodeJs',
+      subtitle: 'TheLabIT',
+      desciption: '',
       tecnologias: [
         {
-          title: "",
+          title: '',
         },
       ],
     },
     {
-      title: "FullStack",
-      subtitle: "Freelance",
+      title: 'FullStack',
+      subtitle: 'Freelance',
 
-      desciption: "",
+      desciption: '',
       tecnologias: [
         {
-          title: "",
+          title: '',
         },
       ],
     },
     {
-      title: "Frontend Angular",
-      subtitle: "Depsys",
-      desciption: "",
+      title: 'Frontend Angular',
+      subtitle: 'Depsys',
+      desciption: '',
       tecnologias: [
         {
-          title: "",
+          title: '',
         },
       ],
     },
@@ -42,38 +45,38 @@ export class ProjectsComponent {
 
   projects = [
     {
-      title: "Portfolio",
-      desciption: "Proyecto individual",
+      title: 'Portfolio',
+      desciption: 'Proyecto individual',
       tecnologias: [
         {
-          title: "",
+          title: '',
         },
       ],
     },
     {
-      title: "Wallet digital",
-      desciption: "Proyecto grupal",
+      title: 'Wallet digital',
+      desciption: 'Proyecto grupal',
       tecnologias: [
         {
-          title: "",
+          title: '',
         },
       ],
     },
     {
-      title: "E-commerce",
-      desciption: "Proyecto grupal",
+      title: 'E-commerce',
+      desciption: 'Proyecto grupal',
       tecnologias: [
         {
-          title: "",
+          title: '',
         },
       ],
     },
     {
-      title: "Pokemon",
-      desciption: "Proyecto individual",
+      title: 'Pokemon',
+      desciption: 'Proyecto individual',
       tecnologias: [
         {
-          title: "",
+          title: '',
         },
       ],
     },

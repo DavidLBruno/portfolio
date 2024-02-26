@@ -1,34 +1,37 @@
-import { Component } from "@angular/core";
-import { Router, NavigationEnd } from "@angular/router";
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { Router, NavigationEnd, RouterModule } from '@angular/router';
 
 @Component({
-  selector: "app-navbar",
-  templateUrl: "./navbar.component.html",
-  styleUrls: ["./navbar.component.scss"],
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss'],
+  imports: [CommonModule, RouterModule],
+  standalone: true,
 })
 export class NavbarComponent {
   hamburguer: boolean = false;
-  routeActually = "";
+  routeActually = '';
   items = [
     {
-      title: "Home",
-      link: "",
-      icon: "",
+      title: 'Home',
+      link: '',
+      icon: '',
     },
     {
-      title: "Proyectos",
-      link: "projects",
-      icon: "",
+      title: 'Proyectos',
+      link: 'projects',
+      icon: '',
     },
     {
-      title: "Sobre mi",
-      link: "about",
-      icon: "",
+      title: 'Sobre mi',
+      link: 'about',
+      icon: '',
     },
     {
-      title: "Tecnologias",
-      link: "tecnologies",
-      icon: "",
+      title: 'Tecnologias',
+      link: 'tecnologies',
+      icon: '',
     },
   ];
 
