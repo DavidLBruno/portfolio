@@ -1,13 +1,15 @@
-@import "../../styles.scss";
+@use 'variables' as *;
 
 #projects {
   padding: 2rem 5rem;
+
   .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 1rem;
+
     .card {
       display: flex;
       flex-direction: column;
@@ -33,5 +35,4 @@
   }
 }
 
-@media screen and (max-width: 991px) {
-}
+@media screen and (max-width: 991px) {}

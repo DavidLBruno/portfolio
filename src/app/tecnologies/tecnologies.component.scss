@@ -1,7 +1,8 @@
-@import "../../styles.scss";
+@use 'variables' as *;
 
 #tecnologies {
   padding: 1rem 5rem;
+
   .container {
     display: flex;
     flex-direction: column;
@@ -9,15 +10,16 @@
     .item {
       display: flex;
       align-items: center;
+      gap: 15rem;
       justify-content: space-between;
-      width: 100%;
       padding: 2rem 0;
       border-bottom: 1px solid $color-primary;
 
       .subItem {
-        width: 50%;
         display: flex;
         align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
         gap: 2rem;
 
         .tecnology {
@@ -57,6 +59,7 @@
   from {
     transform: translateX(100%);
   }
+
   to {
     transform: translateX(0);
   }

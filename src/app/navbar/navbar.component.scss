@@ -1,29 +1,35 @@
-@import "../../styles.scss";
+@use 'variables' as *;
 
 #nav {
   border-bottom: 2px solid $color-primary;
+
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 5rem;
     padding: 0 5rem;
+
     img {
       width: 64px;
       cursor: pointer;
       border-radius: 0.2rem;
     }
+
     .hamburguer {
       display: none;
     }
+
     .item-container {
       display: flex;
       gap: 1rem;
+
       .item {
         display: block;
         font-size: 20px;
         cursor: pointer;
         position: relative;
+
         .item-l {
           position: absolute;
           left: 0;
@@ -34,11 +40,13 @@
           transition: right 500ms;
         }
       }
+
       .item:hover {
         .item-l {
           right: 0;
         }
       }
+
       .item.active {
         .item-l {
           right: 0;
@@ -57,7 +65,7 @@
       padding-top: 1rem;
       height: auto;
       max-height: 0;
-      transition: max-height 2s;
+      transition: max-height 1.5s;
       overflow: hidden;
       padding: 0;
 
@@ -78,6 +86,7 @@
           width: 1rem;
           position: relative;
           cursor: pointer;
+
           .hamburguer {
             display: flex;
             position: absolute;
@@ -86,9 +95,11 @@
             background-color: $color-primary;
             transition: 500ms;
           }
+
           #one {
             top: 0;
           }
+
           #three {
             bottom: 0;
           }
@@ -99,9 +110,11 @@
             rotate: 45deg;
             top: 7px;
           }
+
           #two {
             opacity: 0;
           }
+
           #three {
             bottom: 9px;
             rotate: -45deg;
@@ -115,6 +128,7 @@
         align-items: center;
         width: 100%;
         gap: 0;
+
         .item {
           padding: 1rem;
           display: flex;
@@ -122,6 +136,12 @@
           align-items: center;
           border-bottom: 1px solid $color-primary;
           width: 100%;
+        }
+
+        .item {
+          .item-l {
+            display: none;
+          }
         }
       }
     }

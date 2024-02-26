@@ -1,4 +1,4 @@
-@import "../../styles.scss";
+@use 'variables' as *;
 
 #about {
   .container {
@@ -7,6 +7,7 @@
     align-items: center;
     justify-content: flex-start;
     padding: 1rem 5rem;
+
     .container-card {
       display: flex;
       flex-direction: column;
@@ -14,23 +15,28 @@
       align-items: center;
       width: 100%;
       gap: 2rem;
+
       .card {
         display: flex;
         padding: 2rem;
         width: 100%;
         border: 1px solid $color-primary;
         border-radius: 2rem;
+
         .first {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
+
           h1 {
             margin: 0;
           }
+
           a {
             text-decoration: none;
             color: $color-primary;
           }
+
           p {
             margin: 0;
           }
@@ -44,8 +50,7 @@
   #about {
     .container {
       .container-card {
-        .card {
-        }
+        .card {}
       }
     }
   }

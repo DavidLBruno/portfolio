@@ -1,8 +1,9 @@
-@import "../../styles.scss";
+@use 'variables' as *;
 
 #home {
   .container {
     padding: 1rem 5rem;
+
     .presentacion {
       display: flex;
       flex-direction: column;
@@ -16,6 +17,7 @@
         padding: 2rem;
         align-items: center;
         width: 100%;
+
         .first {
           display: flex;
           flex-direction: column;
@@ -29,6 +31,7 @@
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
           }
         }
+
         .second {
           width: 50%;
         }
@@ -39,7 +42,6 @@
 
 @media screen and (max-width: 991px) {
   #home {
-    .container {
-    }
+    .container {}
   }
 }
