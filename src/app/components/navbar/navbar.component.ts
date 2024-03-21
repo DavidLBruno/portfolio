@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
+import { Item } from '../../interfaces/items.interface';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
   selector: 'app-navbar',
@@ -12,26 +15,26 @@ import { Router, NavigationEnd, RouterModule } from '@angular/router';
 export class NavbarComponent {
   hamburguer: boolean = false;
   routeActually = '';
-  items = [
+  items: Item[] = [
     {
       title: 'Home',
       link: '',
-      icon: '',
     },
     {
       title: 'Proyectos',
       link: 'projects',
-      icon: '',
     },
     {
       title: 'Sobre mi',
       link: 'about',
-      icon: '',
     },
     {
       title: 'Tecnologias',
       link: 'tecnologies',
-      icon: '',
+    },
+    {
+      title: 'Configuraciones',
+      link: '',
     },
   ];
 
@@ -47,5 +50,12 @@ export class NavbarComponent {
 
   handleMenu() {
     this.hamburguer = !this.hamburguer;
+  }
+
+  private modalService = inject(NgbModal);
+
+  open() {
+    const modalRef = this.modalService.open(SettingsComponent);
+    modalRef.componentInstance.name = 'World';
   }
 }
