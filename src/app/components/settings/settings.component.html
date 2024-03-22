@@ -1,10 +1,25 @@
-<div class="modal-header">
-    <h4 class="modal-title">Hi there!</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
-</div>
 <div class="modal-body">
-    <p>Hello, {{ name }}!</p>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  <h1>{{ "settings.title" | transloco }}</h1>
+  <form [formGroup]="settings">
+    <div class="form-group">
+      <label class="form-label">Cambiar idioma</label>
+      <div ngbDropdown class="d-inline-block form-control">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
+          {{ activeLanguaje }}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          @for (item of languaje; track $index) {
+          <button (click)="changeForm(item)" ngbDropdownItem>
+            {{ item.title }}
+          </button>
+          }
+        </div>
+      </div>
+    </div>
+  </form>
 </div>

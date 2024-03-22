@@ -1,3 +1,6 @@
 {
-  "name": "Mi nombre es"
+  "name": "Mi nombre es",
+  "settings": {
+    "title": "Configuraciones"
+  }
 }

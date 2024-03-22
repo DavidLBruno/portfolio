@@ -4,12 +4,14 @@ import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { Item } from '../../interfaces/items.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SettingsComponent } from '../settings/settings.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FontAwesomeModule],
   standalone: true,
 })
 export class NavbarComponent {
@@ -32,13 +34,10 @@ export class NavbarComponent {
       title: 'Tecnologias',
       link: 'tecnologies',
     },
-    {
-      title: 'Configuraciones',
-      link: '',
-    },
   ];
+  icon = faGear;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private modalService: NgbModal) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.routeActually = this.router.url;
@@ -52,10 +51,7 @@ export class NavbarComponent {
     this.hamburguer = !this.hamburguer;
   }
 
-  private modalService = inject(NgbModal);
-
   open() {
-    const modalRef = this.modalService.open(SettingsComponent);
-    modalRef.componentInstance.name = 'World';
+    this.modalService.open(SettingsComponent);
   }
 }
