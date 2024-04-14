@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { Router, NavigationEnd, RouterModule } from '@angular/router';
-import { Item } from '../../interfaces/items.interface';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SettingsComponent } from '../settings/settings.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { CommonModule } from '@angular/common'
+import { Component, inject } from '@angular/core'
+import { Router, NavigationEnd, RouterModule } from '@angular/router'
+import { Item } from '../../interfaces/items.interface'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { SettingsComponent } from '../settings/settings.component'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { faGear } from '@fortawesome/free-solid-svg-icons'
 
 @Component({
   selector: 'app-navbar',
@@ -15,8 +15,8 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
   standalone: true,
 })
 export class NavbarComponent {
-  hamburguer: boolean = false;
-  routeActually = '';
+  hamburguer: boolean = false
+  routeActually = ''
   items: Item[] = [
     {
       title: 'Home',
@@ -34,24 +34,27 @@ export class NavbarComponent {
       title: 'Tecnologias',
       link: 'tecnologies',
     },
-  ];
-  icon = faGear;
+  ]
+  icon = faGear
 
-  constructor(private router: Router, private modalService: NgbModal) {
-    this.router.events.subscribe((event) => {
+  constructor(
+    private router: Router,
+    private modalService: NgbModal,
+  ) {
+    this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.routeActually = this.router.url;
+        this.routeActually = this.router.url
       }
-    });
+    })
   }
 
   ngOninit() {}
 
   handleMenu() {
-    this.hamburguer = !this.hamburguer;
+    this.hamburguer = !this.hamburguer
   }
 
   open() {
-    this.modalService.open(SettingsComponent);
+    this.modalService.open(SettingsComponent)
   }
 }

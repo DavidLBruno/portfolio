@@ -4,8 +4,8 @@
 
 export const environment = {
   baseUrl: 'http://localhost:4200',
-  production: false
-};
+  production: false,
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

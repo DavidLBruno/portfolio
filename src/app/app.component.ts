@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Event, NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { filter } from 'rxjs';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { ChangeLanguajeService } from './services/change-languaje/change-languaje.service';
+import { Component } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { Event, NavigationEnd, Router, RouterOutlet } from '@angular/router'
+import { filter } from 'rxjs'
+import { NavbarComponent } from './components/navbar/navbar.component'
+import { FooterComponent } from './components/footer/footer.component'
+import { ChangeLanguajeService } from './services/change-languaje/change-languaje.service'
 
 @Component({
   selector: 'app-root',
@@ -14,20 +14,20 @@ import { ChangeLanguajeService } from './services/change-languaje/change-languaj
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'proyecto-visitas';
-  routeAct = '';
+  title = 'proyecto-visitas'
+  routeAct = ''
 
   constructor(
     private router: Router,
-    private changeLanguager: ChangeLanguajeService
+    private changeLanguager: ChangeLanguajeService,
   ) {
-    this.changeLanguager.setLanguage();
+    this.changeLanguager.setLanguage()
 
     this.router.events
       .pipe(filter((event: Event) => event instanceof NavigationEnd))
       .subscribe((event: Event) => {
-        this.routeAct = (event as NavigationEnd).url;
-      });
+        this.routeAct = (event as NavigationEnd).url
+      })
   }
 
   ngOnInit(): void {}

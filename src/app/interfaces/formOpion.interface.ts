@@ -1,6 +1,6 @@
-import { Button } from './button.interface';
+import { Button } from './button.interface'
 
 export interface FormOption {
-  id: string;
-  fields: Button[];
+  id: string
+  fields: Button[]
 }

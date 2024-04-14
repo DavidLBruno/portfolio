@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common'
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-about',
@@ -31,5 +31,5 @@ export class AboutComponent {
       fecha: 'Diciembre 2021 - Agosto 2022',
       descripcion: '',
     },
-  ];
+  ]
 }

@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common'
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-tecnologies',
@@ -51,5 +51,5 @@ export class TecnologiesComponent {
         { title: 'Vim' },
       ],
     },
-  ];
+  ]
 }

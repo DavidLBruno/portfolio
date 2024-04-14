@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NgbActiveModal, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { Select } from '../../interfaces/select.interface';
-import { TranslocoPipe } from '@ngneat/transloco';
-import { Subscription } from 'rxjs';
-import { ChangeLanguajeService } from '../../services/change-languaje/change-languaje.service';
-import { Button } from '../../interfaces/button.interface';
+import { Component, OnInit } from '@angular/core'
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
+import { NgbActiveModal, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap'
+import { Select } from '../../interfaces/select.interface'
+import { TranslocoPipe } from '@ngneat/transloco'
+import { Subscription } from 'rxjs'
+import { ChangeLanguajeService } from '../../services/change-languaje/change-languaje.service'
+import { Button } from '../../interfaces/button.interface'
 
 @Component({
   selector: 'app-settings',
@@ -17,9 +17,9 @@ import { Button } from '../../interfaces/button.interface';
 export class SettingsComponent implements OnInit {
   settings = new FormGroup({
     languaje: new FormControl(''),
-  });
-  subscription!: Subscription;
-  activeLanguaje: string = 'Idioma';
+  })
+  subscription!: Subscription
+  activeLanguaje: string = 'Idioma'
 
   configsParams: Button[] = [
     {
@@ -48,31 +48,31 @@ export class SettingsComponent implements OnInit {
         },
       ],
     },
-  ];
+  ]
 
   constructor(
     public activeModal: NgbActiveModal,
-    private languajeService: ChangeLanguajeService
+    private languajeService: ChangeLanguajeService,
   ) {}
 
   changeForm(select: Select): void {
     this.settings.patchValue({
       languaje: select.value,
-    });
+    })
   }
 
   ngOnInit(): void {
-    this.activeLanguaje = this.languajeService.getLanguaje();
+    this.activeLanguaje = this.languajeService.getLanguaje()
 
-    this.subscription = this.settings.valueChanges.subscribe((values) => {
+    this.subscription = this.settings.valueChanges.subscribe(values => {
       if (values.languaje) {
-        this.languajeService.change(values.languaje);
-        this.activeLanguaje = this.languajeService.getLanguaje();
+        this.languajeService.change(values.languaje)
+        this.activeLanguaje = this.languajeService.getLanguaje()
       }
-    });
+    })
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription.unsubscribe()
   }
 }

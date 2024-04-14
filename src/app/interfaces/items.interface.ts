@@ -1,4 +1,4 @@
 export interface Item {
-  title: string;
-  link: string;
+  title: string
+  link: string
 }

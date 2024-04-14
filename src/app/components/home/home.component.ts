@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { Component } from '@angular/core'
+import { TranslocoPipe } from '@ngneat/transloco'
 
 @Component({
   selector: 'app-home',

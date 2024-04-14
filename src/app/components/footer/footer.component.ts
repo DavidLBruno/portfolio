@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CommonModule } from '@angular/common'
+import { Component } from '@angular/core'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import {
   faLinkedin,
   faInstagram,
@@ -8,14 +8,14 @@ import {
   faTelegram,
   faDiscord,
   faGithub,
-} from '@fortawesome/free-brands-svg-icons';
+} from '@fortawesome/free-brands-svg-icons'
 import {
   faChessKnight,
   faCode,
   faEnvelope,
   faSignature,
   faFile,
-} from '@fortawesome/free-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons'
 
 @Component({
   selector: 'app-footer',
@@ -96,5 +96,5 @@ export class FooterComponent {
         },
       ],
     },
-  ];
+  ]
 }
