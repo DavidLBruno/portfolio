@@ -1,34 +1,25 @@
 @use 'variables' as *;
 
 #home {
+  height: 100vh;
+  padding: 5rem 0;
+
   .container {
-    padding: 1rem 5rem;
+    gap: 3rem;
 
     .presentacion {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-
       .card {
-        display: flex;
-        justify-content: space-between;
         padding: 2rem;
-        align-items: center;
-        width: 100%;
+        box-shadow: $shadow;
 
         .first {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
           width: 50%;
 
           img {
             width: 10rem;
             border-radius: 100%;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            box-shadow: $shadow;
+            user-select: none;
           }
         }
 

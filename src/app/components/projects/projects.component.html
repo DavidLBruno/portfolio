@@ -1,24 +1,22 @@
-<div id="projects">
-  <section id="laboral">
+<div class="projects d-flex flex-column">
+  <div class=" laboral d-flex flex-column align-items-center">
     <h1>Experiencia Laboral</h1>
-    <div class="container">
-      <div class="container">
-        <div class="card" *ngFor="let card of works">
-          <h1>{{ card.title }}</h1>
-          <p>{{ card.subtitle }}</p>
-          <p>{{ card.desciption }}</p>
-          <div *ngFor="let item of card.tecnologias">
-            <p>{{ item.title }}</p>
-          </div>
+    <div class="container d-flex justify-content-center flex-wrap align-items-center">
+      <div class="card align-items-center justify-content-center" *ngFor="let card of works">
+        <h1>{{ card.title }}</h1>
+        <p>{{ card.subtitle }}</p>
+        <p>{{ card.desciption }}</p>
+        <div *ngFor="let item of card.tecnologias">
+          <p>{{ item.title }}</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section id="proyectos">
+  <div class="proyectos d-flex flex-column align-items-center">
     <h1>Proyectos</h1>
-    <div class="container">
-      <div class="card" *ngFor="let card of projects">
+    <div class="container d-flex flex-wrap justify-content-center align-items-center">
+      <div class="card align-items-center justify-content-center" *ngFor="let card of projects">
         <h1>{{ card.title }}</h1>
         <p>{{ card.desciption }}</p>
         <div *ngFor="let item of card.tecnologias">
@@ -26,5 +24,5 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </div>
