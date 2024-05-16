@@ -1,8 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'variables' as *;
+@import 'bootstrap/scss/bootstrap';
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
-
-$color-primary: #161417;
-$color-secondary: white;
+@import './assets/scss/card.scss';
 
 body {
   margin: 0;
@@ -11,7 +10,6 @@ body {
 
 * {
   font-family: "Bebas Neue", sans-serif;
-  animation: fadeIn 0.5s;
 }
 
 .card {
@@ -22,6 +20,7 @@ body {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

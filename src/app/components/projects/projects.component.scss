@@ -1,0 +1,18 @@
+@use 'variables' as *;
+
+.projects {
+  padding: 5rem 0;
+  gap: 3rem;
+
+  .container {
+    gap: 1rem;
+
+    .card {
+      width: 20rem;
+      height: 20rem;
+      cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {}

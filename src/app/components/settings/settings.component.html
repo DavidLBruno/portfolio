@@ -1,0 +1,31 @@
+<div class="modal-body">
+  <h1>{{ "settings.title" | transloco }}</h1>
+  <form [formGroup]="settings">
+    <div class="d-flex flex-column align-items-center">
+      @for (param of configsParams; track $index) {
+      <div class="form-control">
+        <label for="dropdownBasic1" class="form-label">{{
+          param.title | transloco
+        }}</label>
+        <div ngbDropdown class="d-inline-block">
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            id="dropdownBasic1"
+            ngbDropdownToggle
+          >
+            {{ "settings.buttons.title.lan.es" | transloco }}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            @for (item of param.option; track $index) {
+            <button (click)="changeForm(item)" ngbDropdownItem>
+              {{ item.title | transloco }}
+            </button>
+            }
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </form>
+</div>

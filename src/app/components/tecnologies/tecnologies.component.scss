@@ -1,0 +1,61 @@
+@use 'variables' as *;
+
+.tecnologies {
+  padding: 1rem 5rem;
+
+  .container {
+
+    .item {
+      gap: 15rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid $color-primary;
+
+      .subItem {
+        gap: 2rem;
+
+        .tecnology {
+          background-color: $color-primary;
+          box-shadow: $shadow;
+          border-radius: 100%;
+          width: 5rem;
+          height: 5rem;
+          color: $color-secondary;
+          cursor: pointer;
+          animation: rigthToLeft 1s;
+          user-select: none;
+        }
+
+      }
+    }
+
+    .item:last-of-type {
+      border-bottom: none;
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  #tecnologies {
+    .container {
+      .item {
+        flex-direction: column;
+
+        .subItem {
+          flex-wrap: wrap;
+          width: 100%;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}
+
+@keyframes rigthToLeft {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}

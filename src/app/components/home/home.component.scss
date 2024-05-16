@@ -1,0 +1,38 @@
+@use 'variables' as *;
+
+#home {
+  height: 100vh;
+  padding: 5rem 0;
+
+  .container {
+    gap: 3rem;
+
+    .presentacion {
+      .card {
+        padding: 2rem;
+        box-shadow: $shadow;
+
+        .first {
+          width: 50%;
+
+          img {
+            width: 10rem;
+            border-radius: 100%;
+            box-shadow: $shadow;
+            user-select: none;
+          }
+        }
+
+        .second {
+          width: 50%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  #home {
+    .container {}
+  }
+}
