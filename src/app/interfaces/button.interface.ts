@@ -1,6 +1,7 @@
-import { Select } from './select.interface'
+import { Select } from './select.interface';
 
 export interface Button {
-  title: string
-  option: Select[]
+  title: string;
+  form: string;
+  option: Select[];
 }

@@ -1,16 +1,19 @@
 {
-  "name": "My name is",
-  "settings": {
-    "title": "Settings",
-    "buttons": {
-      "title": {
-        "lan": "Languaje",
-        "theme": "Theme"
+  "SETTINGS": {
+    "TITLE": "Settings",
+    "BUTTONS": {
+      "LANGUAJE": {
+        "TITLE": "Languaje",
+        "OPTIONS": {
+          "SPANISH": "Spanish",
+          "ENGLISH": "English"
+        }
       },
-      "value": {
-        "lan": {
-          "en": "English",
-          "es": "Spanish"
+      "THEME": {
+        "TITLE": "Theme",
+        "OPTIONS": {
+          "DARK": "Dark",
+          "LIGHT": "Light"
         }
       }
     }
