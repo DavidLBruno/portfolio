@@ -1,26 +1,21 @@
 {
-  "name": "Mi nombre es",
-  "settings": {
-    "title": "Configuraciones",
-    "buttons": {
-      "title": {
-        "lan": "Idioma",
-        "theme": "Tema"
+  "SETTINGS": {
+    "TITLE": "Configuraciones",
+    "BUTTONS": {
+      "LANGUAJE": {
+        "TITLE": "Idioma",
+        "OPTIONS": {
+          "SPANISH": "Español",
+          "ENGLISH": "Ingles"
+        }
       },
-      "value": {
-        "lan": {
-          "en": "Ingles",
-          "es": "Español"
-        },
-        "theme": {
-          "dk": "Oscuro",
-          "lg": "Claro"
+      "THEME": {
+        "TITLE": "Tema",
+        "OPTIONS": {
+          "DARK": "Oscuro",
+          "LIGHT": "Claro"
         }
       }
     }
-  },
-  "home": {},
-  "projects": {},
-  "about": {},
-  "tecnologies": {}
+  }
 }
