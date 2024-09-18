@@ -1,4 +1,4 @@
 export const environment = {
-  baseUrl: 'https://iambrunodavid.com/',
+  baseUrl: 'https://iambrunodavid.com',
   production: true,
 };
