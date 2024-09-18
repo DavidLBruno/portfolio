@@ -77,7 +77,7 @@ export class SettingsComponent implements OnInit {
   }
 
   getOptions(select: Select[], formValue: string) {
-    console.log(select, formValue);
+    // console.log(select, formValue);
     const result = select.find(element => element.value == formValue)?.title;
     return result;
   }
