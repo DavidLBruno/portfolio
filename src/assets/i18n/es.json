@@ -17,5 +17,9 @@
         }
       }
     }
+  },
+  "NAVBAR": {},
+  "HOME": {
+    "TITLE": "Me llamo Bruno David, Soy un desarrollador web FullStack motivado a desarrollar constantemente mis habilidades y crecer profesionalmente. Buscando una oportunidad para seguir aprendiendo en un entorno colaborativo."
   }
 }

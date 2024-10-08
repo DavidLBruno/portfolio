@@ -1,0 +1,15 @@
+@use 'variables' as *;
+
+.settings {
+    .container-form {
+        border: 1px solid $color-primary;
+        border-radius: 0.25rem;
+
+        display: none;
+
+        .form-control {
+            border: none;
+
+        }
+    }
+}

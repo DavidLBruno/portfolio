@@ -37,7 +37,7 @@ export class SettingsComponent implements OnInit {
         },
       ],
     },
-    {
+    /*    {
       title: 'SETTINGS.BUTTONS.THEME.TITLE',
       form: 'theme',
       option: [
@@ -50,7 +50,7 @@ export class SettingsComponent implements OnInit {
           value: 'light',
         },
       ],
-    },
+    }, */
   ];
 
   constructor(
