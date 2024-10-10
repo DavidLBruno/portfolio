@@ -1,13 +1,13 @@
 @use 'variables' as *;
 
-#footer {
+.footer {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   flex-direction: column;
   height: 20rem;
   background-color: $color-primary;
-  color: $color-secondary;
+  color: $white;
   padding: 0 5rem;
 
   .container {
@@ -19,7 +19,7 @@
     .column {
       .subItem {
         text-decoration: none;
-        color: $color-secondary;
+        color: $white;
 
         fa-icon {
           display: flex;
@@ -48,7 +48,7 @@
 }
 
 @media screen and (max-width: 991px) {
-  #footer {
+  .footer {
     justify-content: center;
     height: auto;
 

@@ -1,11 +1,12 @@
-import { CommonModule } from '@angular/common'
-import { Component } from '@angular/core'
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
-  imports: [CommonModule],
+  imports: [CommonModule, TranslocoModule],
   standalone: true,
 })
 export class ProjectsComponent {
@@ -41,12 +42,12 @@ export class ProjectsComponent {
         },
       ],
     },
-  ]
+  ];
 
   projects = [
     {
       title: 'Portfolio',
-      desciption: 'Proyecto individual',
+      desciption: 'PROJECTS.PROJECTS.INDIVIDUAL-PROJECT',
       tecnologias: [
         {
           title: '',
@@ -55,7 +56,7 @@ export class ProjectsComponent {
     },
     {
       title: 'Wallet digital',
-      desciption: 'Proyecto grupal',
+      desciption: 'PROJECTS.PROJECTS.GROUP-PROJECT',
       tecnologias: [
         {
           title: '',
@@ -64,7 +65,7 @@ export class ProjectsComponent {
     },
     {
       title: 'E-commerce',
-      desciption: 'Proyecto grupal',
+      desciption: 'PROJECTS.PROJECTS.GROUP-PROJECT',
       tecnologias: [
         {
           title: '',
@@ -73,12 +74,12 @@ export class ProjectsComponent {
     },
     {
       title: 'Pokemon',
-      desciption: 'Proyecto individual',
+      desciption: 'PROJECTS.PROJECTS.INDIVIDUAL-PROJECT',
       tecnologias: [
         {
           title: '',
         },
       ],
     },
-  ]
+  ];
 }
