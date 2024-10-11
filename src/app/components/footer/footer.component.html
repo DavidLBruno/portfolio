@@ -1,5 +1,5 @@
-<footer id="footer">
-  <div class="container">
+<footer class="footer">
+  <div class="container p-3">
     <div class="column" *ngFor="let item of columns">
       <h1>{{ item.title }}</h1>
       <a class="subItem" *ngFor="let subItem of item.subColumns" [href]="subItem.link" target="_blank">

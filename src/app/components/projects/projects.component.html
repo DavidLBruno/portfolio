@@ -1,6 +1,6 @@
 <div class="projects d-flex flex-column">
   <div class=" laboral d-flex flex-column align-items-center">
-    <h1>Experiencia Laboral</h1>
+    <h1>{{ 'PROJECTS.WORK-EXPERIENCE.TITLE' | transloco }}</h1>
     <div class="container d-flex justify-content-center flex-wrap align-items-center">
       <div class="card align-items-center justify-content-center" *ngFor="let card of works">
         <h1>{{ card.title }}</h1>
@@ -14,15 +14,43 @@
   </div>
 
   <div class="proyectos d-flex flex-column align-items-center">
-    <h1>Proyectos</h1>
+    <h1>{{ 'PROJECTS.PROJECTS.TITLE' | transloco }}</h1>
     <div class="container d-flex flex-wrap justify-content-center align-items-center">
-      <div class="card align-items-center justify-content-center" *ngFor="let card of projects">
-        <h1>{{ card.title }}</h1>
-        <p>{{ card.desciption }}</p>
-        <div *ngFor="let item of card.tecnologias">
-          <p>{{ item.title }}</p>
+      @for (card of projects; track $index) {
+      <div hrb class="card">
+        <img [src]="card.image" class="card__image" alt="" />
+        <div class="card__overlay">
+          <div class="card__header">
+
+            <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
+              <path />
+            </svg>
+
+            <img class="card__thumb" [src]="card.icon" alt="" />
+            <div class="text">
+              <p class="title m-0">{{ card.title }}</p>
+              <p class="subtitle m-0">{{ card.desciption | transloco }}</p>
+            </div>
+          </div>
+          <p class="card__description d-flex gap-2">
+            @if (card.repository) {
+            <a [href]="card.repository" target="_blank" rel="noopener"
+              class="button-p w-100 d-flex align-items-center justify-content-center">{{
+              'PROJECTS.PROJECTS.CARDS.BUTTONS.REPOSITORY' | transloco
+              }}</a>
+            }
+            @if (card.deploy) {
+            <a [href]="card.deploy" target="_blank" rel="noopener"
+              class="button-p w-100 d-flex align-items-center justify-content-center">{{
+              'PROJECTS.PROJECTS.CARDS.BUTTONS.DEPLOY' | transloco }}</a>
+            }
+          </p>
         </div>
       </div>
+      }
+
+
+
     </div>
   </div>
 </div>

@@ -6,19 +6,27 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { Subscription } from 'rxjs';
 import { ChangeSettingService } from '../../services/change-settings/change-settings.service';
 import { Button } from '../../interfaces/button.interface';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
   standalone: true,
-  imports: [ReactiveFormsModule, NgbDropdownModule, TranslocoPipe],
+  imports: [
+    ReactiveFormsModule,
+    NgbDropdownModule,
+    TranslocoPipe,
+    FontAwesomeModule,
+  ],
 })
 export class SettingsComponent implements OnInit {
   settings: FormGroup = new FormGroup({
     languaje: new FormControl(''),
     theme: new FormControl(''),
   });
+  faChevronDown = faChevronDown;
 
   subscription!: Subscription;
 
@@ -37,7 +45,7 @@ export class SettingsComponent implements OnInit {
         },
       ],
     },
-    {
+    /*    {
       title: 'SETTINGS.BUTTONS.THEME.TITLE',
       form: 'theme',
       option: [
@@ -50,7 +58,7 @@ export class SettingsComponent implements OnInit {
           value: 'light',
         },
       ],
-    },
+    }, */
   ];
 
   constructor(

@@ -9,10 +9,17 @@
 
     .card {
       width: 20rem;
-      height: 20rem;
+      height: 25rem;
+      transition: 0.5s;
       cursor: pointer;
+      overflow: hidden;
     }
   }
-}
 
-@media screen and (max-width: 991px) {}
+  .card:hover {
+    .information {
+      height: 15rem;
+    }
+  }
+
+}

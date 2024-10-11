@@ -1,0 +1,37 @@
+@use 'variables' as *;
+
+.settings {
+
+    .container-form {
+        border: 1px solid $color-primary;
+        border-radius: 0.25rem;
+
+        .form-control {
+            border: none;
+
+            .btn {
+                border: 1px solid $color-primary;
+
+                .icon {
+                    transition: 300ms;
+                    font-size: 12px;
+                }
+            }
+
+            .dropdown-item:active,
+            .active {
+                background-color: $medium-gray;
+            }
+
+            .btn::after {
+                display: none;
+            }
+
+            .custom-dropdown[aria-expanded="true"] {
+                .icon {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+    }
+}

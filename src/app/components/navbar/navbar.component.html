@@ -11,7 +11,7 @@
     <div class="item-container" [ngClass]="hamburguer ? 'open' : ''">
       <div id="item" class="item" *ngFor="let item of items" [routerLink]="item.link" (click)="handleMenu()"
         [class.active]="'/' + item.link == routeActually">
-        {{ item.title }}
+        {{ item.title | transloco }}
         <label class="item-l" for="item"></label>
       </div>
     </div>

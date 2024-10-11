@@ -17,5 +17,35 @@
         }
       }
     }
+  },
+  "NAVBAR": {
+    "BUTTONS": {
+      "HOME": "Inicio",
+      "PROJECTS": "Proyectos",
+      "ABOUT": "Sobre mi",
+      "TECNOLOGIES": "Tecnologias"
+    }
+  },
+  "HOME": {
+    "TITLE": "Me llamo Bruno David, Soy un desarrollador web FullStack motivado a desarrollar constantemente mis habilidades y crecer profesionalmente. Buscando una oportunidad para seguir aprendiendo en un entorno colaborativo."
+  },
+  "PROJECTS": {
+    "WORK-EXPERIENCE": {
+      "TITLE": "Experiencia Laboral",
+      "CARDS": {
+        "1": {}
+      }
+    },
+    "PROJECTS": {
+      "TITLE": "Proyectos",
+      "INDIVIDUAL-PROJECT": "Proyecto Individual",
+      "GROUP-PROJECT": "Proyecto Grupal",
+      "CARDS": {
+        "BUTTONS": {
+          "REPOSITORY": "Repositorio",
+          "DEPLOY": "Despliegue"
+        }
+      }
+    }
   }
 }

@@ -1,15 +1,17 @@
-import { CommonModule } from '@angular/common'
-import { Component } from '@angular/core'
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { TranslocoModule } from '@ngneat/transloco';
+import { Project } from '../../interfaces/project.interface';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
-  imports: [CommonModule],
+  imports: [CommonModule, TranslocoModule],
   standalone: true,
 })
 export class ProjectsComponent {
-  works = [
+  works: Project[] = [
     {
       title: 'Backend NodeJs',
       subtitle: 'TheLabIT',
@@ -41,12 +43,15 @@ export class ProjectsComponent {
         },
       ],
     },
-  ]
+  ];
 
-  projects = [
+  projects: Project[] = [
     {
       title: 'Portfolio',
-      desciption: 'Proyecto individual',
+      desciption: 'PROJECTS.PROJECTS.INDIVIDUAL-PROJECT',
+      image: '/assets/images/projects/portfolio.png',
+      icon: '/assets/images/projects/portfolio-icon.png',
+      repository: 'https://github.com/DavidLBruno/portfolio',
       tecnologias: [
         {
           title: '',
@@ -55,7 +60,10 @@ export class ProjectsComponent {
     },
     {
       title: 'Wallet digital',
-      desciption: 'Proyecto grupal',
+      desciption: 'PROJECTS.PROJECTS.GROUP-PROJECT',
+      image: '/assets/images/projects/wallet-digital.png',
+      icon: '/assets/images/projects/wallet-digital-icon.png',
+      repository: 'https://github.com/DavidLBruno/grupo-n-1',
       tecnologias: [
         {
           title: '',
@@ -64,7 +72,11 @@ export class ProjectsComponent {
     },
     {
       title: 'E-commerce',
-      desciption: 'Proyecto grupal',
+      desciption: 'PROJECTS.PROJECTS.GROUP-PROJECT',
+      image: '/assets/images/projects/e-commerce.png',
+      icon: '/assets/images/projects/e-commerce-logo.png',
+      repository: '',
+      deploy: 'https://pf-vlixes-main.vercel.app/',
       tecnologias: [
         {
           title: '',
@@ -73,12 +85,16 @@ export class ProjectsComponent {
     },
     {
       title: 'Pokemon',
-      desciption: 'Proyecto individual',
+      desciption: 'PROJECTS.PROJECTS.INDIVIDUAL-PROJECT',
+      image: '/assets/images/projects/pokemon.png',
+      icon: '/assets/images/projects/game1.png',
+      deploy: 'https://pi-pokemon-eta.vercel.app/',
+      repository: 'https://github.com/DavidLBruno/PI-POKEMON',
       tecnologias: [
         {
           title: '',
         },
       ],
     },
-  ]
+  ];
 }
