@@ -1,0 +1,68 @@
+@use 'variables' as *;
+
+
+.button-p {
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    color: $color-primary;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 0.5em;
+    background: $white;
+    border: 1px solid $white;
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+    text-decoration: none;
+}
+
+.button-p:active {
+    color: #666;
+    box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+}
+
+.button-p:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    width: 140%;
+    height: 180%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+}
+
+.button-p:after {
+    content: "";
+    position: absolute;
+    left: 55%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.45);
+    top: 180%;
+    width: 160%;
+    height: 190%;
+    background-color: $purple-haze;
+    border-radius: 50%;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+}
+
+.button-p:hover {
+    color: $white;
+    border: 1px solid $purple-haze;
+}
+
+.button-p:hover:before {
+    top: -35%;
+    background-color: $purple-haze;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+.button-p:hover:after {
+    top: -45%;
+    background-color: $purple-haze;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}

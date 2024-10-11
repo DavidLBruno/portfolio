@@ -39,7 +39,13 @@
     "PROJECTS": {
       "TITLE": "Projects",
       "INDIVIDUAL-PROJECT": "Individual Project",
-      "GROUP-PROJECT": "Group Project"
+      "GROUP-PROJECT": "Group Project",
+      "CARDS": {
+        "BUTTONS": {
+          "REPOSITORY": "Repository",
+          "DEPLOY": "Deploy"
+        }
+      }
     }
   }
 }
