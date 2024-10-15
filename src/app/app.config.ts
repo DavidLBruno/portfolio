@@ -1,10 +1,11 @@
-import { ApplicationConfig, isDevMode } from '@angular/core'
-import { provideRouter } from '@angular/router'
-import { routes } from './app.routes'
-import { provideClientHydration } from '@angular/platform-browser'
-import { provideHttpClient, withFetch } from '@angular/common/http'
-import { TranslocoHttpLoader } from './transloco-loader'
-import { provideTransloco } from '@ngneat/transloco'
+import { ApplicationConfig, isDevMode } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
+import { provideClientHydration } from '@angular/platform-browser';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { TranslocoHttpLoader } from './transloco-loader';
+import { provideTransloco } from '@ngneat/transloco';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,9 +18,9 @@ export const appConfig: ApplicationConfig = {
         availableLangs: ['en', 'es'],
         defaultLang: 'en',
         reRenderOnLangChange: true,
-        prodMode: !isDevMode(),
+        prodMode: environment.production,
       },
       loader: TranslocoHttpLoader,
     }),
   ],
-}
+};

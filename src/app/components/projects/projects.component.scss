@@ -10,16 +10,6 @@
     .card {
       width: 20rem;
       height: 25rem;
-      transition: 0.5s;
-      cursor: pointer;
-      overflow: hidden;
     }
   }
-
-  .card:hover {
-    .information {
-      height: 15rem;
-    }
-  }
-
 }
