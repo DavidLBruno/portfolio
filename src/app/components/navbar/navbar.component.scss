@@ -1,7 +1,7 @@
 @use 'variables' as *;
 
-#nav {
-  border-bottom: 2px solid $color-primary;
+.nav {
+  border-bottom: 1px solid $color-primary;
 
   .container {
     align-items: center;
@@ -60,7 +60,7 @@
 }
 
 @media screen and (max-width: 991px) {
-  #nav {
+  .nav {
     .container {
       justify-content: flex-start;
       flex-direction: column;

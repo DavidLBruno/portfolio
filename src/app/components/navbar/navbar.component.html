@@ -1,5 +1,5 @@
-<nav id="nav" class="position-relative">
-  <div class="container d-flex" [ngClass]="hamburguer ? 'open' : ''">
+<nav class="nav position-relative">
+  <div class="container d-flex p-0" [ngClass]="hamburguer ? 'open' : ''">
     <div class="container-resposive">
       <img src="/assets/images/main.png" alt="not found" routerLink="/" />
       <div class="container-hamb" (click)="handleMenu()" [class.open]="hamburguer">

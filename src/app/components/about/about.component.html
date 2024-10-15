@@ -1,21 +1,23 @@
-<div id="about">
-  <div class="container">
+<div class="about">
+  <div class="container d-flex flex-column align-items-center justify-content-start">
     <h1>Estudios</h1>
 
-    <div class="container-card">
-      <div class="card" *ngFor="let card of estudios">
+    <div class="container-card d-flex flex-column w-100">
+      @for (card of estudios; track $index) {
+      <div class="card d-flex w-100 p-5">
         <div class="first">
           <h1>{{ card.title }}</h1>
           <a [href]="card.subTitle.link" target="_blank">{{
             card.subTitle.title
-          }}</a>
+            }}</a>
           <p>{{ card.fecha }}</p>
         </div>
-        <div class="second">
+        <!--         <div class="second">
           <p>{{ card.descripcion }}</p>
         </div>
-        <p>{{ card.descripcion }}</p>
+        <p>{{ card.descripcion }}</p> -->
       </div>
+      }
     </div>
   </div>
 </div>

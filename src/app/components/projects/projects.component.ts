@@ -92,7 +92,7 @@ export class ProjectsComponent {
       repository: 'https://github.com/DavidLBruno/PI-POKEMON',
       tecnologias: [
         {
-          title: '',
+          title: 'React',
         },
       ],
     },
