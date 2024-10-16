@@ -1,11 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { Item } from '../../interfaces/items.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -21,12 +15,11 @@ import { TranslocoModule } from '@ngneat/transloco';
   imports: [CommonModule, RouterModule, FontAwesomeModule, TranslocoModule],
   standalone: true,
 })
-export class NavbarComponent implements OnInit, AfterViewInit {
-  @ViewChild('itemContainer') itemContainer: ElementRef | undefined;
-  @ViewChild('nav') nav: ElementRef | undefined;
+export class NavbarComponent implements OnInit {
   hamburguer: boolean = false;
-  routeActually = '';
+  routeActually: string = '';
   heigthElements: number = 4;
+  isMobile = false;
   items: Item[] = [
     {
       title: 'NAVBAR.BUTTONS.HOME',
@@ -60,35 +53,16 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {}
 
-  ngAfterViewInit(): void {
-    const itemContainer = this.itemContainer;
-    if (itemContainer) {
-      for (let i = 0; i < itemContainer.nativeElement.children.length; i++) {
-        itemContainer.nativeElement.children[i].style.height =
-          this.heigthElements + 'rem';
-      }
-    }
-  }
-
   handleMenu() {
     this.hamburguer = !this.hamburguer;
-
-    const itemContainer = this.itemContainer;
-    const nav = this.nav;
-
-    if (itemContainer && nav) {
-      if (this.hamburguer) {
-        nav.nativeElement.style.height =
-          this.heigthElements * itemContainer.nativeElement.children.length +
-          5 +
-          'rem';
-      } else {
-        nav.nativeElement.style.height = '0';
-      }
-    }
   }
 
-  open() {
+  openModal() {
     this.modalService.open(SettingsComponent);
+  }
+
+  handleClick(event: MouseEvent) {
+    (event.currentTarget as HTMLElement).classList.toggle('rotated');
+    this.openModal();
   }
 }

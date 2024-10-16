@@ -42,17 +42,28 @@
         }
       }
 
-      .item.active {
+      .active {
         .item-l {
           right: 0;
         }
       }
+
     }
 
     .settings {
       cursor: pointer;
+      user-select: none;
+      transition: transform 0.5s ease;
+
     }
+
+    .rotated {
+      transform: rotate(180deg);
+      display: none;
+    }
+
   }
+
 }
 
 @media screen and (max-width: 991px) {
@@ -61,7 +72,7 @@
       flex-direction: column;
       min-height: 5rem;
       padding-top: 1rem;
-      transition: 1s;
+      transition: 2s;
       overflow: hidden;
       padding: 0;
 
@@ -100,9 +111,46 @@
             bottom: 0;
           }
         }
+      }
 
-        .open {
+      .item-container {
+        flex-direction: column;
+        border-top: 1px solid $color-primary;
+        align-items: center;
+        width: 100%;
+        gap: 0;
 
+        .item:last-child {
+          border-bottom: none;
+        }
+
+        .item {
+          border-bottom: 1px solid $color-primary;
+          width: 100%;
+          height: 4rem;
+
+
+
+          .item-l {
+            display: none;
+          }
+        }
+
+        .active {
+          color: $white;
+          background-color: $purple-haze;
+        }
+      }
+    }
+
+  }
+
+  .open {
+    .container {
+      height: 21rem;
+
+      .container-resposive {
+        .container-hamb {
           #one {
             rotate: 45deg;
             top: 7px;
@@ -115,32 +163,6 @@
           #three {
             bottom: 9px;
             rotate: -45deg;
-          }
-        }
-      }
-
-      .item-container {
-        flex-direction: column;
-        border-top: 1px solid $color-primary;
-        align-items: center;
-        width: 100%;
-        gap: 0;
-
-        .item {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-bottom: 1px solid $color-primary;
-          width: 100%;
-        }
-
-        .item:last-child {
-          border-bottom: none;
-        }
-
-        .item {
-          .item-l {
-            display: none;
           }
         }
       }

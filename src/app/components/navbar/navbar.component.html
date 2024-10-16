@@ -1,17 +1,16 @@
-<nav class="nav position-relative">
-  <div #nav class="container d-flex align-items-center justify-content-between p-0"
-    [ngClass]="hamburguer ? 'open' : ''">
+<nav class="nav position-relative" [class.open]="!hamburguer">
+  <div class="container d-flex align-items-center justify-content-between p-0">
     <div class="container-resposive">
       <img src="/assets/images/main.png" alt="not found" routerLink="/" />
-      <div class="container-hamb" (click)="handleMenu()" [class.open]="hamburguer">
-        <div class="hamburguer" id="one"></div>
-        <div class="hamburguer" id="two"></div>
-        <div class="hamburguer" id="three"></div>
+      <div class="container-hamb" (click)="handleMenu()">
+        @for (item of ['one', 'two', 'three']; track $index) {
+        <div class="hamburguer" [id]="item"></div>
+        }
       </div>
     </div>
-    <div #itemContainer class="item-container d-flex">
+    <div class="item-container d-flex">
       @for (item of items; track $index) {
-      <div #item id="item" class="item" [routerLink]="item.link" (click)="handleMenu()"
+      <div class="item d-flex align-items-center justify-content-center" [routerLink]="item.link" (click)="handleMenu()"
         [class.active]="'/' + item.link == routeActually">
         {{ item.title | transloco }}
         <label class="item-l" for="item"></label>
@@ -20,7 +19,7 @@
     </div>
 
     <div class="settings position-absolute end-0 top-0 m-3">
-      <fa-icon [icon]="icon" (click)="open()"></fa-icon>
+      <fa-icon [icon]="icon" (click)="openModal()"></fa-icon>
     </div>
   </div>
 </nav>
