@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { Item } from '../../interfaces/items.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,9 +21,12 @@ import { TranslocoModule } from '@ngneat/transloco';
   imports: [CommonModule, RouterModule, FontAwesomeModule, TranslocoModule],
   standalone: true,
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit, AfterViewInit {
+  @ViewChild('itemContainer') itemContainer: ElementRef | undefined;
+  @ViewChild('nav') nav: ElementRef | undefined;
   hamburguer: boolean = false;
   routeActually = '';
+  heigthElements: number = 4;
   items: Item[] = [
     {
       title: 'NAVBAR.BUTTONS.HOME',
@@ -49,10 +58,34 @@ export class NavbarComponent {
     });
   }
 
-  ngOninit() {}
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    const itemContainer = this.itemContainer;
+    if (itemContainer) {
+      for (let i = 0; i < itemContainer.nativeElement.children.length; i++) {
+        itemContainer.nativeElement.children[i].style.height =
+          this.heigthElements + 'rem';
+      }
+    }
+  }
 
   handleMenu() {
     this.hamburguer = !this.hamburguer;
+
+    const itemContainer = this.itemContainer;
+    const nav = this.nav;
+
+    if (itemContainer && nav) {
+      if (this.hamburguer) {
+        nav.nativeElement.style.height =
+          this.heigthElements * itemContainer.nativeElement.children.length +
+          5 +
+          'rem';
+      } else {
+        nav.nativeElement.style.height = '0';
+      }
+    }
   }
 
   open() {

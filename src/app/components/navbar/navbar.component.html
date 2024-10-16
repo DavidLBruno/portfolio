@@ -1,5 +1,6 @@
 <nav class="nav position-relative">
-  <div class="container d-flex p-0" [ngClass]="hamburguer ? 'open' : ''">
+  <div #nav class="container d-flex align-items-center justify-content-between p-0"
+    [ngClass]="hamburguer ? 'open' : ''">
     <div class="container-resposive">
       <img src="/assets/images/main.png" alt="not found" routerLink="/" />
       <div class="container-hamb" (click)="handleMenu()" [class.open]="hamburguer">
@@ -8,12 +9,14 @@
         <div class="hamburguer" id="three"></div>
       </div>
     </div>
-    <div class="item-container" [ngClass]="hamburguer ? 'open' : ''">
-      <div id="item" class="item" *ngFor="let item of items" [routerLink]="item.link" (click)="handleMenu()"
+    <div #itemContainer class="item-container d-flex">
+      @for (item of items; track $index) {
+      <div #item id="item" class="item" [routerLink]="item.link" (click)="handleMenu()"
         [class.active]="'/' + item.link == routeActually">
         {{ item.title | transloco }}
         <label class="item-l" for="item"></label>
       </div>
+      }
     </div>
 
     <div class="settings position-absolute end-0 top-0 m-3">
