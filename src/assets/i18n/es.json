@@ -6,7 +6,7 @@
         "TITLE": "Idioma",
         "OPTIONS": {
           "SPANISH": "Español",
-          "ENGLISH": "Ingles"
+          "ENGLISH": "Inglés"
         }
       },
       "THEME": {
@@ -21,13 +21,23 @@
   "NAVBAR": {
     "BUTTONS": {
       "HOME": "Inicio",
-      "PROJECTS": "Proyectos",
-      "ABOUT": "Sobre mi",
-      "TECNOLOGIES": "Tecnologias"
+      "PROJECTS": "Experiencia",
+      "ABOUT": "Educación",
+      "TECNOLOGIES": "Habilidades"
     }
   },
   "HOME": {
-    "TITLE": "Me llamo Bruno David, Soy un desarrollador web FullStack motivado a desarrollar constantemente mis habilidades y crecer profesionalmente. Buscando una oportunidad para seguir aprendiendo en un entorno colaborativo."
+    "GREETING": "Hola, soy",
+    "NAME": "Bruno David",
+    "ROLE": "Desarrollador Full Stack",
+    "DESCRIPTION": "Desarrollador con mentalidad de crecimiento y sólida formación técnica, enfocado en crear soluciones escalables y eficientes. Experto en ecosistemas JavaScript/TypeScript y con experiencia en la modernización de sistemas críticos.",
+    "LOCATION": "Rosario, Santa Fe, Argentina",
+    "CTA_CONTACT": "Contactame",
+    "CTA_PROJECTS": "Ver Experiencia"
+  },
+  "EXPERIENCE": {
+    "TITLE": "Experiencia Laboral",
+    "SUBTITLE": "Mi trayectoria profesional"
   },
   "PROJECTS": {
     "WORK-EXPERIENCE": {
@@ -37,15 +47,30 @@
       }
     },
     "PROJECTS": {
-      "TITLE": "Proyectos",
+      "TITLE": "Proyectos y Emprendimientos",
+      "SUBTITLE": "Proyectos personales y colaborativos",
       "INDIVIDUAL-PROJECT": "Proyecto Individual",
       "GROUP-PROJECT": "Proyecto Grupal",
       "CARDS": {
         "BUTTONS": {
           "REPOSITORY": "Repositorio",
-          "DEPLOY": "Despliegue"
+          "DEPLOY": "Demo en Vivo"
         }
       }
     }
+  },
+  "TECHNOLOGIES": {
+    "TITLE": "Habilidades Técnicas",
+    "SUBTITLE": "Tecnologías y herramientas con las que trabajo"
+  },
+  "ABOUT": {
+    "TITLE": "Educación y Formación",
+    "SUBTITLE": "Mi formación académica"
+  },
+  "FOOTER": {
+    "ABOUT_ME": "Sobre Mí",
+    "SOCIAL": "Redes",
+    "CONTACT": "Contacto",
+    "RIGHTS": "Todos los derechos reservados."
   }
 }

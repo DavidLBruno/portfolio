@@ -1,56 +1,89 @@
-<div class="projects d-flex flex-column">
-  <div class=" laboral d-flex flex-column align-items-center">
-    <h1>{{ 'PROJECTS.WORK-EXPERIENCE.TITLE' | transloco }}</h1>
-    <div class="container d-flex justify-content-center flex-wrap align-items-center">
-      <div class="card align-items-center justify-content-center" *ngFor="let card of works">
-        <h1>{{ card.title }}</h1>
-        <p>{{ card.subtitle }}</p>
-        <p>{{ card.desciption }}</p>
-        <div *ngFor="let item of card.tecnologias">
-          <p>{{ item.title }}</p>
-        </div>
-      </div>
-    </div>
+<section class="projects-page section-container">
+  <!-- Work Experience Section -->
+  <div class="section-header">
+    <h1 class="section-title">{{ 'EXPERIENCE.TITLE' | transloco }}</h1>
+    <p class="section-subtitle">{{ 'EXPERIENCE.SUBTITLE' | transloco }}</p>
   </div>
 
-  <div class="proyectos d-flex flex-column align-items-center">
-    <h1>{{ 'PROJECTS.PROJECTS.TITLE' | transloco }}</h1>
-    <div class="container d-flex flex-wrap justify-content-center align-items-center">
-      @for (card of projects; track $index) {
-      <div hrb class="card">
-        <img [src]="card.image" class="card__image" alt="" />
-        <div class="card__overlay">
-          <div class="card__header">
-
-            <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
-              <path />
-            </svg>
-
-            <img class="card__thumb" [src]="card.icon" alt="" />
-            <div class="text">
-              <p class="title m-0">{{ card.title }}</p>
-              <p class="subtitle m-0">{{ card.desciption | transloco }}</p>
-            </div>
+  <div class="timeline">
+    <div class="timeline-item" *ngFor="let job of workExperience; let i = index"
+         [style.animation-delay]="i * 0.15 + 's'">
+      <div class="timeline-marker">
+        <div class="marker-dot" [class.active]="job.current"></div>
+        <div class="marker-line" *ngIf="i < workExperience.length - 1"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-header">
+          <div class="timeline-title-group">
+            <h3 class="job-title">{{ job.title }}</h3>
+            <span class="job-company">{{ job.company }}</span>
           </div>
-          <p class="card__description d-flex gap-2">
-            @if (card.repository) {
-            <a [href]="card.repository" target="_blank" rel="noopener"
-              class="button-p w-100 d-flex align-items-center justify-content-center">{{
-              'PROJECTS.PROJECTS.CARDS.BUTTONS.REPOSITORY' | transloco
-              }}</a>
-            }
-            @if (card.deploy) {
-            <a [href]="card.deploy" target="_blank" rel="noopener"
-              class="button-p w-100 d-flex align-items-center justify-content-center">{{
-              'PROJECTS.PROJECTS.CARDS.BUTTONS.DEPLOY' | transloco }}</a>
-            }
-          </p>
+          <div class="timeline-meta">
+            <span class="job-period">{{ job.period }}</span>
+            <span class="current-badge" *ngIf="job.current">Actual</span>
+          </div>
+        </div>
+        <p class="job-description">{{ job.description }}</p>
+        <ul class="job-responsibilities">
+          <li *ngFor="let resp of job.responsibilities">{{ resp }}</li>
+        </ul>
+        <div class="job-tags">
+          <span class="tag" *ngFor="let tag of job.tags">{{ tag }}</span>
         </div>
       </div>
-      }
-
-
-
     </div>
   </div>
-</div>
+
+  <!-- Projects Section -->
+  <div class="section-header projects-header">
+    <h1 class="section-title">{{ 'PROJECTS.PROJECTS.TITLE' | transloco }}</h1>
+    <p class="section-subtitle">{{ 'PROJECTS.PROJECTS.SUBTITLE' | transloco }}</p>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-card" *ngFor="let project of projects; let i = index"
+         [style.animation-delay]="i * 0.1 + 's'">
+      <!-- Image if available -->
+      <div class="project-image" *ngIf="project.image">
+        <img [src]="project.image" [alt]="project.title" loading="lazy" />
+        <div class="project-overlay">
+          <div class="project-links">
+            <a *ngIf="project.repository" [href]="project.repository" target="_blank" rel="noopener" class="project-link-btn"
+               aria-label="Repository">
+              <fa-icon [icon]="faCode"></fa-icon>
+              <span>{{ 'PROJECTS.PROJECTS.CARDS.BUTTONS.REPOSITORY' | transloco }}</span>
+            </a>
+            <a *ngIf="project.deploy" [href]="project.deploy" target="_blank" rel="noopener" class="project-link-btn"
+               aria-label="Live Demo">
+              <fa-icon [icon]="faExternal"></fa-icon>
+              <span>{{ 'PROJECTS.PROJECTS.CARDS.BUTTONS.DEPLOY' | transloco }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- No image placeholder -->
+      <div class="project-image project-no-image" *ngIf="!project.image">
+        <div class="no-image-icon">
+          <fa-icon [icon]="faBriefcase"></fa-icon>
+        </div>
+      </div>
+
+      <div class="project-info">
+        <h3 class="project-title">{{ project.title }}</h3>
+        <p class="project-description">{{ project.description }}</p>
+        <div class="project-tags">
+          <span class="tag" *ngFor="let tag of project.tags">{{ tag }}</span>
+        </div>
+        <div class="project-actions" *ngIf="!project.image && (project.repository || project.deploy)">
+          <a *ngIf="project.repository" [href]="project.repository" target="_blank" rel="noopener" class="project-link-inline">
+            <fa-icon [icon]="faCode"></fa-icon> Repo
+          </a>
+          <a *ngIf="project.deploy" [href]="project.deploy" target="_blank" rel="noopener" class="project-link-inline">
+            <fa-icon [icon]="faExternal"></fa-icon> Demo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

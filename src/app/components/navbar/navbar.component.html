@@ -1,23 +1,47 @@
-<nav class="nav position-relative">
-  <div class="container d-flex p-0" [ngClass]="hamburguer ? 'open' : ''">
-    <div class="container-resposive">
-      <img src="/assets/images/main.png" alt="not found" routerLink="/" />
-      <div class="container-hamb" (click)="handleMenu()" [class.open]="hamburguer">
-        <div class="hamburguer" id="one"></div>
-        <div class="hamburguer" id="two"></div>
-        <div class="hamburguer" id="three"></div>
-      </div>
-    </div>
-    <div class="item-container" [ngClass]="hamburguer ? 'open' : ''">
-      <div id="item" class="item" *ngFor="let item of items" [routerLink]="item.link" (click)="handleMenu()"
-        [class.active]="'/' + item.link == routeActually">
-        {{ item.title | transloco }}
-        <label class="item-l" for="item"></label>
+<nav class="main-nav" [class.scrolled]="scrolled">
+  <div class="nav-inner" [ngClass]="hamburguer ? 'open' : ''">
+    <!-- Logo + Hamburger Row -->
+    <div class="nav-brand">
+      <img src="/assets/images/main.png" alt="Bruno David" routerLink="/" class="logo" />
+
+      <div class="nav-actions-mobile">
+        <!-- Theme toggle mobile -->
+        <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
+          <fa-icon [icon]="isDark ? iconSun : iconMoon"></fa-icon>
+        </button>
+        <!-- Settings mobile -->
+        <button class="settings-btn" (click)="open()" aria-label="Settings">
+          <fa-icon [icon]="iconGear"></fa-icon>
+        </button>
+        <!-- Hamburger -->
+        <div class="hamburger" (click)="handleMenu()" [class.open]="hamburguer">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </div>
 
-    <div class="settings position-absolute end-0 top-0 m-3">
-      <fa-icon [icon]="icon" (click)="open()"></fa-icon>
+    <!-- Navigation Links -->
+    <div class="nav-links" [ngClass]="hamburguer ? 'open' : ''">
+      <a *ngFor="let item of items"
+         class="main-nav-link"
+         [routerLink]="'/' + item.link"
+         (click)="handleMenu()"
+         [class.active]="'/' + item.link === routeActually || (item.link === '' && routeActually === '/')">
+        {{ item.title | transloco }}
+        <span class="link-indicator"></span>
+      </a>
+    </div>
+
+    <!-- Desktop Actions -->
+    <div class="nav-actions-desktop">
+      <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
+        <fa-icon [icon]="isDark ? iconSun : iconMoon"></fa-icon>
+      </button>
+      <button class="settings-btn" (click)="open()" aria-label="Settings">
+        <fa-icon [icon]="iconGear"></fa-icon>
+      </button>
     </div>
   </div>
 </nav>

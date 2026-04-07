@@ -1,28 +1,237 @@
 @use 'variables' as *;
 @import 'bootstrap/scss/bootstrap';
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 @import './assets/scss/components/card.scss';
 @import './assets/scss/components/button.scss';
 
-body {
+// ============================================
+// Global Reset & Base
+// ============================================
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
-  background-color: $white;
+  padding: 0;
 }
 
-* {
-  font-family: "Bebas Neue", sans-serif;
+html {
+  scroll-behavior: smooth;
 }
 
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+body {
+  font-family: $font-primary;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color $transition-normal, color $transition-normal;
 }
 
+// ============================================
+// Theme System (CSS Custom Properties)
+// ============================================
+
+// Dark theme (default)
+body,
+body.theme-dark {
+  --bg: #{$dark-bg};
+  --surface: #{$dark-surface};
+  --surface-hover: #{$dark-surface-hover};
+  --border: #{$dark-border};
+  --border-accent: #{$dark-border-accent};
+  --text: #{$dark-text};
+  --text-secondary: #{$dark-text-secondary};
+  --text-muted: #{$dark-text-muted};
+  --card-shadow: #{$dark-card-shadow};
+  --glow: #{$dark-glow};
+  --accent: #{$accent-primary};
+  --accent-hover: #{$accent-primary-hover};
+  --accent-secondary: #{$accent-secondary};
+  --accent-gradient: #{$accent-gradient};
+  --navbar-bg: rgba(10, 10, 15, 0.85);
+  --tag-bg: rgba(139, 92, 246, 0.12);
+  --tag-text: #{$accent-primary};
+  --tag-border: rgba(139, 92, 246, 0.25);
+  --overlay-bg: rgba(0, 0, 0, 0.5);
+
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+// Light theme
+body.theme-light {
+  --bg: #{$light-bg};
+  --surface: #{$light-surface};
+  --surface-hover: #{$light-surface-hover};
+  --border: #{$light-border};
+  --border-accent: #{$light-border-accent};
+  --text: #{$light-text};
+  --text-secondary: #{$light-text-secondary};
+  --text-muted: #{$light-text-muted};
+  --card-shadow: #{$light-card-shadow};
+  --glow: #{$light-glow};
+  --accent: #{$accent-primary};
+  --accent-hover: #{$accent-primary-hover};
+  --accent-secondary: #{$accent-secondary};
+  --accent-gradient: #{$accent-gradient};
+  --navbar-bg: rgba(248, 250, 252, 0.85);
+  --tag-bg: rgba(139, 92, 246, 0.08);
+  --tag-text: #{$accent-primary-hover};
+  --tag-border: rgba(139, 92, 246, 0.2);
+  --overlay-bg: rgba(255, 255, 255, 0.5);
+}
+
+// ============================================
+// Custom Scrollbar
+// ============================================
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+
+  &:hover {
+    background: var(--accent);
+  }
+}
+
+// ============================================
+// Selection
+// ============================================
+::selection {
+  background-color: rgba(139, 92, 246, 0.3);
+  color: var(--text);
+}
+
+// ============================================
+// Typography Utilities
+// ============================================
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-display;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: var(--accent-hover);
+  }
+}
+
+// ============================================
+// Section Styles
+// ============================================
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+}
+
+// ============================================
+// Animations
+// ============================================
 @keyframes fadeIn {
-  from {
-    opacity: 0;
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+// ============================================
+// Glassmorphism Utility
+// ============================================
+.glass {
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+}
+
+// ============================================
+// Card Override (bootstrap)
+// ============================================
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  transition: all $transition-normal;
+}
+
+// ============================================
+// Responsive Container
+// ============================================
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+
+  @media (max-width: $breakpoint-lg) {
+    padding: 3rem 1.5rem;
   }
 
-  to {
-    opacity: 1;
+  @media (max-width: $breakpoint-md) {
+    padding: 2.5rem 1rem;
   }
 }

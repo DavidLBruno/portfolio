@@ -1,13 +1,22 @@
-<div class="tecnologies">
-  <div class="container d-flex flex-column">
-    <div *ngFor="let item of tecnologies" class="item d-flex align-items-center justify-content-between"
-      [ngClass]="item.title">
-      <h1>{{ item.title }}</h1>
-      <div class="subItem d-flex flex-wrap align-items-center justify-content-end">
-        <div class="tecnology d-flex align-items-center justify-content-center" *ngFor="let subItem of item.items">
-          <p class="m-0">{{ subItem.title }}</p>
-        </div>
+<section class="skills-page section-container">
+  <div class="section-header">
+    <h1 class="section-title">{{ 'TECHNOLOGIES.TITLE' | transloco }}</h1>
+    <p class="section-subtitle">{{ 'TECHNOLOGIES.SUBTITLE' | transloco }}</p>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-category" *ngFor="let category of tecnologies; let i = index"
+         [style.animation-delay]="i * 0.1 + 's'">
+      <div class="category-header">
+        <span class="category-icon">{{ category.icon }}</span>
+        <h3 class="category-title">{{ category.title }}</h3>
+      </div>
+      <div class="category-tags">
+        <span class="skill-tag" *ngFor="let item of category.items; let j = index"
+              [style.animation-delay]="(i * 0.1 + j * 0.03) + 's'">
+          {{ item.title }}
+        </span>
       </div>
     </div>
   </div>
-</div>
+</section>

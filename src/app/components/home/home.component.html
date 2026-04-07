@@ -1,28 +1,55 @@
-<div id="home">
-  <div class="container d-flex flex-column">
-    <div class="presentacion d-flex flex-column align-items-center justify-content-center w-100">
-      <div class="card d-flex flex-row justify-content-between align-items-center w-100">
-        <div class="first d-flex align-items-center justify-content-between">
-          <img src="/assets/images/bruno-david.jpeg" alt="Bruno" />
-        </div>
+<section id="home" class="hero">
+  <!-- Background decorations -->
+  <div class="hero-bg">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="grid-overlay"></div>
+  </div>
 
-        <div class="second">
-          <p>
-            {{ 'HOME.TITLE' | transloco }}
-          </p>
-        </div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <p class="hero-greeting animate-item">{{ 'HOME.GREETING' | transloco }}</p>
+      <h1 class="hero-name animate-item">{{ 'HOME.NAME' | transloco }}</h1>
+      <h2 class="hero-role animate-item">{{ 'HOME.ROLE' | transloco }}</h2>
+      <p class="hero-description animate-item">{{ 'HOME.DESCRIPTION' | transloco }}</p>
+
+      <div class="hero-location animate-item">
+        <fa-icon [icon]="faLocation"></fa-icon>
+        <span>{{ 'HOME.LOCATION' | transloco }}</span>
+      </div>
+
+      <div class="hero-actions animate-item">
+        <a href="mailto:bruno.david9914@gmail.com" class="btn-primary-hero">
+          <fa-icon [icon]="faEnvelope"></fa-icon>
+          <span>{{ 'HOME.CTA_CONTACT' | transloco }}</span>
+        </a>
+        <a routerLink="/projects" class="btn-secondary-hero">
+          <span>{{ 'HOME.CTA_PROJECTS' | transloco }}</span>
+          <fa-icon [icon]="faArrow"></fa-icon>
+        </a>
+      </div>
+
+      <div class="hero-socials animate-item">
+        <a *ngFor="let link of socialLinks"
+           [href]="link.url"
+           target="_blank"
+           rel="noopener"
+           class="social-link"
+           [attr.aria-label]="link.label">
+          <fa-icon [icon]="link.icon"></fa-icon>
+        </a>
       </div>
     </div>
-    <div class="hobbies">
-      <!--       <div class="card">
-        <div class="first">
-          <h1>Hobbies</h1>
-        </div>
-        <div class="second">
-          <p></p>
-        </div>
+
+    <div class="hero-visual animate-item">
+      <div class="avatar-container">
+        <div class="avatar-ring"></div>
+        <img src="/assets/images/bruno-david.jpeg" alt="Bruno David" class="avatar-img" />
       </div>
- -->
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span>Available for work</span>
+      </div>
     </div>
   </div>
-</div>
+</section>

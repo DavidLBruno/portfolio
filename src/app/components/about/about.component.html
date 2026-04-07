@@ -1,23 +1,44 @@
-<div class="about">
-  <div class="container d-flex flex-column align-items-center justify-content-start">
-    <h1>Estudios</h1>
+<section class="about-page section-container">
+  <!-- Education Section -->
+  <div class="section-header">
+    <h1 class="section-title">{{ 'ABOUT.TITLE' | transloco }}</h1>
+    <p class="section-subtitle">{{ 'ABOUT.SUBTITLE' | transloco }}</p>
+  </div>
 
-    <div class="container-card d-flex flex-column w-100">
-      @for (card of estudios; track $index) {
-      <div class="card d-flex w-100 p-5">
-        <div class="first">
-          <h1>{{ card.title }}</h1>
-          <a [href]="card.subTitle.link" target="_blank">{{
-            card.subTitle.title
-            }}</a>
-          <p>{{ card.fecha }}</p>
-        </div>
-        <!--         <div class="second">
-          <p>{{ card.descripcion }}</p>
-        </div>
-        <p>{{ card.descripcion }}</p> -->
+  <div class="education-grid">
+    <div class="education-card" *ngFor="let edu of estudios; let i = index"
+         [style.animation-delay]="i * 0.12 + 's'">
+      <div class="edu-icon">
+        <fa-icon [icon]="faGrad"></fa-icon>
       </div>
-      }
+      <div class="edu-content">
+        <div class="edu-header">
+          <h3 class="edu-title">{{ edu.title }}</h3>
+          <div class="edu-meta">
+            <span class="edu-period">{{ edu.period }}</span>
+            <span class="edu-badge" *ngIf="edu.current">En curso</span>
+          </div>
+        </div>
+        <a [href]="edu.institutionLink" target="_blank" rel="noopener" class="edu-institution">
+          {{ edu.institution }}
+        </a>
+        <p class="edu-description">{{ edu.description }}</p>
+      </div>
     </div>
   </div>
-</div>
+
+  <!-- Hobbies Section -->
+  <div class="section-header hobbies-header">
+    <h2 class="section-title">Intereses</h2>
+  </div>
+
+  <div class="hobbies-grid">
+    <div class="hobby-card" *ngFor="let hobby of hobbies; let i = index"
+         [style.animation-delay]="i * 0.08 + 's'">
+      <div class="hobby-icon">
+        <fa-icon [icon]="hobby.icon"></fa-icon>
+      </div>
+      <span class="hobby-title">{{ hobby.title }}</span>
+    </div>
+  </div>
+</section>

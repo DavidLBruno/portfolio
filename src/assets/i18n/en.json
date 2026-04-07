@@ -3,7 +3,7 @@
     "TITLE": "Settings",
     "BUTTONS": {
       "LANGUAJE": {
-        "TITLE": "Languaje",
+        "TITLE": "Language",
         "OPTIONS": {
           "SPANISH": "Spanish",
           "ENGLISH": "English"
@@ -21,13 +21,23 @@
   "NAVBAR": {
     "BUTTONS": {
       "HOME": "Home",
-      "PROJECTS": "Projects",
-      "ABOUT": "About me",
-      "TECNOLOGIES": "Tecnologies"
+      "PROJECTS": "Experience",
+      "ABOUT": "Education",
+      "TECNOLOGIES": "Skills"
     }
   },
   "HOME": {
-    "TITLE": "My name is Bruno David, I am a motivated FullStack web developer constantly looking to develop my skills and grow professionally. Seeking an opportunity to continue learning in a collaborative environment."
+    "GREETING": "Hi, I'm",
+    "NAME": "Bruno David",
+    "ROLE": "Full Stack Developer",
+    "DESCRIPTION": "Developer with a growth mindset and strong technical background, focused on building scalable and efficient solutions. Expert in JavaScript/TypeScript ecosystems with experience in modernizing critical systems.",
+    "LOCATION": "Rosario, Santa Fe, Argentina",
+    "CTA_CONTACT": "Get in Touch",
+    "CTA_PROJECTS": "View Projects"
+  },
+  "EXPERIENCE": {
+    "TITLE": "Work Experience",
+    "SUBTITLE": "My professional journey"
   },
   "PROJECTS": {
     "WORK-EXPERIENCE": {
@@ -37,15 +47,30 @@
       }
     },
     "PROJECTS": {
-      "TITLE": "Projects",
+      "TITLE": "Projects & Ventures",
+      "SUBTITLE": "Personal and collaborative projects",
       "INDIVIDUAL-PROJECT": "Individual Project",
       "GROUP-PROJECT": "Group Project",
       "CARDS": {
         "BUTTONS": {
           "REPOSITORY": "Repository",
-          "DEPLOY": "Deploy"
+          "DEPLOY": "Live Demo"
         }
       }
     }
+  },
+  "TECHNOLOGIES": {
+    "TITLE": "Technical Skills",
+    "SUBTITLE": "Technologies and tools I work with"
+  },
+  "ABOUT": {
+    "TITLE": "Education & Training",
+    "SUBTITLE": "My academic background"
+  },
+  "FOOTER": {
+    "ABOUT_ME": "About Me",
+    "SOCIAL": "Social",
+    "CONTACT": "Contact",
+    "RIGHTS": "All rights reserved."
   }
 }

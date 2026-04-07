@@ -29,36 +29,25 @@ export class SettingsComponent implements OnInit {
   faChevronDown = faChevronDown;
 
   subscription!: Subscription;
+  themeSubscription!: Subscription;
 
   configsParams: Button[] = [
     {
       title: 'SETTINGS.BUTTONS.LANGUAJE.TITLE',
       form: 'languaje',
       option: [
-        {
-          title: 'SETTINGS.BUTTONS.LANGUAJE.OPTIONS.SPANISH',
-          value: 'es',
-        },
-        {
-          title: 'SETTINGS.BUTTONS.LANGUAJE.OPTIONS.ENGLISH',
-          value: 'en',
-        },
+        { title: 'SETTINGS.BUTTONS.LANGUAJE.OPTIONS.SPANISH', value: 'es' },
+        { title: 'SETTINGS.BUTTONS.LANGUAJE.OPTIONS.ENGLISH', value: 'en' },
       ],
     },
-    /*    {
+    {
       title: 'SETTINGS.BUTTONS.THEME.TITLE',
       form: 'theme',
       option: [
-        {
-          title: 'SETTINGS.BUTTONS.THEME.OPTIONS.DARK',
-          value: 'dark',
-        },
-        {
-          title: 'SETTINGS.BUTTONS.THEME.OPTIONS.LIGHT',
-          value: 'light',
-        },
+        { title: 'SETTINGS.BUTTONS.THEME.OPTIONS.DARK', value: 'dark' },
+        { title: 'SETTINGS.BUTTONS.THEME.OPTIONS.LIGHT', value: 'light' },
       ],
-    }, */
+    },
   ];
 
   constructor(
@@ -76,21 +65,30 @@ export class SettingsComponent implements OnInit {
     this.settings.controls['languaje'].patchValue(
       this.settingsService.getLanguaje(),
     );
+    this.settings.controls['theme'].patchValue(
+      this.settingsService.getTheme(),
+    );
 
     this.subscription = this.settings.controls[
       'languaje'
     ].valueChanges.subscribe(values => {
       this.settingsService.change(values || 'en');
     });
+
+    this.themeSubscription = this.settings.controls[
+      'theme'
+    ].valueChanges.subscribe(value => {
+      this.settingsService.setTheme(value || 'dark');
+    });
   }
 
   getOptions(select: Select[], formValue: string) {
-    // console.log(select, formValue);
     const result = select.find(element => element.value == formValue)?.title;
     return result;
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.themeSubscription.unsubscribe();
   }
 }

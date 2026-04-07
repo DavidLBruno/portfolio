@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TranslocoModule } from '@ngneat/transloco';
 import {
   faLinkedin,
   faInstagram,
@@ -13,8 +14,8 @@ import {
   faChessKnight,
   faCode,
   faEnvelope,
-  faSignature,
-  faFile,
+  faHeart,
+  faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 import { VersionService } from '../../services/version/version.service';
 
@@ -22,84 +23,30 @@ import { VersionService } from '../../services/version/version.service';
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, TranslocoModule],
   standalone: true,
 })
 export class FooterComponent implements OnInit {
-  columns = [
-    {
-      title: 'Sobre mi',
-      subColumns: [
-        {
-          title: 'Bruno David',
-          link: '',
-          icon: faSignature,
-        },
-        {
-          title: 'Mi cv',
-          link: '',
-          icon: faFile,
-        },
-      ],
-    },
-    {
-      title: 'Redes sociales',
-      subColumns: [
-        {
-          title: 'Linkedin',
-          link: 'https://www.linkedin.com/in/bruno-developer/',
-          icon: faLinkedin,
-        },
-        {
-          title: 'GitHub',
-          link: 'https://github.com/DavidLBruno',
-          icon: faGithub,
-        },
-        {
-          title: 'Discord',
-          link: 'https://www.linkedin.com/in/bruno-developer/',
-          icon: faDiscord,
-        },
-        {
-          title: 'Instagram',
-          link: 'https://www.instagram.com/brunod.01/',
-          icon: faInstagram,
-        },
-        {
-          title: 'CODEFORCES',
-          link: 'https://codeforces.com/profile/DevidB',
-          icon: faCode,
-        },
-        {
-          title: 'LICHESS',
-          link: 'https://lichess.org/@/DeividL',
-          icon: faChessKnight,
-        },
-      ],
-    },
-    {
-      title: 'Contacto',
-      subColumns: [
-        {
-          title: 'WhatsApp',
-          link: 'https://wa.me/543412705762',
-          icon: faWhatsapp,
-        },
-        {
-          title: 'Telegram',
-          link: 'https://t.me/brunodavidl',
-          icon: faTelegram,
-        },
-        {
-          title: 'Mail',
-          link: 'mailto:bruno.david9914@gmail.com?',
-          icon: faEnvelope,
-        },
-      ],
-    },
+  faHeart = faHeart;
+  faLocation = faLocationDot;
+
+  socialLinks = [
+    { icon: faLinkedin, url: 'https://www.linkedin.com/in/bruno-developer/', label: 'LinkedIn' },
+    { icon: faGithub, url: 'https://github.com/DavidLBruno', label: 'GitHub' },
+    { icon: faInstagram, url: 'https://www.instagram.com/brunod.01/', label: 'Instagram' },
+    { icon: faDiscord, url: 'https://www.linkedin.com/in/bruno-developer/', label: 'Discord' },
+    { icon: faCode, url: 'https://codeforces.com/profile/DevidB', label: 'Codeforces' },
+    { icon: faChessKnight, url: 'https://lichess.org/@/DeividL', label: 'Lichess' },
+  ];
+
+  contactLinks = [
+    { icon: faWhatsapp, url: 'https://wa.me/543412705762', label: 'WhatsApp' },
+    { icon: faTelegram, url: 'https://t.me/brunodavidl', label: 'Telegram' },
+    { icon: faEnvelope, url: 'mailto:bruno.david9914@gmail.com', label: 'Email' },
   ];
 
   versionProyect = '';
+  currentYear = new Date().getFullYear();
 
   constructor(private version: VersionService) {}
 

@@ -1,14 +1,55 @@
 <footer class="footer">
-  <div class="container p-3">
-    <div class="column" *ngFor="let item of columns">
-      <h1>{{ item.title }}</h1>
-      <a class="subItem" *ngFor="let subItem of item.subColumns" [href]="subItem.link" target="_blank">
-        <fa-icon [icon]="subItem.icon"></fa-icon>
-        <p>
-          {{ subItem.title }}
-        </p>
-      </a>
+  <div class="footer-inner">
+    <!-- Top Section -->
+    <div class="footer-top">
+      <!-- About Column -->
+      <div class="footer-col">
+        <h3 class="footer-heading">Bruno David</h3>
+        <p class="footer-description">Full Stack Developer</p>
+        <div class="footer-location">
+          <fa-icon [icon]="faLocation"></fa-icon>
+          <span>Rosario, Santa Fe, Argentina</span>
+        </div>
+      </div>
+
+      <!-- Social Column -->
+      <div class="footer-col">
+        <h4 class="footer-heading">{{ 'FOOTER.SOCIAL' | transloco }}</h4>
+        <div class="footer-social-grid">
+          <a *ngFor="let link of socialLinks"
+             [href]="link.url"
+             target="_blank"
+             rel="noopener"
+             class="social-icon-link"
+             [attr.aria-label]="link.label"
+             [attr.title]="link.label">
+            <fa-icon [icon]="link.icon"></fa-icon>
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Column -->
+      <div class="footer-col">
+        <h4 class="footer-heading">{{ 'FOOTER.CONTACT' | transloco }}</h4>
+        <div class="footer-contact-list">
+          <a *ngFor="let link of contactLinks"
+             [href]="link.url"
+             target="_blank"
+             rel="noopener"
+             class="contact-link">
+            <fa-icon [icon]="link.icon"></fa-icon>
+            <span>{{ link.label }}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Section -->
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        © {{ currentYear }} Bruno David. {{ 'FOOTER.RIGHTS' | transloco }}
+      </p>
+      <p class="footer-version">v{{ versionProyect }}</p>
     </div>
   </div>
-  <p>v{{ versionProyect }}</p>
 </footer>

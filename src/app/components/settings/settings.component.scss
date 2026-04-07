@@ -1,37 +1,98 @@
 @use 'variables' as *;
 
 .settings {
+  background: var(--surface);
+  color: var(--text);
+  border-radius: $radius-md;
 
-    .container-form {
-        border: 1px solid $color-primary;
-        border-radius: 0.25rem;
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-        .form-control {
-            border: none;
+  .container-form {
+    border: 1px solid var(--border);
+    border-radius: $radius-sm;
+    background: var(--surface);
 
-            .btn {
-                border: 1px solid $color-primary;
+    .setting-item {
+      border: none;
+      background: transparent;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
 
-                .icon {
-                    transition: 300ms;
-                    font-size: 12px;
-                }
-            }
+      &:last-child {
+        border-bottom: none;
+      }
 
-            .dropdown-item:active,
-            .active {
-                background-color: $medium-gray;
-            }
+      label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text);
+        white-space: nowrap;
+      }
 
-            .btn::after {
-                display: none;
-            }
+      .btn {
+        border: 1px solid var(--border);
+        color: var(--text);
+        background: transparent;
+        font-family: $font-primary;
+        font-size: 0.85rem;
 
-            .custom-dropdown[aria-expanded="true"] {
-                .icon {
-                    transform: rotate(180deg);
-                }
-            }
+        &:hover {
+          border-color: var(--border-accent);
         }
+
+        .icon {
+          transition: 300ms;
+          font-size: 12px;
+          color: var(--text-muted);
+        }
+      }
+
+      .dropdown-menu {
+        background: var(--surface);
+        border: 1px solid var(--border);
+      }
+
+      .dropdown-item {
+        color: var(--text-secondary);
+        font-family: $font-primary;
+        font-size: 0.85rem;
+
+        &:hover {
+          background: var(--surface-hover);
+          color: var(--text);
+        }
+
+        &.active,
+        &:active {
+          background: var(--accent);
+          color: #fff;
+        }
+      }
+
+      .btn::after {
+        display: none;
+      }
+
+      .custom-dropdown[aria-expanded="true"] {
+        .icon {
+          transform: rotate(180deg);
+        }
+      }
     }
+  }
+}
+
+// Override ngb-modal styling
+:host ::ng-deep .modal-content {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: $radius-md;
 }

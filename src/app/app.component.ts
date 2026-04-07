@@ -14,7 +14,7 @@ import { ChangeSettingService } from './services/change-settings/change-settings
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'proyecto-visitas';
+  title = 'Bruno David – Full Stack Developer';
   routeAct = '';
 
   constructor(
@@ -22,6 +22,7 @@ export class AppComponent {
     private settingsService: ChangeSettingService,
   ) {
     this.settingsService.setLanguage();
+    this.settingsService.initTheme();
 
     this.router.events
       .pipe(filter((event: Event) => event instanceof NavigationEnd))
