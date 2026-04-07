@@ -2,17 +2,20 @@
   <h1>{{ "SETTINGS.TITLE" | transloco }}</h1>
   <form [formGroup]="settings" class="container-form d-flex flex-column align-items-center p-1">
     @for (param of configsParams; track $index) {
-    <div class="form-control d-flex gap-3">
-      <label for="dropdownBasic1" class="form-label">{{
+    <div class="form-control d-flex gap-3 align-items-center">
+      <label for="dropdownBasic1" class="form-label m-0">{{
         param.title | transloco
         }}</label>
       <div ngbDropdown class="d-inline-block">
-        <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
+        <button type="button" class="btn custom-dropdown d-flex align-items-center gap-2" id="dropdownBasic1"
+          ngbDropdownToggle>
           {{ getOptions(param.option, settings.controls[param.form].value) | transloco }}
+          <fa-icon class="icon" [icon]="faChevronDown"></fa-icon>
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           @for (item of param.option; track $index) {
-          <button (click)="changeForm(item, param.form)" ngbDropdownItem>
+          <button [class.active]="settings.controls[param.form].value == item.value"
+            (click)="changeForm(item, param.form)" ngbDropdownItem>
             {{ item.title | transloco }}
           </button>
           }

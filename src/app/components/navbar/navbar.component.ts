@@ -1,41 +1,44 @@
-import { CommonModule } from '@angular/common'
-import { Component, inject } from '@angular/core'
-import { Router, NavigationEnd, RouterModule } from '@angular/router'
-import { Item } from '../../interfaces/items.interface'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { SettingsComponent } from '../settings/settings.component'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { faGear } from '@fortawesome/free-solid-svg-icons'
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd, RouterModule } from '@angular/router';
+import { Item } from '../../interfaces/items.interface';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SettingsComponent } from '../settings/settings.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  imports: [CommonModule, RouterModule, FontAwesomeModule],
+  imports: [CommonModule, RouterModule, FontAwesomeModule, TranslocoModule],
   standalone: true,
 })
-export class NavbarComponent {
-  hamburguer: boolean = false
-  routeActually = ''
+export class NavbarComponent implements OnInit {
+  hamburguer: boolean = false;
+  routeActually: string = '';
+  heigthElements: number = 4;
+  isMobile = false;
   items: Item[] = [
     {
-      title: 'Home',
+      title: 'NAVBAR.BUTTONS.HOME',
       link: '',
     },
     {
-      title: 'Proyectos',
+      title: 'NAVBAR.BUTTONS.PROJECTS',
       link: 'projects',
     },
     {
-      title: 'Sobre mi',
+      title: 'NAVBAR.BUTTONS.ABOUT',
       link: 'about',
     },
     {
-      title: 'Tecnologias',
+      title: 'NAVBAR.BUTTONS.TECNOLOGIES',
       link: 'tecnologies',
     },
-  ]
-  icon = faGear
+  ];
+  icon = faGear;
 
   constructor(
     private router: Router,
@@ -43,18 +46,23 @@ export class NavbarComponent {
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.routeActually = this.router.url
+        this.routeActually = this.router.url;
       }
-    })
+    });
   }
 
-  ngOninit() {}
+  ngOnInit(): void {}
 
   handleMenu() {
-    this.hamburguer = !this.hamburguer
+    this.hamburguer = !this.hamburguer;
   }
 
-  open() {
-    this.modalService.open(SettingsComponent)
+  openModal() {
+    this.modalService.open(SettingsComponent);
+  }
+
+  handleClick(event: MouseEvent) {
+    (event.currentTarget as HTMLElement).classList.toggle('rotated');
+    this.openModal();
   }
 }

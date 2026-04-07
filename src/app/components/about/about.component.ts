@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common'
-import { Component } from '@angular/core'
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-about',
@@ -16,7 +16,7 @@ export class AboutComponent {
         title: 'Universidad Nacional de Rosario',
         link: 'https://unr.edu.ar/',
       },
-      fecha: 'Febrero de 2023 - Diciembre 2025',
+      fecha: 'Febrero de 2023 - Diciembre 2026',
       descripcion: '',
     },
     {
@@ -31,5 +31,5 @@ export class AboutComponent {
       fecha: 'Diciembre 2021 - Agosto 2022',
       descripcion: '',
     },
-  ]
+  ];
 }

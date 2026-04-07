@@ -1,8 +1,7 @@
 @use 'variables' as *;
 
-#home {
+.home {
   height: 100vh;
-  padding: 5rem 0;
 
   .container {
     gap: 3rem;
@@ -32,7 +31,20 @@
 }
 
 @media screen and (max-width: 991px) {
-  #home {
-    .container {}
+  .home {
+    .container {
+      .presentacion {
+        .card {
+          .first {
+            width: 100%;
+          }
+
+          .second {
+            width: 100%;
+          }
+        }
+      }
+    }
   }
+
 }
