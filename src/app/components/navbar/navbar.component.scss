@@ -7,9 +7,11 @@
   right: 0;
   z-index: 1000;
   background: transparent;
+  border-bottom: 1px solid transparent; /* Evita flash de border de color del sistema al animar */
   transition: all $transition-normal;
 
-  &.scrolled {
+  &.scrolled,
+  &.menu-open {
     background: var(--navbar-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faGraduationCap, faGamepad, faChess, faMicrochip, faAppleWhole, faDumbbell } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +13,7 @@ interface Education {
   period: string;
   current: boolean;
   description: string;
+  tags?: string[];
 }
 
 interface Hobby {
@@ -26,8 +28,34 @@ interface Hobby {
   imports: [CommonModule, TranslocoModule, FontAwesomeModule],
   standalone: true,
 })
-export class AboutComponent {
+export class AboutComponent implements OnInit {
   faGrad = faGraduationCap;
+  
+  selectedTech: string | null = null;
+
+  constructor(private route: ActivatedRoute, private router: Router) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.selectedTech = params['tech'] || null;
+      if (this.selectedTech && typeof window !== 'undefined') {
+        const doc = document.getElementById('education-section');
+        if (doc) doc.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+
+  hasTechEdu(edu: Education): boolean {
+    if (!this.selectedTech) return true;
+    if (!edu.tags) return false;
+    return edu.tags.some(
+      (t) => t.toLowerCase() === this.selectedTech?.toLowerCase()
+    );
+  }
+
+  clearFilter() {
+    this.router.navigate(['/about']);
+  }
 
   estudios: Education[] = [
     {
@@ -37,14 +65,25 @@ export class AboutComponent {
       period: '2024 – En curso',
       current: true,
       description: 'Formación integral en sistemas informáticos con enfoque en la ingeniería de software.',
+      tags: ['C', 'C#', '.NET Framework', 'SQL', 'Git']
     },
     {
       title: 'Tecnicatura Universitaria en Inteligencia Artificial',
       institution: 'Universidad Nacional de Rosario',
       institutionLink: 'https://unr.edu.ar/',
-      period: 'Febrero 2023 – En curso',
-      current: true,
-      description: 'Estudio de fundamentos de IA, machine learning y procesamiento de datos.',
+      period: 'Febrero 2023 – 2024',
+      current: false,
+      description: 'Cursada finalizada (sin titulación). Estudio de fundamentos de IA, machine learning y procesamiento de datos.',
+      tags: ['Python', 'Bash', 'Docker', 'Linux', 'Git']
+    },
+    {
+      title: 'Training Camp de Programación Competitiva',
+      institution: 'TC ARG',
+      institutionLink: 'https://www.pc-arg.com/tc-arg',
+      period: 'Julio 2023',
+      current: false,
+      description: 'Entrenamiento intensivo de 2 semanas enfocado en resolución de problemas complejos, diseño de algoritmos y structures de datos.',
+      tags: ['C++']
     },
     {
       title: 'Full Stack Web Developer',
@@ -53,6 +92,7 @@ export class AboutComponent {
       period: 'Diciembre 2021 – Agosto 2022',
       current: false,
       description: 'Programa intensivo de 700 horas cubriendo el stack PERN (PostgreSQL, Express, React, Node.js).',
+      tags: ['JavaScript', 'React', 'Node.js', 'Express', 'PostgreSQL', 'Sequelize', 'Git']
     },
     {
       title: 'SkillUp Node.js',
@@ -61,6 +101,7 @@ export class AboutComponent {
       period: 'Noviembre 2022',
       current: false,
       description: 'Programa especializado en desarrollo backend con Node.js.',
+      tags: ['Node.js', 'Express', 'TypeScript', 'Git']
     },
   ];
 

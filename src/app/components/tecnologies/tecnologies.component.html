@@ -8,12 +8,15 @@
     <div class="skill-category" *ngFor="let category of tecnologies; let i = index"
          [style.animation-delay]="i * 0.1 + 's'">
       <div class="category-header">
-        <span class="category-icon">{{ category.icon }}</span>
+        <div class="category-icon">
+          <fa-icon [icon]="category.icon"></fa-icon>
+        </div>
         <h3 class="category-title">{{ category.title }}</h3>
       </div>
       <div class="category-tags">
         <span class="skill-tag" *ngFor="let item of category.items; let j = index"
-              [style.animation-delay]="(i * 0.1 + j * 0.03) + 's'">
+              [style.animation-delay]="(i * 0.1 + j * 0.03) + 's'"
+              (click)="filterExperience(item.title)">
           {{ item.title }}
         </span>
       </div>

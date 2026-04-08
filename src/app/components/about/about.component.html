@@ -1,13 +1,20 @@
-<section class="about-page section-container">
+<section id="education-section" class="about-page section-container">
   <!-- Education Section -->
   <div class="section-header">
     <h1 class="section-title">{{ 'ABOUT.TITLE' | transloco }}</h1>
     <p class="section-subtitle">{{ 'ABOUT.SUBTITLE' | transloco }}</p>
   </div>
 
+  <!-- Filter Banner -->
+  <div class="filter-banner" *ngIf="selectedTech">
+    <span>Resaltando formación en: <strong>{{ selectedTech }}</strong></span>
+    <button (click)="clearFilter()" class="btn-clear">Mostrar todo</button>
+  </div>
+
   <div class="education-grid">
     <div class="education-card" *ngFor="let edu of estudios; let i = index"
-         [style.animation-delay]="i * 0.12 + 's'">
+         [style.animation-delay]="i * 0.12 + 's'"
+         [class.dimmed]="selectedTech && !hasTechEdu(edu)">
       <div class="edu-icon">
         <fa-icon [icon]="faGrad"></fa-icon>
       </div>
@@ -23,6 +30,12 @@
           {{ edu.institution }}
         </a>
         <p class="edu-description">{{ edu.description }}</p>
+        <div class="job-tags" style="margin-top: 1rem" *ngIf="edu.tags">
+           <span class="tag" *ngFor="let tag of edu.tags"
+                 [class.tech-match]="selectedTech && tag.toLowerCase() === selectedTech.toLowerCase()">
+             {{ tag }}
+           </span>
+        </div>
       </div>
     </div>
   </div>

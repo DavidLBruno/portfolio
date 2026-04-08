@@ -1,13 +1,20 @@
-<section class="projects-page section-container">
+<section id="experience-section" class="projects-page section-container">
   <!-- Work Experience Section -->
   <div class="section-header">
     <h1 class="section-title">{{ 'EXPERIENCE.TITLE' | transloco }}</h1>
     <p class="section-subtitle">{{ 'EXPERIENCE.SUBTITLE' | transloco }}</p>
   </div>
 
+  <!-- Filter Banner -->
+  <div class="filter-banner" *ngIf="selectedTech">
+    <span>Resaltando experiencia con: <strong>{{ selectedTech }}</strong></span>
+    <button (click)="clearFilter()" class="btn-clear">Mostrar todo</button>
+  </div>
+
   <div class="timeline">
     <div class="timeline-item" *ngFor="let job of workExperience; let i = index"
-         [style.animation-delay]="i * 0.15 + 's'">
+         [style.animation-delay]="i * 0.15 + 's'"
+         [class.dimmed]="selectedTech && !hasTechJob(job)">
       <div class="timeline-marker">
         <div class="marker-dot" [class.active]="job.current"></div>
         <div class="marker-line" *ngIf="i < workExperience.length - 1"></div>
@@ -28,7 +35,27 @@
           <li *ngFor="let resp of job.responsibilities">{{ resp }}</li>
         </ul>
         <div class="job-tags">
-          <span class="tag" *ngFor="let tag of job.tags">{{ tag }}</span>
+          <span class="tag" *ngFor="let tag of job.tags"
+                [class.tech-match]="selectedTech && tag.toLowerCase() === selectedTech.toLowerCase()">
+            {{ tag }}
+          </span>
+        </div>
+
+        <!-- Sub-Projects -->
+        <div class="job-sub-projects" *ngIf="job.subProjects && job.subProjects.length > 0">
+          <h4 class="sub-projects-title">Proyectos Destacados</h4>
+          <div class="sub-projects-grid">
+            <div class="sub-project-card" *ngFor="let sub of job.subProjects">
+              <h5 class="sub-project-title">{{ sub.title }}</h5>
+              <p class="sub-project-description">{{ sub.description }}</p>
+              <div class="job-tags" style="margin-top: 0.6rem">
+                <span class="tag" *ngFor="let tag of sub.tags"
+                      [class.tech-match]="selectedTech && tag.toLowerCase() === selectedTech.toLowerCase()">
+                  {{ tag }}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -42,7 +69,8 @@
 
   <div class="projects-grid">
     <div class="project-card" *ngFor="let project of projects; let i = index"
-         [style.animation-delay]="i * 0.1 + 's'">
+         [style.animation-delay]="i * 0.1 + 's'"
+         [class.dimmed]="selectedTech && !hasTechProject(project)">
       <!-- Image if available -->
       <div class="project-image" *ngIf="project.image">
         <img [src]="project.image" [alt]="project.title" loading="lazy" />
@@ -73,7 +101,10 @@
         <h3 class="project-title">{{ project.title }}</h3>
         <p class="project-description">{{ project.description }}</p>
         <div class="project-tags">
-          <span class="tag" *ngFor="let tag of project.tags">{{ tag }}</span>
+          <span class="tag" *ngFor="let tag of project.tags"
+                [class.tech-match]="selectedTech && tag.toLowerCase() === selectedTech.toLowerCase()">
+            {{ tag }}
+          </span>
         </div>
         <div class="project-actions" *ngIf="!project.image && (project.repository || project.deploy)">
           <a *ngIf="project.repository" [href]="project.repository" target="_blank" rel="noopener" class="project-link-inline">

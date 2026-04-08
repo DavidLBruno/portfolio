@@ -1,8 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faBriefcase, faArrowUpRightFromSquare, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBriefcase,
+  faArrowUpRightFromSquare,
+  faCodeBranch,
+} from '@fortawesome/free-solid-svg-icons';
 
 interface WorkExperience {
   title: string;
@@ -11,6 +16,13 @@ interface WorkExperience {
   current: boolean;
   description: string;
   responsibilities: string[];
+  tags: string[];
+  subProjects?: SubProject[];
+}
+
+interface SubProject {
+  title: string;
+  description: string;
   tags: string[];
 }
 
@@ -32,64 +44,104 @@ interface ProjectItem {
   imports: [CommonModule, TranslocoModule, FontAwesomeModule],
   standalone: true,
 })
-export class ProjectsComponent {
+export class ProjectsComponent implements OnInit {
   faBriefcase = faBriefcase;
   faExternal = faArrowUpRightFromSquare;
   faCode = faCodeBranch;
 
+  selectedTech: string | null = null;
+
+  constructor(private route: ActivatedRoute, private router: Router) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.selectedTech = params['tech'] || null;
+      if (this.selectedTech && typeof window !== 'undefined') {
+        const doc = document.getElementById('experience-section');
+        if (doc) doc.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+
+  hasTechJob(job: any): boolean {
+    if (!this.selectedTech) return true;
+    const lowerTech = this.selectedTech.toLowerCase();
+    const hasInTags = job.tags.some((t: string) => t.toLowerCase() === lowerTech);
+    const hasInSub = job.subProjects
+      ? job.subProjects.some((s: any) =>
+          s.tags.some((t: string) => t.toLowerCase() === lowerTech)
+        )
+      : false;
+    return hasInTags || hasInSub;
+  }
+
+  hasTechProject(project: any): boolean {
+    if (!this.selectedTech) return true;
+    return project.tags.some(
+      (t: string) => t.toLowerCase() === this.selectedTech?.toLowerCase()
+    );
+  }
+
+  clearFilter() {
+    this.router.navigate(['/projects']);
+  }
+
   workExperience: WorkExperience[] = [
     {
-      title: 'Desarrollador de Producto',
-      company: 'InspectIA',
-      period: 'Abril 2026 – Actualidad',
-      current: true,
-      description: 'Lidero el desarrollo integral de una plataforma de inspección vehicular para compañías de seguros.',
-      responsibilities: [
-        'Diseño y ejecución del flujo completo de inspección, desde la captura de datos hasta el procesamiento con IA.',
-        'Arquitectura del backend y frontend asegurando una experiencia de usuario fluida y robusta.',
-      ],
-      tags: ['Angular', 'NestJS', 'Prisma', 'AWS', 'IA'],
-    },
-    {
-      title: 'BackEnd Developer',
+      title: 'Full Stack Developer',
       company: 'TheLabit',
       period: 'Agosto 2023 – Actualidad',
       current: true,
-      description: 'Desarrollo y migración de microservicios y aplicaciones móviles.',
+      description:
+        'Desarrollo y mantenimiento continuo de productos digitales complejos, aplicaciones móviles nativas y ecosistemas de microservicios para múltiples clientes institucionales.',
       responsibilities: [
-        'Migración de microservicios Java a NestJS en OpenShift RedHat.',
-        'Desarrollo de apps React Native con sistemas de validación QR.',
-        'Mantenimiento y desarrollo de aplicaciones web administrativas en Angular.',
+        'Liderazgo arquitectónico y migración de microservicios Java a NestJS en infraestructuras Cloud (OpenShift RedHat / AWS).',
+        'Desarrollo integral de aplicaciones React Native y Angular abarcando captura de datos, lectura de QR y gestión de identidades digitales.',
       ],
-      tags: ['NestJS', 'React Native', 'Angular', 'OpenShift', 'Java'],
+      tags: ['Angular', 'React Native', 'NestJS', 'Python', 'AWS', 'MySQL', 'Git', 'OracleSQL', 'HTML5', 'CSS3', 'Jira'],
+      subProjects: [
+        {
+          title: 'InspectIA',
+          description: 'Plataforma B2B para compañías de seguros que automatiza la inspección de vehículos usando inteligencia artificial.',
+          tags: ['Angular', 'NestJS', 'Prisma', 'FastAPI', 'Python', 'Docker', 'AWS', 'IA']
+        },
+        {
+          title: 'Credential Wallet',
+          description: 'Billetera digital de credenciales con sistema validación QR, diseñada para multi-empresa institucional.',
+          tags: ['React Native', 'NestJS', 'MySQL']
+        },
+        {
+          title: 'App Sindical (ATSA)',
+          description: 'Aplicación integral para afiliados. Permite gestión de permisos familiares, inscripción a sorteos/eventos e incluye feed de noticias en tiempo real del gremio.',
+          tags: ['React Native', 'Angular', 'NestJS', 'TypeORM', 'MySQL']
+        }
+      ]
     },
     {
       title: 'FrontEnd Developer Angular',
       company: 'Depsys Informática (IberaSoft)',
       period: 'Octubre 2022 – Agosto 2023',
       current: false,
-      description: 'Modernización de sistemas ERP y diseño de reportes.',
+      description:
+        'Modernización de sistemas ERP, desarrollo de aplicaciones para terceros y diseño de reportes.',
       responsibilities: [
         'Migración de un ERP legacy en Visual Basic hacia una arquitectura moderna en Angular.',
+        'Diseño y desarrollo de páginas web del tipo SPA (Single Page Applications) para clientes de terceros.',
         'Diseño y estructuración de informes técnicos con JasperSoft.',
       ],
-      tags: ['Angular', 'TypeScript', 'JasperSoft', 'Visual Basic'],
+      tags: ['Angular', 'TypeScript', 'JasperSoft', 'Visual Basic', 'HTML5', 'CSS3'],
     },
   ];
 
   projects: ProjectItem[] = [
-    {
-      title: 'InspectIA',
-      description: 'Plataforma de inspección vehicular con IA para compañías de seguros.',
-      tags: ['Angular', 'NestJS', 'Prisma', 'AWS', 'IA'],
-      type: 'product',
-    },
+    /* 
     {
       title: 'LetsGo',
       description: 'Sistema de gestión escolar con plan de modernización tecnológica.',
       tags: ['.NET Framework', 'Angular', 'NestJS'],
       type: 'venture',
     },
+    */
     {
       title: 'Portfolio',
       description: 'Aplicación web para exhibir habilidades de UI/UX.',
@@ -119,12 +171,13 @@ export class ProjectsComponent {
     },
     {
       title: 'App Pokémon',
-      description: 'Desarrollo Full Stack con filtros, búsquedas y creación de datos.',
+      description:
+        'Desarrollo Full Stack con filtros, búsquedas y creación de datos.',
       image: '/assets/images/projects/pokemon.png',
       icon: '/assets/images/projects/game1.png',
       deploy: 'https://pi-pokemon-eta.vercel.app/',
       repository: 'https://github.com/DavidLBruno/PI-POKEMON',
-      tags: ['React', 'Redux', 'Express', 'PostgreSQL'],
+      tags: ['React', 'Redux', 'Express', 'PostgreSQL', 'Sequelize'],
       type: 'personal',
     },
   ];

@@ -175,6 +175,108 @@
   border: 1px solid var(--tag-border);
   border-radius: 50px;
   white-space: nowrap;
+  transition: all $transition-fast;
+
+  &.tech-match {
+    background: $accent-primary;
+    color: #fff;
+    border-color: $accent-primary;
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
+    font-weight: 700;
+  }
+}
+
+// ---- Modifiers / Filtering ----
+.dimmed {
+  opacity: 0.35 !important;
+  pointer-events: none;
+  filter: grayscale(80%);
+}
+
+.filter-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2.5rem;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: $radius-sm;
+  color: var(--text);
+  font-size: 0.95rem;
+
+  strong {
+    color: var(--accent);
+    margin-left: 0.3rem;
+  }
+
+  .btn-clear {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: var(--border);
+      color: var(--text);
+    }
+  }
+}
+
+// ============================================
+// Sub Projects (Nested in Timeline)
+// ============================================
+.job-sub-projects {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--border);
+}
+
+.sub-projects-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sub-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.sub-project-card {
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  border-radius: $radius-sm;
+  padding: 1.25rem;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: var(--border-accent);
+    background: rgba(139, 92, 246, 0.04);
+  }
+
+  .sub-project-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+  }
+
+  .sub-project-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
 }
 
 // ============================================

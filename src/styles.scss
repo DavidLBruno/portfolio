@@ -17,6 +17,11 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: $dark-bg; // Evita que se vea blanco abajo al hacer scroll
+}
+
+html:has(body.theme-light) {
+  background-color: $light-bg;
 }
 
 body {
