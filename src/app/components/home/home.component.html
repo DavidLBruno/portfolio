@@ -19,10 +19,10 @@
       </div>
 
       <div class="hero-actions animate-item">
-        <a href="mailto:bruno.david9914@gmail.com" class="btn-primary-hero">
+        <button class="btn-primary-hero" (click)="openContactModal()">
           <fa-icon [icon]="faEnvelope"></fa-icon>
           <span>{{ 'HOME.CTA_CONTACT' | transloco }}</span>
-        </a>
+        </button>
         <a routerLink="/projects" class="btn-secondary-hero">
           <span>{{ 'HOME.CTA_PROJECTS' | transloco }}</span>
           <fa-icon [icon]="faArrow"></fa-icon>
@@ -53,3 +53,8 @@
     </div>
   </div>
 </section>
+
+<app-contact-modal
+  *ngIf="showContactModal"
+  (closeModal)="closeContactModal()">
+</app-contact-modal>

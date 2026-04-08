@@ -35,6 +35,21 @@
     "CTA_CONTACT": "Get in Touch",
     "CTA_PROJECTS": "View Projects"
   },
+  "CONTACT": {
+    "TITLE": "Send me a message",
+    "SUBTITLE": "Have a project in mind or want to chat? Let's talk!",
+    "NAME": "Your name",
+    "EMAIL": "Your email",
+    "MESSAGE": "Your message",
+    "MIN_CHARS": "min. characters",
+    "SEND": "Send message",
+    "SENDING": "Sending...",
+    "SUCCESS_TITLE": "Message sent!",
+    "SUCCESS_MSG": "Thanks for reaching out. I'll get back to you as soon as possible.",
+    "ERROR_TITLE": "Failed to send",
+    "ERROR_MSG": "Something went wrong. Please try again or email me directly at bruno.david9914@gmail.com",
+    "RETRY": "Try again"
+  },
   "EXPERIENCE": {
     "TITLE": "Work Experience",
     "SUBTITLE": "My professional journey"

@@ -1,0 +1,628 @@
+@use 'variables' as *;
+
+// ============================================
+// Contact Modal – Glassmorphism Design
+// ============================================
+
+// ---- Overlay ----
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5vh 1.5rem;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: overlayIn 0.3s ease forwards;
+
+  &.closing {
+    animation: overlayOut 0.3s ease forwards;
+  }
+}
+
+// ---- Background Orbs ----
+.modal-bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+
+  &.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: $accent-primary;
+    top: 10%;
+    right: 10%;
+    opacity: 0.08;
+    animation: float 10s ease-in-out infinite;
+  }
+
+  &.orb-2 {
+    width: 350px;
+    height: 350px;
+    background: $accent-secondary;
+    bottom: 10%;
+    left: 10%;
+    opacity: 0.06;
+    animation: float 10s ease-in-out infinite reverse;
+  }
+}
+
+// ---- Modal Container ----
+.modal-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+  margin: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  padding: 1.75rem 2.5rem;
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.3),
+    0 0 80px rgba(139, 92, 246, 0.06);
+  animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  &.closing {
+    animation: modalOut 0.3s ease forwards;
+  }
+
+  // Subtle gradient border glow
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: calc($radius-lg + 1px);
+    background: $accent-gradient;
+    z-index: -1;
+    opacity: 0.15;
+  }
+}
+
+// ---- Close Button ----
+.modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: $radius-sm;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: var(--accent);
+    border-color: var(--border-accent);
+    background: rgba(139, 92, 246, 0.08);
+    transform: rotate(90deg);
+  }
+}
+
+// ---- Header ----
+.modal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  gap: 0.25rem;
+}
+
+.modal-header-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: $accent-gradient;
+  color: #fff;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+.modal-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.modal-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+// ============================================
+// Form Styles
+// ============================================
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+// ---- Form Group with Floating Label ----
+.form-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  position: relative;
+  animation: fieldIn 0.5s ease forwards;
+  opacity: 0;
+
+  @for $i from 1 through 3 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{0.1 + $i * 0.08}s;
+    }
+  }
+}
+
+.input-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 48px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  transition: color $transition-normal;
+  flex-shrink: 0;
+
+  .focused & {
+    color: $accent-primary;
+  }
+
+  &.textarea-icon {
+    height: auto;
+    padding-top: 0.85rem;
+  }
+}
+
+.input-wrapper {
+  flex: 1;
+  position: relative;
+
+  label {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: left;
+  }
+
+  .textarea-group & label {
+    top: 1rem;
+    transform: translateY(0);
+  }
+}
+
+// Float label up on focus or when has value
+.form-group.focused,
+.form-group.has-value {
+  .input-wrapper label {
+    top: -6px;
+    transform: translateY(0) scale(0.8);
+    color: $accent-primary;
+    font-weight: 600;
+  }
+
+  &.textarea-group .input-wrapper label {
+    top: -6px;
+  }
+}
+
+// ---- Input & Textarea ----
+input,
+textarea {
+  width: 100%;
+  padding: 0.85rem 0.75rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-sm;
+  color: var(--text);
+  font-family: $font-primary;
+  font-size: 0.95rem;
+  transition: all $transition-normal;
+  outline: none;
+
+  &:focus {
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  }
+
+  &::placeholder {
+    color: transparent;
+  }
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.6;
+}
+
+// ---- Animated input underline ----
+.input-line {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: $accent-gradient;
+  border-radius: 2px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(-50%);
+}
+
+.form-group.focused .input-line {
+  width: 100%;
+}
+
+// ---- Character Count ----
+.char-count {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: right;
+  margin-top: -0.75rem;
+  transition: color $transition-fast;
+
+  &.valid {
+    color: #22c55e;
+  }
+}
+
+// ---- Submit Button ----
+.btn-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.95rem 2rem;
+  background: $accent-gradient;
+  color: #fff;
+  border: none;
+  border-radius: $radius-sm;
+  font-family: $font-primary;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all $transition-normal;
+  position: relative;
+  overflow: hidden;
+  margin-top: 0.5rem;
+
+  .btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  // Shimmer effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.15),
+        transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  &.sending {
+    pointer-events: none;
+  }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+// ============================================
+// Status Messages
+// ============================================
+.status-message {
+  text-align: center;
+  padding: 2rem 1rem;
+  animation: statusIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  .status-icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  &.success .status-icon-wrapper {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    animation: successBounce 0.6s ease;
+  }
+
+  &.error .status-icon-wrapper {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+    animation: shake 0.5s ease;
+  }
+}
+
+.btn-retry {
+  margin-top: 1.25rem;
+  padding: 0.6rem 1.5rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: $radius-sm;
+  color: var(--text);
+  font-family: $font-primary;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+// ============================================
+// Animations
+// ============================================
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlayOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes modalOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+}
+
+@keyframes fieldIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes iconPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 0 12px rgba(139, 92, 246, 0);
+  }
+}
+
+@keyframes statusIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes successBounce {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(20px, -20px);
+  }
+}
+
+// ============================================
+// Responsive
+// ============================================
+@media screen and (max-width: $breakpoint-md) {
+  .modal-container {
+    padding: 1.5rem;
+  }
+
+  .modal-title {
+    font-size: 1.4rem;
+  }
+
+  .modal-bg-orb {
+    display: none;
+  }
+}
+
+@media screen and (max-width: $breakpoint-sm) {
+  .modal-overlay {
+    padding: 1rem;
+    align-items: flex-end;
+  }
+
+  .modal-container {
+    padding: 1.75rem 1.25rem;
+    border-radius: $radius-lg $radius-lg $radius-sm $radius-sm;
+    margin-top: auto;
+    margin-bottom: 0;
+    animation: modalInMobile 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+    &.closing {
+      animation: modalOutMobile 0.3s ease forwards;
+    }
+  }
+
+  .input-icon {
+    display: none;
+  }
+}
+
+@keyframes modalInMobile {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalOutMobile {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}

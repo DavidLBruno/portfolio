@@ -35,6 +35,21 @@
     "CTA_CONTACT": "Contactame",
     "CTA_PROJECTS": "Ver Experiencia"
   },
+  "CONTACT": {
+    "TITLE": "Enviame un mensaje",
+    "SUBTITLE": "¿Tenés un proyecto en mente o querés charlar? ¡Escribime!",
+    "NAME": "Tu nombre",
+    "EMAIL": "Tu email",
+    "MESSAGE": "Tu mensaje",
+    "MIN_CHARS": "caracteres mín.",
+    "SEND": "Enviar mensaje",
+    "SENDING": "Enviando...",
+    "SUCCESS_TITLE": "¡Mensaje enviado!",
+    "SUCCESS_MSG": "Gracias por contactarme. Te responderé lo antes posible.",
+    "ERROR_TITLE": "Error al enviar",
+    "ERROR_MSG": "Algo salió mal. Por favor, intentá de nuevo o escribime directo a bruno.david9914@gmail.com",
+    "RETRY": "Reintentar"
+  },
   "EXPERIENCE": {
     "TITLE": "Experiencia Laboral",
     "SUBTITLE": "Mi trayectoria profesional"
