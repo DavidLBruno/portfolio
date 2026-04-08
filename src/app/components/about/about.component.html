@@ -36,6 +36,11 @@
              {{ tag }}
            </span>
         </div>
+        <div class="edu-actions" *ngIf="edu.certificate" style="margin-top: 1rem">
+          <a [href]="edu.certificate" target="_blank" rel="noopener" class="btn-certificate">
+            <fa-icon [icon]="faCert"></fa-icon> Ver Certificado
+          </a>
+        </div>
       </div>
     </div>
   </div>

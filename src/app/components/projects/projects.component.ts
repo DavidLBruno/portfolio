@@ -180,5 +180,19 @@ export class ProjectsComponent implements OnInit {
       tags: ['React', 'Redux', 'Express', 'PostgreSQL', 'Sequelize'],
       type: 'personal',
     },
+    {
+      title: 'Gastos Compartidos',
+      description: 'Aplicación para seguimiento de gastos y métricas con paneles compartidos.',
+      image: '/assets/images/projects/gastos_compartidos.png',
+      tags: ['Angular', 'NestJS', 'PostgreSQL', 'SCSS'],
+      type: 'personal',
+    },
+    {
+      title: 'Food Code',
+      description: 'Web app 100% mobile (PWA) para gestión de menú QR, pedidos guiados en mesa y pagos integrados (efectivo/digital).',
+      image: '/assets/images/projects/food_code.png',
+      tags: ['Angular', 'NestJS', 'TypeORM', 'PostgreSQL'],
+      type: 'group',
+    },
   ];
 }

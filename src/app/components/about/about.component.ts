@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faGraduationCap, faGamepad, faChess, faMicrochip, faAppleWhole, faDumbbell } from '@fortawesome/free-solid-svg-icons';
+import { faGraduationCap, faGamepad, faChess, faMicrochip, faAppleWhole, faDumbbell, faCertificate } from '@fortawesome/free-solid-svg-icons';
 import { faJs } from '@fortawesome/free-brands-svg-icons';
 
 interface Education {
@@ -14,6 +14,7 @@ interface Education {
   current: boolean;
   description: string;
   tags?: string[];
+  certificate?: string;
 }
 
 interface Hobby {
@@ -30,6 +31,7 @@ interface Hobby {
 })
 export class AboutComponent implements OnInit {
   faGrad = faGraduationCap;
+  faCert = faCertificate;
   
   selectedTech: string | null = null;
 
@@ -83,7 +85,8 @@ export class AboutComponent implements OnInit {
       period: 'Julio 2023',
       current: false,
       description: 'Entrenamiento intensivo de 2 semanas enfocado en resolución de problemas complejos, diseño de algoritmos y structures de datos.',
-      tags: ['C++']
+      tags: ['C++'],
+      certificate: '/assets/certificates/tc-arg.pdf'
     },
     {
       title: 'Full Stack Web Developer',
@@ -92,7 +95,8 @@ export class AboutComponent implements OnInit {
       period: 'Diciembre 2021 – Agosto 2022',
       current: false,
       description: 'Programa intensivo de 700 horas cubriendo el stack PERN (PostgreSQL, Express, React, Node.js).',
-      tags: ['JavaScript', 'React', 'Node.js', 'Express', 'PostgreSQL', 'Sequelize', 'Git']
+      tags: ['JavaScript', 'React', 'Node.js', 'Express', 'PostgreSQL', 'Sequelize', 'Git'],
+      certificate: '/assets/certificates/henry.pdf'
     },
     {
       title: 'SkillUp Node.js',
@@ -101,7 +105,8 @@ export class AboutComponent implements OnInit {
       period: 'Noviembre 2022',
       current: false,
       description: 'Programa especializado en desarrollo backend con Node.js.',
-      tags: ['Node.js', 'Express', 'TypeScript', 'Git']
+      tags: ['Node.js', 'Express', 'TypeScript', 'Git'],
+      certificate: '/assets/certificates/alkemy.pdf'
     },
   ];
 
