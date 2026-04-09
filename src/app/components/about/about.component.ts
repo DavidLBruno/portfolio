@@ -3,7 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faGraduationCap, faGamepad, faChess, faMicrochip, faAppleWhole, faDumbbell, faCertificate } from '@fortawesome/free-solid-svg-icons';
+import {
+  faGraduationCap,
+  faGamepad,
+  faChess,
+  faMicrochip,
+  faAppleWhole,
+  faDumbbell,
+  faCertificate,
+} from '@fortawesome/free-solid-svg-icons';
 import { faJs } from '@fortawesome/free-brands-svg-icons';
 
 interface Education {
@@ -32,22 +40,27 @@ interface Hobby {
 export class AboutComponent implements OnInit {
   faGrad = faGraduationCap;
   faCert = faCertificate;
-  
+
   selectedTech: string | null = null;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
 
   originalEstudios: Education[] = [];
 
   ngOnInit() {
     this.originalEstudios = [...this.estudios];
 
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.subscribe(params => {
       this.selectedTech = params['tech'] || null;
-      
+
       if (this.selectedTech) {
-        this.estudios = [...this.originalEstudios].sort((a,b) => (this.hasTechEdu(b) ? 1 : 0) - (this.hasTechEdu(a) ? 1 : 0));
-        
+        this.estudios = [...this.originalEstudios].sort(
+          (a, b) => (this.hasTechEdu(b) ? 1 : 0) - (this.hasTechEdu(a) ? 1 : 0),
+        );
+
         if (typeof window !== 'undefined') {
           const doc = document.getElementById('education-section');
           if (doc) doc.scrollIntoView({ behavior: 'smooth' });
@@ -62,7 +75,7 @@ export class AboutComponent implements OnInit {
     if (!this.selectedTech) return true;
     if (!edu.tags) return false;
     return edu.tags.some(
-      (t) => t.toLowerCase() === this.selectedTech?.toLowerCase()
+      t => t.toLowerCase() === this.selectedTech?.toLowerCase(),
     );
   }
 
@@ -77,8 +90,9 @@ export class AboutComponent implements OnInit {
       institutionLink: 'https://uai.edu.ar/',
       period: '2024 – En curso',
       current: true,
-      description: 'Formación integral en sistemas informáticos con enfoque en la ingeniería de software.',
-      tags: ['C', 'C#', '.NET Framework', 'SQL', 'Git']
+      description:
+        'Formación integral en sistemas informáticos con enfoque en la ingeniería de software.',
+      tags: ['C', 'C#', '.NET Framework', 'SQL', 'Git'],
     },
     {
       title: 'English Certificate (Nivel A2) & Clases In-Company',
@@ -86,8 +100,9 @@ export class AboutComponent implements OnInit {
       institutionLink: 'https://www.efset.org/',
       period: 'Formación Continua (Actualidad)',
       current: true,
-      description: 'Cursos técnicos semanales propiciados corporativamente. Enfoque en conversación diaria, lectura de documentación técnica y escritura formal IT.',
-      certificate: 'https://cert.efset.org/A9gUpb'
+      description:
+        'Cursos técnicos semanales propiciados corporativamente. Enfoque en conversación diaria, lectura de documentación técnica y escritura formal IT.',
+      certificate: 'https://cert.efset.org/A9gUpb',
     },
     {
       title: 'Tecnicatura Universitaria en Inteligencia Artificial',
@@ -95,8 +110,9 @@ export class AboutComponent implements OnInit {
       institutionLink: 'https://unr.edu.ar/',
       period: 'Febrero 2023 – 2024',
       current: false,
-      description: 'Cursada finalizada (sin titulación). Estudio de fundamentos de IA, machine learning y procesamiento de datos.',
-      tags: ['Python', 'Bash', 'Docker', 'Linux', 'Git']
+      description:
+        'Cursada finalizada (sin titulación). Estudio de fundamentos de IA, machine learning y procesamiento de datos.',
+      tags: ['Python', 'Bash', 'Docker', 'Linux', 'Git'],
     },
     {
       title: 'Training Camp de Programación Competitiva',
@@ -104,9 +120,10 @@ export class AboutComponent implements OnInit {
       institutionLink: 'https://www.pc-arg.com/tc-arg',
       period: 'Julio 2023',
       current: false,
-      description: 'Entrenamiento intensivo de 2 semanas enfocado en resolución de problemas complejos, diseño de algoritmos y structures de datos.',
+      description:
+        'Entrenamiento intensivo de 2 semanas enfocado en resolución de problemas complejos, diseño de algoritmos y structures de datos.',
       tags: ['C++'],
-      certificate: '/assets/certificates/tc-arg.pdf'
+      certificate: '/assets/certificates/tc-arg.pdf',
     },
     {
       title: 'Full Stack Web Developer',
@@ -114,9 +131,18 @@ export class AboutComponent implements OnInit {
       institutionLink: 'https://www.soyhenry.com/',
       period: 'Diciembre 2021 – Agosto 2022',
       current: false,
-      description: 'Programa intensivo de 700 horas cubriendo el stack PERN (PostgreSQL, Express, React, Node.js).',
-      tags: ['JavaScript', 'React', 'Node.js', 'Express', 'PostgreSQL', 'Sequelize', 'Git'],
-      certificate: '/assets/certificates/henry.pdf'
+      description:
+        'Programa intensivo de 700 horas cubriendo el stack PERN (PostgreSQL, Express, React, Node.js).',
+      tags: [
+        'JavaScript',
+        'React',
+        'Node.js',
+        'Express',
+        'PostgreSQL',
+        'Sequelize',
+        'Git',
+      ],
+      certificate: '/assets/certificates/henry.pdf',
     },
     {
       title: 'SkillUp Node.js',
@@ -126,7 +152,7 @@ export class AboutComponent implements OnInit {
       current: false,
       description: 'Programa especializado en desarrollo backend con Node.js.',
       tags: ['Node.js', 'Express', 'TypeScript', 'Git'],
-      certificate: '/assets/certificates/alkemy.pdf'
+      certificate: '/assets/certificates/alkemy.pdf',
     },
   ];
 
@@ -134,7 +160,6 @@ export class AboutComponent implements OnInit {
     { title: 'Programación Competitiva', icon: faJs },
     { title: 'Ajedrez', icon: faChess },
     { title: 'Hardware de PC', icon: faMicrochip },
-    { title: 'Nutrición', icon: faAppleWhole },
     { title: 'Deportes', icon: faDumbbell },
   ];
 }
