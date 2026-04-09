@@ -37,12 +37,23 @@ export class AboutComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
+  originalEstudios: Education[] = [];
+
   ngOnInit() {
+    this.originalEstudios = [...this.estudios];
+
     this.route.queryParams.subscribe((params) => {
       this.selectedTech = params['tech'] || null;
-      if (this.selectedTech && typeof window !== 'undefined') {
-        const doc = document.getElementById('education-section');
-        if (doc) doc.scrollIntoView({ behavior: 'smooth' });
+      
+      if (this.selectedTech) {
+        this.estudios = [...this.originalEstudios].sort((a,b) => (this.hasTechEdu(b) ? 1 : 0) - (this.hasTechEdu(a) ? 1 : 0));
+        
+        if (typeof window !== 'undefined') {
+          const doc = document.getElementById('education-section');
+          if (doc) doc.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        this.estudios = [...this.originalEstudios];
       }
     });
   }
@@ -68,6 +79,15 @@ export class AboutComponent implements OnInit {
       current: true,
       description: 'Formación integral en sistemas informáticos con enfoque en la ingeniería de software.',
       tags: ['C', 'C#', '.NET Framework', 'SQL', 'Git']
+    },
+    {
+      title: 'English Certificate (Nivel A2) & Clases In-Company',
+      institution: 'EF Standard English Test (EF SET)',
+      institutionLink: 'https://www.efset.org/',
+      period: 'Formación Continua (Actualidad)',
+      current: true,
+      description: 'Cursos técnicos semanales propiciados corporativamente. Enfoque en conversación diaria, lectura de documentación técnica y escritura formal IT.',
+      certificate: 'https://cert.efset.org/A9gUpb'
     },
     {
       title: 'Tecnicatura Universitaria en Inteligencia Artificial',

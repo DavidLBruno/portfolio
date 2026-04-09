@@ -53,12 +53,29 @@ export class ProjectsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
+  originalWorkExperience: WorkExperience[] = [];
+  originalProjects: ProjectItem[] = [];
+
   ngOnInit() {
+    // Backup arrays on init
+    this.originalWorkExperience = [...this.workExperience];
+    this.originalProjects = [...this.projects];
+
     this.route.queryParams.subscribe((params) => {
       this.selectedTech = params['tech'] || null;
-      if (this.selectedTech && typeof window !== 'undefined') {
-        const doc = document.getElementById('experience-section');
-        if (doc) doc.scrollIntoView({ behavior: 'smooth' });
+      
+      if (this.selectedTech) {
+        this.workExperience = [...this.originalWorkExperience].sort((a,b) => (this.hasTechJob(b) ? 1 : 0) - (this.hasTechJob(a) ? 1 : 0));
+        this.projects = [...this.originalProjects].sort((a,b) => (this.hasTechProject(b) ? 1 : 0) - (this.hasTechProject(a) ? 1 : 0));
+
+        if (typeof window !== 'undefined') {
+          const doc = document.getElementById('experience-section');
+          if (doc) doc.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        // Restore original order when filter is cleared
+        this.workExperience = [...this.originalWorkExperience];
+        this.projects = [...this.originalProjects];
       }
     });
   }
@@ -97,8 +114,10 @@ export class ProjectsComponent implements OnInit {
       responsibilities: [
         'Liderazgo arquitectónico y migración de microservicios Java a NestJS en infraestructuras Cloud (OpenShift RedHat / AWS).',
         'Desarrollo integral de aplicaciones React Native y Angular abarcando captura de datos, lectura de QR y gestión de identidades digitales.',
+        'Análisis constante de requerimientos y comunicación directa con clientes para traducir demandas comerciales en código sólido y seguro.',
+        'Mentoría técnica orientada a perfiles iniciales / nuevos ingresos e impulso de buenas prácticas de desarrollo en metodologías ágiles.'
       ],
-      tags: ['Angular', 'React Native', 'NestJS', 'Python', 'AWS', 'MySQL', 'Git', 'OracleSQL', 'HTML5', 'CSS3', 'Jira'],
+      tags: ['Angular', 'React Native', 'NestJS', 'Python', 'AWS', 'MySQL', 'Git', 'OracleSQL', 'HTML5', 'CSS3', 'Jira', 'OpenShift'],
       subProjects: [
         {
           title: 'InspectIA',
