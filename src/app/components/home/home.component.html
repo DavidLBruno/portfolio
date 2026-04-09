@@ -30,12 +30,8 @@
       </div>
 
       <div class="hero-socials animate-item">
-        <a *ngFor="let link of socialLinks"
-           [href]="link.url"
-           target="_blank"
-           rel="noopener"
-           class="social-link"
-           [attr.aria-label]="link.label">
+        <a *ngFor="let link of socialLinks" [href]="link.url" target="_blank" rel="noopener" class="social-link"
+          [attr.aria-label]="link.label">
           <fa-icon [icon]="link.icon"></fa-icon>
         </a>
       </div>
@@ -44,7 +40,7 @@
     <div class="hero-visual animate-item">
       <div class="avatar-container">
         <div class="avatar-ring"></div>
-        <img src="/assets/images/bruno-david.jpeg" alt="Bruno David" class="avatar-img" />
+        <img src="/assets/images/bruno-david.jpg" alt="Bruno David" class="avatar-img" />
       </div>
       <div class="status-badge">
         <span class="status-dot"></span>
@@ -54,7 +50,5 @@
   </div>
 </section>
 
-<app-contact-modal
-  *ngIf="showContactModal"
-  (closeModal)="closeContactModal()">
+<app-contact-modal *ngIf="showContactModal" (closeModal)="closeContactModal()">
 </app-contact-modal>
