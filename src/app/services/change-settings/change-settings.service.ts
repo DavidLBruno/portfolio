@@ -1,71 +1,89 @@
-import { Injectable } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { Injectable, inject } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 import { BehaviorSubject } from 'rxjs';
+
+export type Theme = 'dark' | 'light';
+export type Lang = 'es' | 'en';
+
+const DEFAULT_LANG: Lang = 'es';
+const DEFAULT_THEME: Theme = 'dark';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChangeSettingService {
-  private themeSubject = new BehaviorSubject<string>('dark');
+  private translocoService = inject(TranslocoService);
+
+  private themeSubject = new BehaviorSubject<Theme>(DEFAULT_THEME);
   theme$ = this.themeSubject.asObservable();
 
-  constructor(private translocoService: TranslocoService) {}
+  private get storage(): Storage | null {
+    try {
+      return typeof window !== 'undefined' ? window.localStorage : null;
+    } catch {
+      // Storage can throw in private mode / blocked cookies
+      return null;
+    }
+  }
 
   // ---- Language ----
   change(value: string): void {
-    localStorage.setItem('lan', value);
-    const newValue = localStorage.getItem('lan');
-    if (newValue) {
-      this.translocoService.setActiveLang(newValue);
-    }
+    const lang = this.normalizeLang(value);
+    this.storage?.setItem('lan', lang);
+    this.translocoService.setActiveLang(lang);
+    this.setDocumentLang(lang);
   }
 
   setLanguage(): void {
-    if (typeof window !== 'undefined') {
-      const value = localStorage.getItem('lan') || 'es';
-      this.translocoService.setActiveLang(value);
-    }
+    const lang = this.getLanguaje();
+    this.translocoService.setActiveLang(lang);
+    this.setDocumentLang(lang);
   }
 
-  getLanguaje(): string {
-    let value = '';
-    if (typeof window !== 'undefined') {
-      value = localStorage.getItem('lan') || 'en';
-    }
-    return value;
+  getLanguaje(): Lang {
+    return this.normalizeLang(this.storage?.getItem('lan'));
   }
 
   // ---- Theme ----
   initTheme(): void {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('theme') || 'dark';
-      this.applyTheme(saved);
-    }
+    this.applyTheme(this.getTheme());
   }
 
   toggleTheme(): void {
-    const current = this.themeSubject.value;
-    const next = current === 'dark' ? 'light' : 'dark';
-    this.applyTheme(next);
+    this.applyTheme(this.themeSubject.value === 'dark' ? 'light' : 'dark');
   }
 
   setTheme(theme: string): void {
-    this.applyTheme(theme);
+    this.applyTheme(this.normalizeTheme(theme));
   }
 
-  getTheme(): string {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') || 'dark';
-    }
-    return 'dark';
+  getTheme(): Theme {
+    return this.normalizeTheme(this.storage?.getItem('theme'));
   }
 
-  private applyTheme(theme: string): void {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('theme', theme);
+  private applyTheme(theme: Theme): void {
+    this.storage?.setItem('theme', theme);
+    if (typeof document !== 'undefined') {
       document.body.classList.remove('theme-dark', 'theme-light');
       document.body.classList.add(`theme-${theme}`);
-      this.themeSubject.next(theme);
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute('content', theme === 'dark' ? '#0a0a0f' : '#f8fafc');
     }
+    this.themeSubject.next(theme);
+  }
+
+  private setDocumentLang(lang: Lang): void {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang;
+    }
+  }
+
+  private normalizeLang(value: string | null | undefined): Lang {
+    return value === 'en' ? 'en' : DEFAULT_LANG;
+  }
+
+  private normalizeTheme(value: string | null | undefined): Theme {
+    return value === 'light' ? 'light' : DEFAULT_THEME;
   }
 }

@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgbActiveModal, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { Select } from '../../interfaces/select.interface';
-import { TranslocoPipe } from '@ngneat/transloco';
-import { Subscription } from 'rxjs';
-import { ChangeSettingService } from '../../services/change-settings/change-settings.service';
-import { Button } from '../../interfaces/button.interface';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { Select } from '../../interfaces/select.interface';
+import { Button } from '../../interfaces/button.interface';
+import { ChangeSettingService } from '../../services/change-settings/change-settings.service';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     NgbDropdownModule,
@@ -22,14 +21,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   ],
 })
 export class SettingsComponent implements OnInit {
-  settings: FormGroup = new FormGroup({
+  activeModal = inject(NgbActiveModal);
+  private settingsService = inject(ChangeSettingService);
+  private destroyRef = inject(DestroyRef);
+
+  settings = new FormGroup({
     languaje: new FormControl(''),
     theme: new FormControl(''),
   });
   faChevronDown = faChevronDown;
-
-  subscription!: Subscription;
-  themeSubscription!: Subscription;
 
   configsParams: Button[] = [
     {
@@ -50,45 +50,33 @@ export class SettingsComponent implements OnInit {
     },
   ];
 
-  constructor(
-    public activeModal: NgbActiveModal,
-    public settingsService: ChangeSettingService,
-  ) {}
+  ngOnInit(): void {
+    this.settings.patchValue(
+      {
+        languaje: this.settingsService.getLanguaje(),
+        theme: this.settingsService.getTheme(),
+      },
+      { emitEvent: false },
+    );
+
+    this.settings.controls.languaje.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(value => this.settingsService.change(value || 'es'));
+
+    this.settings.controls.theme.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(value => this.settingsService.setTheme(value || 'dark'));
+  }
 
   changeForm(select: Select, form: string): void {
-    this.settings.patchValue({
-      [form]: select.value,
-    });
+    this.settings.patchValue({ [form]: select.value });
   }
 
-  ngOnInit(): void {
-    this.settings.controls['languaje'].patchValue(
-      this.settingsService.getLanguaje(),
-    );
-    this.settings.controls['theme'].patchValue(
-      this.settingsService.getTheme(),
-    );
-
-    this.subscription = this.settings.controls[
-      'languaje'
-    ].valueChanges.subscribe(values => {
-      this.settingsService.change(values || 'en');
-    });
-
-    this.themeSubscription = this.settings.controls[
-      'theme'
-    ].valueChanges.subscribe(value => {
-      this.settingsService.setTheme(value || 'dark');
-    });
+  currentValue(form: string): string {
+    return this.settings.get(form)?.value ?? '';
   }
 
-  getOptions(select: Select[], formValue: string) {
-    const result = select.find(element => element.value == formValue)?.title;
-    return result;
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-    this.themeSubscription.unsubscribe();
+  getOptions(select: Select[], formValue: string): string {
+    return select.find(element => element.value === formValue)?.title ?? '';
   }
 }

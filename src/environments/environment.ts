@@ -1,17 +1,13 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
+// Replaced by environment.prod.ts in production builds (see angular.json).
 export const environment = {
   baseUrl: 'http://localhost:4200',
   production: false,
-}
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+  // EmailJS credentials are public by design (they ship in the browser bundle).
+  // Abuse is prevented from the EmailJS dashboard: restrict "Allowed origins"
+  // to the production domain and keep the monthly quota low.
+  emailjs: {
+    serviceId: 'service_ecan7om',
+    templateId: 'template_3a4iifo',
+    publicKey: 'oOnC2LcHyRp5NO0CE',
+  },
+};

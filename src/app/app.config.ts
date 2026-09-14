@@ -1,22 +1,32 @@
-import { ApplicationConfig, isDevMode } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import {
+  provideClientHydration,
+  withNoIncrementalHydration,
+} from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideTransloco } from '@jsverse/transloco';
+import { routes } from './app.routes';
 import { TranslocoHttpLoader } from './transloco-loader';
-import { provideTransloco } from '@ngneat/transloco';
 import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
-    provideClientHydration(),
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({ scrollPositionRestoration: 'top' }),
+    ),
+    provideClientHydration(withNoIncrementalHydration()),
     provideHttpClient(withFetch()),
-    provideHttpClient(),
     provideTransloco({
       config: {
         availableLangs: ['en', 'es'],
-        defaultLang: 'en',
+        defaultLang: 'es',
+        fallbackLang: 'es',
         reRenderOnLangChange: true,
         prodMode: environment.production,
       },

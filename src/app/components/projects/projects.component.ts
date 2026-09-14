@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faBriefcase,
@@ -9,211 +9,220 @@ import {
   faCodeBranch,
 } from '@fortawesome/free-solid-svg-icons';
 
+/**
+ * Text fields hold translation keys (see assets/i18n/*.json); the templates
+ * resolve them with the transloco pipe so the content follows the active language.
+ */
 interface WorkExperience {
-  title: string;
-  company: string;
-  period: string;
+  key: string;
+  responsibilities: number;
   current: boolean;
-  description: string;
-  responsibilities: string[];
   tags: string[];
   subProjects?: SubProject[];
 }
 
 interface SubProject {
-  title: string;
-  description: string;
+  key: string;
   tags: string[];
 }
 
 interface ProjectItem {
-  title: string;
-  description: string;
+  key: string;
   image?: string;
   icon?: string;
   repository?: string;
   deploy?: string;
   tags: string[];
-  type: string;
+  type: 'personal' | 'group' | 'venture';
 }
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
-  imports: [CommonModule, TranslocoModule, FontAwesomeModule],
-  standalone: true,
+  imports: [TranslocoModule, FontAwesomeModule],
 })
 export class ProjectsComponent implements OnInit {
   faBriefcase = faBriefcase;
   faExternal = faArrowUpRightFromSquare;
   faCode = faCodeBranch;
 
-  selectedTech: string | null = null;
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
-
-  originalWorkExperience: WorkExperience[] = [];
-  originalProjects: ProjectItem[] = [];
+  selectedTech = signal<string | null>(null);
+  workExperience = signal<WorkExperience[]>([]);
+  projects = signal<ProjectItem[]>([]);
 
   ngOnInit() {
-    // Backup arrays on init
-    this.originalWorkExperience = [...this.workExperience];
-    this.originalProjects = [...this.projects];
+    this.route.queryParams
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(params => {
+        const tech = params['tech'] || null;
+        this.selectedTech.set(tech);
 
-    this.route.queryParams.subscribe((params) => {
-      this.selectedTech = params['tech'] || null;
-      
-      if (this.selectedTech) {
-        this.workExperience = [...this.originalWorkExperience].sort((a,b) => (this.hasTechJob(b) ? 1 : 0) - (this.hasTechJob(a) ? 1 : 0));
-        this.projects = [...this.originalProjects].sort((a,b) => (this.hasTechProject(b) ? 1 : 0) - (this.hasTechProject(a) ? 1 : 0));
-
-        if (typeof window !== 'undefined') {
-          const doc = document.getElementById('experience-section');
-          if (doc) doc.scrollIntoView({ behavior: 'smooth' });
+        if (tech) {
+          // Matching items first, original order otherwise
+          this.workExperience.set(
+            [...WORK_EXPERIENCE].sort(
+              (a, b) => Number(this.hasTechJob(b)) - Number(this.hasTechJob(a)),
+            ),
+          );
+          this.projects.set(
+            [...PROJECTS].sort(
+              (a, b) =>
+                Number(this.hasTechProject(b)) - Number(this.hasTechProject(a)),
+            ),
+          );
+          if (typeof window !== 'undefined') {
+            document
+              .getElementById('experience-section')
+              ?.scrollIntoView({ behavior: 'smooth' });
+          }
+        } else {
+          this.workExperience.set([...WORK_EXPERIENCE]);
+          this.projects.set([...PROJECTS]);
         }
-      } else {
-        // Restore original order when filter is cleared
-        this.workExperience = [...this.originalWorkExperience];
-        this.projects = [...this.originalProjects];
-      }
-    });
+      });
   }
 
-  hasTechJob(job: any): boolean {
-    if (!this.selectedTech) return true;
-    const lowerTech = this.selectedTech.toLowerCase();
-    const hasInTags = job.tags.some((t: string) => t.toLowerCase() === lowerTech);
-    const hasInSub = job.subProjects
-      ? job.subProjects.some((s: any) =>
-          s.tags.some((t: string) => t.toLowerCase() === lowerTech)
-        )
-      : false;
-    return hasInTags || hasInSub;
-  }
-
-  hasTechProject(project: any): boolean {
-    if (!this.selectedTech) return true;
-    return project.tags.some(
-      (t: string) => t.toLowerCase() === this.selectedTech?.toLowerCase()
+  /** Keys of the numbered responsibilities of a job, e.g. `...RESPONSIBILITIES.1` */
+  responsibilityKeys(job: WorkExperience): string[] {
+    return Array.from(
+      { length: job.responsibilities },
+      (_, i) => `${job.key}.RESPONSIBILITIES.${i + 1}`,
     );
+  }
+
+  isMatch(tag: string): boolean {
+    const tech = this.selectedTech();
+    return !!tech && tag.toLowerCase() === tech.toLowerCase();
+  }
+
+  hasTechJob(job: WorkExperience): boolean {
+    if (!this.selectedTech()) return true;
+    return (
+      job.tags.some(t => this.isMatch(t)) ||
+      (job.subProjects ?? []).some(s => s.tags.some(t => this.isMatch(t)))
+    );
+  }
+
+  hasTechProject(project: ProjectItem): boolean {
+    if (!this.selectedTech()) return true;
+    return project.tags.some(t => this.isMatch(t));
   }
 
   clearFilter() {
     this.router.navigate(['/projects']);
   }
-
-  workExperience: WorkExperience[] = [
-    {
-      title: 'Full Stack Developer',
-      company: 'TheLabit',
-      period: 'Agosto 2023 – Actualidad',
-      current: true,
-      description:
-        'Desarrollo y mantenimiento continuo de productos digitales complejos, aplicaciones móviles nativas y ecosistemas de microservicios para múltiples clientes institucionales.',
-      responsibilities: [
-        'Liderazgo arquitectónico y migración de microservicios Java a NestJS en infraestructuras Cloud (OpenShift RedHat / AWS).',
-        'Desarrollo integral de aplicaciones React Native y Angular abarcando captura de datos, lectura de QR y gestión de identidades digitales.',
-        'Análisis constante de requerimientos y comunicación directa con clientes para traducir demandas comerciales en código sólido y seguro.',
-        'Mentoría técnica orientada a perfiles iniciales / nuevos ingresos e impulso de buenas prácticas de desarrollo en metodologías ágiles.'
-      ],
-      tags: ['Angular', 'React Native', 'NestJS', 'Python', 'AWS', 'MySQL', 'Git', 'OracleSQL', 'HTML5', 'CSS3', 'Jira', 'OpenShift'],
-      subProjects: [
-        {
-          title: 'InspectIA',
-          description: 'Plataforma B2B para compañías de seguros que automatiza la inspección de vehículos usando inteligencia artificial.',
-          tags: ['Angular', 'NestJS', 'Prisma', 'FastAPI', 'Python', 'Docker', 'AWS', 'IA']
-        },
-        {
-          title: 'Credential Wallet',
-          description: 'Billetera digital de credenciales con sistema validación QR, diseñada para multi-empresa institucional.',
-          tags: ['React Native', 'NestJS', 'MySQL']
-        },
-        {
-          title: 'App Sindical (ATSA)',
-          description: 'Aplicación integral para afiliados. Permite gestión de permisos familiares, inscripción a sorteos/eventos e incluye feed de noticias en tiempo real del gremio.',
-          tags: ['React Native', 'Angular', 'NestJS', 'TypeORM', 'MySQL']
-        }
-      ]
-    },
-    {
-      title: 'FrontEnd Developer Angular',
-      company: 'Depsys Informática (IberaSoft)',
-      period: 'Octubre 2022 – Agosto 2023',
-      current: false,
-      description:
-        'Modernización de sistemas ERP, desarrollo de aplicaciones para terceros y diseño de reportes.',
-      responsibilities: [
-        'Migración de un ERP legacy en Visual Basic hacia una arquitectura moderna en Angular.',
-        'Diseño y desarrollo de páginas web del tipo SPA (Single Page Applications) para clientes de terceros.',
-        'Diseño y estructuración de informes técnicos con JasperSoft.',
-      ],
-      tags: ['Angular', 'TypeScript', 'JasperSoft', 'Visual Basic', 'HTML5', 'CSS3'],
-    },
-  ];
-
-  projects: ProjectItem[] = [
-    /* 
-    {
-      title: 'LetsGo',
-      description: 'Sistema de gestión escolar con plan de modernización tecnológica.',
-      tags: ['.NET Framework', 'Angular', 'NestJS'],
-      type: 'venture',
-    },
-    */
-    {
-      title: 'Portfolio',
-      description: 'Aplicación web para exhibir habilidades de UI/UX.',
-      image: '/assets/images/projects/portfolio.png',
-      icon: '/assets/images/projects/portfolio-icon.png',
-      repository: 'https://github.com/DavidLBruno/portfolio',
-      tags: ['Angular', 'SSR', 'SCSS'],
-      type: 'personal',
-    },
-    {
-      title: 'Billetera Virtual',
-      description: 'Aplicación financiera desarrollada en equipo.',
-      image: '/assets/images/projects/wallet-digital.png',
-      icon: '/assets/images/projects/wallet-digital-icon.png',
-      repository: 'https://github.com/DavidLBruno/grupo-n-1',
-      tags: ['Node.js', 'React', 'PostgreSQL'],
-      type: 'group',
-    },
-    {
-      title: 'E-commerce Vlixes',
-      description: 'Tienda de ropa deportiva con coordinación de equipo.',
-      image: '/assets/images/projects/e-commerce.png',
-      icon: '/assets/images/projects/e-commerce-logo.png',
-      deploy: 'https://pf-vlixes-main.vercel.app/',
-      tags: ['React', 'Node.js', 'Redux'],
-      type: 'group',
-    },
-    {
-      title: 'App Pokémon',
-      description:
-        'Desarrollo Full Stack con filtros, búsquedas y creación de datos.',
-      image: '/assets/images/projects/pokemon.png',
-      icon: '/assets/images/projects/game1.png',
-      deploy: 'https://pi-pokemon-eta.vercel.app/',
-      repository: 'https://github.com/DavidLBruno/PI-POKEMON',
-      tags: ['React', 'Redux', 'Express', 'PostgreSQL', 'Sequelize'],
-      type: 'personal',
-    },
-    {
-      title: 'Gastos Compartidos',
-      description: 'Aplicación para seguimiento de gastos y métricas con paneles compartidos.',
-      image: '/assets/images/projects/gastos_compartidos.png',
-      deploy: 'https://vps-4441022-x.dattaweb.com/auth',
-      tags: ['Angular', 'NestJS', 'PostgreSQL', 'SCSS'],
-      type: 'personal',
-    },
-    {
-      title: 'Food Code',
-      description: 'Web app 100% mobile (PWA) para gestión de menú QR, pedidos guiados en mesa y pagos integrados (efectivo/digital).',
-      image: '/assets/images/projects/food_code.png',
-      deploy: 'https://food-code-front.pages.dev/',
-      tags: ['Angular', 'NestJS', 'TypeORM', 'PostgreSQL'],
-      type: 'group',
-    },
-  ];
 }
+
+const WORK_EXPERIENCE: WorkExperience[] = [
+  {
+    key: 'EXPERIENCE.JOBS.THELABIT',
+    responsibilities: 4,
+    current: true,
+    tags: [
+      'Angular',
+      'React Native',
+      'NestJS',
+      'Python',
+      'AWS',
+      'MySQL',
+      'Git',
+      'OracleSQL',
+      'HTML5',
+      'CSS3',
+      'Jira',
+      'OpenShift',
+    ],
+    subProjects: [
+      {
+        key: 'EXPERIENCE.JOBS.THELABIT.PROJECTS.INSPECTIA',
+        tags: [
+          'Angular',
+          'NestJS',
+          'Prisma',
+          'FastAPI',
+          'Python',
+          'Docker',
+          'AWS',
+          'IA',
+        ],
+      },
+      {
+        key: 'EXPERIENCE.JOBS.THELABIT.PROJECTS.CREDENTIAL_WALLET',
+        tags: ['React Native', 'NestJS', 'MySQL'],
+      },
+      {
+        key: 'EXPERIENCE.JOBS.THELABIT.PROJECTS.ATSA',
+        tags: ['React Native', 'Angular', 'NestJS', 'TypeORM', 'MySQL'],
+      },
+    ],
+  },
+  {
+    key: 'EXPERIENCE.JOBS.DEPSYS',
+    responsibilities: 3,
+    current: false,
+    tags: [
+      'Angular',
+      'TypeScript',
+      'JasperSoft',
+      'Visual Basic',
+      'HTML5',
+      'CSS3',
+    ],
+  },
+];
+
+const PROJECTS: ProjectItem[] = [
+  {
+    key: 'PROJECTS.ITEMS.PORTFOLIO',
+    image: '/assets/images/projects/portfolio.png',
+    icon: '/assets/images/projects/portfolio-icon.png',
+    repository: 'https://github.com/DavidLBruno/portfolio',
+    deploy: 'https://www.bruno-david.com/',
+    tags: ['Angular', 'SSR', 'SCSS'],
+    type: 'personal',
+  },
+  {
+    key: 'PROJECTS.ITEMS.WALLET',
+    image: '/assets/images/projects/wallet-digital.png',
+    icon: '/assets/images/projects/wallet-digital-icon.png',
+    repository: 'https://github.com/DavidLBruno/grupo-n-1',
+    tags: ['Node.js', 'React', 'PostgreSQL'],
+    type: 'group',
+  },
+  {
+    key: 'PROJECTS.ITEMS.VLIXES',
+    image: '/assets/images/projects/e-commerce.png',
+    icon: '/assets/images/projects/e-commerce-logo.png',
+    deploy: 'https://pf-vlixes-main.vercel.app/',
+    tags: ['React', 'Node.js', 'Redux'],
+    type: 'group',
+  },
+  {
+    key: 'PROJECTS.ITEMS.POKEMON',
+    image: '/assets/images/projects/pokemon.png',
+    icon: '/assets/images/projects/game1.png',
+    deploy: 'https://pi-pokemon-eta.vercel.app/',
+    repository: 'https://github.com/DavidLBruno/PI-POKEMON',
+    tags: ['React', 'Redux', 'Express', 'PostgreSQL', 'Sequelize'],
+    type: 'personal',
+  },
+  {
+    key: 'PROJECTS.ITEMS.SHARED_EXPENSES',
+    image: '/assets/images/projects/gastos_compartidos.png',
+    deploy: 'https://vps-4441022-x.dattaweb.com/auth',
+    tags: ['Angular', 'NestJS', 'PostgreSQL', 'SCSS'],
+    type: 'personal',
+  },
+  {
+    key: 'PROJECTS.ITEMS.FOOD_CODE',
+    image: '/assets/images/projects/food_code.png',
+    deploy: 'https://food-code-front.pages.dev/',
+    tags: ['Angular', 'NestJS', 'TypeORM', 'PostgreSQL'],
+    type: 'group',
+  },
+];

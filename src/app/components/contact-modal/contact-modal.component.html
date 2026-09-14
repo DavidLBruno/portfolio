@@ -1,15 +1,26 @@
-<div class="modal-overlay"
-     [class.closing]="isClosing"
-     (click)="onBackdropClick($event)">
-
+<div
+  class="modal-overlay"
+  [class.closing]="isClosing()"
+  (click)="onBackdropClick($event)"
+>
   <!-- Decorative background orbs -->
   <div class="modal-bg-orb orb-1"></div>
   <div class="modal-bg-orb orb-2"></div>
 
-  <div class="modal-container" [class.closing]="isClosing">
-
+  <div
+    class="modal-container"
+    [class.closing]="isClosing()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="contact-modal-title"
+  >
     <!-- Close button -->
-    <button class="modal-close" (click)="close()" aria-label="Close">
+    <button
+      type="button"
+      class="modal-close"
+      (click)="close()"
+      [attr.aria-label]="'CONTACT.CLOSE' | transloco"
+    >
       <fa-icon [icon]="faClose"></fa-icon>
     </button>
 
@@ -18,121 +29,180 @@
       <div class="modal-header-icon">
         <fa-icon [icon]="faEnvelope"></fa-icon>
       </div>
-      <h2 class="modal-title">{{ 'CONTACT.TITLE' | transloco }}</h2>
+      <h2 id="contact-modal-title" class="modal-title">
+        {{ 'CONTACT.TITLE' | transloco }}
+      </h2>
       <p class="modal-subtitle">{{ 'CONTACT.SUBTITLE' | transloco }}</p>
     </div>
 
-    <!-- Success State -->
-    <div *ngIf="sendStatus === 'success'" class="status-message success">
-      <div class="status-icon-wrapper">
-        <fa-icon [icon]="faSuccess"></fa-icon>
-      </div>
-      <h3>{{ 'CONTACT.SUCCESS_TITLE' | transloco }}</h3>
-      <p>{{ 'CONTACT.SUCCESS_MSG' | transloco }}</p>
-    </div>
-
-    <!-- Error State -->
-    <div *ngIf="sendStatus === 'error'" class="status-message error">
-      <div class="status-icon-wrapper">
-        <fa-icon [icon]="faError"></fa-icon>
-      </div>
-      <h3>{{ 'CONTACT.ERROR_TITLE' | transloco }}</h3>
-      <p>{{ 'CONTACT.ERROR_MSG' | transloco }}</p>
-      <button class="btn-retry" (click)="sendStatus = 'idle'">
-        {{ 'CONTACT.RETRY' | transloco }}
-      </button>
-    </div>
-
-    <!-- Form -->
-    <form *ngIf="sendStatus === 'idle'"
-          class="contact-form"
-          (ngSubmit)="sendEmail()">
-
-      <!-- Honeypot field - Bots will see it but humans won't -->
-      <div class="sr-only" aria-hidden="true" style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;">
-        <input type="text" name="website" [(ngModel)]="formData.website" tabindex="-1" autocomplete="off" />
-      </div>
-
-      <!-- Name Field -->
-      <div class="form-group" [class.focused]="focusedField === 'name'" [class.has-value]="formData.name.length > 0">
-        <div class="input-icon">
-          <fa-icon [icon]="faUser"></fa-icon>
+    @switch (sendStatus()) {
+      <!-- Success State -->
+      @case ('success') {
+        <div class="status-message success" role="status">
+          <div class="status-icon-wrapper">
+            <fa-icon [icon]="faSuccess"></fa-icon>
+          </div>
+          <h3>{{ 'CONTACT.SUCCESS_TITLE' | transloco }}</h3>
+          <p>{{ 'CONTACT.SUCCESS_MSG' | transloco }}</p>
         </div>
-        <div class="input-wrapper">
-          <input
-            type="text"
-            id="contact-name"
-            [(ngModel)]="formData.name"
-            name="name"
-            (focus)="onFocus('name')"
-            (blur)="onBlur('name')"
-            autocomplete="name"
-            required />
-          <label for="contact-name">{{ 'CONTACT.NAME' | transloco }}</label>
-          <div class="input-line"></div>
-        </div>
-      </div>
+      }
 
-      <!-- Email Field -->
-      <div class="form-group" [class.focused]="focusedField === 'email'" [class.has-value]="formData.email.length > 0">
-        <div class="input-icon">
-          <fa-icon [icon]="faEnvelope"></fa-icon>
+      <!-- Error State -->
+      @case ('error') {
+        <div class="status-message error" role="alert">
+          <div class="status-icon-wrapper">
+            <fa-icon [icon]="faError"></fa-icon>
+          </div>
+          <h3>{{ 'CONTACT.ERROR_TITLE' | transloco }}</h3>
+          <p>{{ 'CONTACT.ERROR_MSG' | transloco }}</p>
+          <button
+            type="button"
+            class="btn-retry"
+            (click)="sendStatus.set('idle')"
+          >
+            {{ 'CONTACT.RETRY' | transloco }}
+          </button>
         </div>
-        <div class="input-wrapper">
-          <input
-            type="email"
-            id="contact-email"
-            [(ngModel)]="formData.email"
-            name="email"
-            (focus)="onFocus('email')"
-            (blur)="onBlur('email')"
-            autocomplete="email"
-            required />
-          <label for="contact-email">{{ 'CONTACT.EMAIL' | transloco }}</label>
-          <div class="input-line"></div>
-        </div>
-      </div>
+      }
 
-      <!-- Message Field -->
-      <div class="form-group textarea-group" [class.focused]="focusedField === 'message'" [class.has-value]="formData.message.length > 0">
-        <div class="input-icon textarea-icon">
-          <fa-icon [icon]="faMessage"></fa-icon>
-        </div>
-        <div class="input-wrapper">
-          <textarea
-            id="contact-message"
-            [(ngModel)]="formData.message"
-            name="message"
-            rows="4"
-            (focus)="onFocus('message')"
-            (blur)="onBlur('message')"
-            required></textarea>
-          <label for="contact-message">{{ 'CONTACT.MESSAGE' | transloco }}</label>
-          <div class="input-line"></div>
-        </div>
-      </div>
+      <!-- Form -->
+      @default {
+        <form class="contact-form" (ngSubmit)="sendEmail()">
+          <!-- Honeypot field - bots fill it, humans never see it -->
+          <div
+            class="sr-only"
+            aria-hidden="true"
+            style="
+              position: absolute;
+              left: -9999px;
+              opacity: 0;
+              pointer-events: none;
+            "
+          >
+            <input
+              type="text"
+              name="website"
+              [ngModel]="formData().website"
+              (ngModelChange)="updateField('website', $event)"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
 
-      <!-- Character count -->
-      <div class="char-count" [class.valid]="formData.message.length > 10">
-        {{ formData.message.length }} / 10 {{ 'CONTACT.MIN_CHARS' | transloco }}
-      </div>
+          <!-- Name Field -->
+          <div
+            class="form-group"
+            [class.focused]="focusedField() === 'name'"
+            [class.has-value]="formData().name.length > 0"
+          >
+            <div class="input-icon">
+              <fa-icon [icon]="faUser"></fa-icon>
+            </div>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="contact-name"
+                name="name"
+                [ngModel]="formData().name"
+                (ngModelChange)="updateField('name', $event)"
+                (focus)="onFocus('name')"
+                (blur)="onBlur()"
+                autocomplete="name"
+                [attr.maxlength]="maxNameLength"
+                required
+              />
+              <label for="contact-name">{{ 'CONTACT.NAME' | transloco }}</label>
+              <div class="input-line"></div>
+            </div>
+          </div>
 
-      <!-- Submit Button -->
-      <button
-        type="submit"
-        class="btn-submit"
-        [disabled]="!isFormValid || isSending"
-        [class.sending]="isSending">
-        <span class="btn-content" *ngIf="!isSending">
-          <fa-icon [icon]="faSend"></fa-icon>
-          <span>{{ 'CONTACT.SEND' | transloco }}</span>
-        </span>
-        <span class="btn-content" *ngIf="isSending">
-          <fa-icon [icon]="faSpinner" class="spinner"></fa-icon>
-          <span>{{ 'CONTACT.SENDING' | transloco }}</span>
-        </span>
-      </button>
-    </form>
+          <!-- Email Field -->
+          <div
+            class="form-group"
+            [class.focused]="focusedField() === 'email'"
+            [class.has-value]="formData().email.length > 0"
+          >
+            <div class="input-icon">
+              <fa-icon [icon]="faEnvelope"></fa-icon>
+            </div>
+            <div class="input-wrapper">
+              <input
+                type="email"
+                id="contact-email"
+                name="email"
+                [ngModel]="formData().email"
+                (ngModelChange)="updateField('email', $event)"
+                (focus)="onFocus('email')"
+                (blur)="onBlur()"
+                autocomplete="email"
+                maxlength="254"
+                required
+              />
+              <label for="contact-email">{{
+                'CONTACT.EMAIL' | transloco
+              }}</label>
+              <div class="input-line"></div>
+            </div>
+          </div>
 
+          <!-- Message Field -->
+          <div
+            class="form-group textarea-group"
+            [class.focused]="focusedField() === 'message'"
+            [class.has-value]="formData().message.length > 0"
+          >
+            <div class="input-icon textarea-icon">
+              <fa-icon [icon]="faMessage"></fa-icon>
+            </div>
+            <div class="input-wrapper">
+              <textarea
+                id="contact-message"
+                name="message"
+                rows="4"
+                [ngModel]="formData().message"
+                (ngModelChange)="updateField('message', $event)"
+                (focus)="onFocus('message')"
+                (blur)="onBlur()"
+                [attr.maxlength]="maxMessageLength"
+                required
+              ></textarea>
+              <label for="contact-message">{{
+                'CONTACT.MESSAGE' | transloco
+              }}</label>
+              <div class="input-line"></div>
+            </div>
+          </div>
+
+          <!-- Character count -->
+          <div
+            class="char-count"
+            [class.valid]="formData().message.length > minMessageLength"
+          >
+            {{ formData().message.length }} / {{ minMessageLength }}
+            {{ 'CONTACT.MIN_CHARS' | transloco }}
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="btn-submit"
+            [disabled]="!isFormValid() || isSending()"
+            [class.sending]="isSending()"
+          >
+            @if (isSending()) {
+              <span class="btn-content">
+                <fa-icon [icon]="faSpinner" class="spinner"></fa-icon>
+                <span>{{ 'CONTACT.SENDING' | transloco }}</span>
+              </span>
+            } @else {
+              <span class="btn-content">
+                <fa-icon [icon]="faSend"></fa-icon>
+                <span>{{ 'CONTACT.SEND' | transloco }}</span>
+              </span>
+            }
+          </button>
+        </form>
+      }
+    }
   </div>
 </div>

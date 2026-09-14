@@ -1,27 +1,40 @@
 <div class="settings modal-body">
-  <h1>{{ "SETTINGS.TITLE" | transloco }}</h1>
-  <form [formGroup]="settings" class="container-form d-flex flex-column align-items-center p-1">
-    @for (param of configsParams; track $index) {
-    <div class="setting-item d-flex gap-3 align-items-center justify-content-between w-100">
-      <label for="dropdownBasic1" class="form-label m-0">{{
-        param.title | transloco
-        }}</label>
-      <div ngbDropdown class="d-inline-block">
-        <button type="button" class="btn custom-dropdown d-flex align-items-center gap-2" id="dropdownBasic1"
-          ngbDropdownToggle>
-          {{ getOptions(param.option, settings.controls[param.form].value) | transloco }}
-          <fa-icon class="icon" [icon]="faChevronDown"></fa-icon>
-        </button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          @for (item of param.option; track $index) {
-          <button [class.active]="settings.controls[param.form].value == item.value"
-            (click)="changeForm(item, param.form)" ngbDropdownItem>
-            {{ item.title | transloco }}
+  <h1>{{ 'SETTINGS.TITLE' | transloco }}</h1>
+  <form
+    [formGroup]="settings"
+    class="container-form d-flex flex-column align-items-center p-1"
+  >
+    @for (param of configsParams; track param.form) {
+      <div
+        class="setting-item d-flex gap-3 align-items-center justify-content-between w-100"
+      >
+        <label [for]="'setting-' + param.form" class="form-label m-0">
+          {{ param.title | transloco }}
+        </label>
+        <div ngbDropdown class="d-inline-block">
+          <button
+            type="button"
+            class="btn custom-dropdown d-flex align-items-center gap-2"
+            [id]="'setting-' + param.form"
+            ngbDropdownToggle
+          >
+            {{ getOptions(param.option, currentValue(param.form)) | transloco }}
+            <fa-icon class="icon" [icon]="faChevronDown"></fa-icon>
           </button>
-          }
+          <div ngbDropdownMenu [attr.aria-labelledby]="'setting-' + param.form">
+            @for (item of param.option; track item.value) {
+              <button
+                type="button"
+                [class.active]="currentValue(param.form) === item.value"
+                (click)="changeForm(item, param.form)"
+                ngbDropdownItem
+              >
+                {{ item.title | transloco }}
+              </button>
+            }
+          </div>
         </div>
       </div>
-    </div>
     }
   </form>
 </div>

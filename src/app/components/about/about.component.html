@@ -6,57 +6,91 @@
   </div>
 
   <!-- Filter Banner -->
-  <div class="filter-banner" *ngIf="selectedTech">
-    <span>Resaltando formación en: <strong>{{ selectedTech }}</strong></span>
-    <button (click)="clearFilter()" class="btn-clear">Mostrar todo</button>
-  </div>
+  @if (selectedTech(); as tech) {
+    <div class="filter-banner">
+      <span
+        >{{ 'FILTER.EDUCATION_LABEL' | transloco }}
+        <strong>{{ tech }}</strong></span
+      >
+      <button (click)="clearFilter()" class="btn-clear">
+        {{ 'FILTER.SHOW_ALL' | transloco }}
+      </button>
+    </div>
+  }
 
   <div class="education-grid">
-    <div class="education-card" *ngFor="let edu of estudios; let i = index"
-         [style.animation-delay]="i * 0.12 + 's'"
-         [class.dimmed]="selectedTech && !hasTechEdu(edu)">
-      <div class="edu-icon">
-        <fa-icon [icon]="faGrad"></fa-icon>
-      </div>
-      <div class="edu-content">
-        <div class="edu-header">
-          <h3 class="edu-title">{{ edu.title }}</h3>
-          <div class="edu-meta">
-            <span class="edu-period">{{ edu.period }}</span>
-            <span class="edu-badge" *ngIf="edu.current">En curso</span>
+    @for (edu of estudios(); track edu.key; let i = $index) {
+      <div
+        class="education-card"
+        [style.animation-delay]="i * 0.12 + 's'"
+        [class.dimmed]="selectedTech() && !hasTechEdu(edu)"
+      >
+        <div class="edu-icon">
+          <fa-icon [icon]="faGrad"></fa-icon>
+        </div>
+        <div class="edu-content">
+          <div class="edu-header">
+            <h3 class="edu-title">{{ edu.key + '.TITLE' | transloco }}</h3>
+            <div class="edu-meta">
+              <span class="edu-period">{{
+                edu.key + '.PERIOD' | transloco
+              }}</span>
+              @if (edu.current) {
+                <span class="edu-badge">{{ 'ABOUT.CURRENT' | transloco }}</span>
+              }
+            </div>
           </div>
-        </div>
-        <a [href]="edu.institutionLink" target="_blank" rel="noopener" class="edu-institution">
-          {{ edu.institution }}
-        </a>
-        <p class="edu-description">{{ edu.description }}</p>
-        <div class="job-tags" style="margin-top: 1rem" *ngIf="edu.tags">
-           <span class="tag" *ngFor="let tag of edu.tags"
-                 [class.tech-match]="selectedTech && tag.toLowerCase() === selectedTech.toLowerCase()">
-             {{ tag }}
-           </span>
-        </div>
-        <div class="edu-actions" *ngIf="edu.certificate" style="margin-top: 1rem">
-          <a [href]="edu.certificate" target="_blank" rel="noopener" class="btn-certificate">
-            <fa-icon [icon]="faCert"></fa-icon> Ver Certificado
+          <a
+            [href]="edu.institutionLink"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="edu-institution"
+          >
+            {{ edu.key + '.INSTITUTION' | transloco }}
           </a>
+          <p class="edu-description">
+            {{ edu.key + '.DESCRIPTION' | transloco }}
+          </p>
+          @if (edu.tags) {
+            <div class="job-tags" style="margin-top: 1rem">
+              @for (tag of edu.tags; track tag) {
+                <span class="tag" [class.tech-match]="isMatch(tag)">
+                  {{ tag }}
+                </span>
+              }
+            </div>
+          }
+          @if (edu.certificate) {
+            <div class="edu-actions" style="margin-top: 1rem">
+              <a
+                [href]="edu.certificate"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-certificate"
+              >
+                <fa-icon [icon]="faCert"></fa-icon>
+                {{ 'ABOUT.VIEW_CERTIFICATE' | transloco }}
+              </a>
+            </div>
+          }
         </div>
       </div>
-    </div>
+    }
   </div>
 
   <!-- Hobbies Section -->
   <div class="section-header hobbies-header">
-    <h2 class="section-title">Intereses</h2>
+    <h2 class="section-title">{{ 'ABOUT.INTERESTS' | transloco }}</h2>
   </div>
 
   <div class="hobbies-grid">
-    <div class="hobby-card" *ngFor="let hobby of hobbies; let i = index"
-         [style.animation-delay]="i * 0.08 + 's'">
-      <div class="hobby-icon">
-        <fa-icon [icon]="hobby.icon"></fa-icon>
+    @for (hobby of hobbies; track hobby.key; let i = $index) {
+      <div class="hobby-card" [style.animation-delay]="i * 0.08 + 's'">
+        <div class="hobby-icon">
+          <fa-icon [icon]="hobby.icon"></fa-icon>
+        </div>
+        <span class="hobby-title">{{ hobby.key | transloco }}</span>
       </div>
-      <span class="hobby-title">{{ hobby.title }}</span>
-    </div>
+    }
   </div>
 </section>

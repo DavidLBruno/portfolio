@@ -1,45 +1,107 @@
-<nav class="main-nav" [class.scrolled]="scrolled" [class.menu-open]="hamburguer">
-  <div class="nav-inner" [ngClass]="hamburguer ? 'open' : ''">
+<nav
+  class="main-nav"
+  [class.scrolled]="scrolled()"
+  [class.menu-open]="hamburguer()"
+>
+  <div class="nav-inner" [class.open]="hamburguer()">
     <!-- Logo + Hamburger Row -->
     <div class="nav-brand">
-      <img src="/assets/images/main.png" alt="Bruno David" routerLink="/" class="logo" />
+      <a
+        routerLink="/"
+        (click)="closeMenu()"
+        [attr.aria-label]="'NAVBAR.ARIA.LOGO' | transloco"
+      >
+        <img
+          src="/assets/images/main.png"
+          alt=""
+          class="logo"
+          width="48"
+          height="48"
+        />
+      </a>
 
       <div class="nav-actions-mobile">
         <!-- Theme toggle mobile -->
-        <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
-          <fa-icon [icon]="isDark ? iconSun : iconMoon"></fa-icon>
+        <button
+          type="button"
+          class="theme-toggle"
+          (click)="toggleTheme()"
+          [attr.aria-label]="
+            (isDark() ? 'NAVBAR.ARIA.TO_LIGHT' : 'NAVBAR.ARIA.TO_DARK')
+              | transloco
+          "
+        >
+          <fa-icon [icon]="isDark() ? iconSun : iconMoon"></fa-icon>
         </button>
         <!-- Settings mobile -->
-        <button class="settings-btn" (click)="open()" aria-label="Settings">
+        <button
+          type="button"
+          class="settings-btn"
+          (click)="open()"
+          [attr.aria-label]="'NAVBAR.ARIA.SETTINGS' | transloco"
+        >
           <fa-icon [icon]="iconGear"></fa-icon>
         </button>
         <!-- Hamburger -->
-        <div class="hamburger" (click)="handleMenu()" [class.open]="hamburguer">
+        <button
+          type="button"
+          class="hamburger"
+          (click)="handleMenu()"
+          [class.open]="hamburguer()"
+          [attr.aria-expanded]="hamburguer()"
+          aria-controls="main-nav-links"
+          [attr.aria-label]="
+            (hamburguer() ? 'NAVBAR.ARIA.CLOSE_MENU' : 'NAVBAR.ARIA.MENU')
+              | transloco
+          "
+        >
           <span></span>
           <span></span>
           <span></span>
-        </div>
+        </button>
       </div>
     </div>
 
     <!-- Navigation Links -->
-    <div class="nav-links" [ngClass]="hamburguer ? 'open' : ''">
-      <a *ngFor="let item of items"
-         class="main-nav-link"
-         [routerLink]="'/' + item.link"
-         (click)="handleMenu()"
-         [class.active]="'/' + item.link === routeActually || (item.link === '' && routeActually === '/')">
-        {{ item.title | transloco }}
-        <span class="link-indicator"></span>
-      </a>
+    <div id="main-nav-links" class="nav-links" [class.open]="hamburguer()">
+      @for (item of items; track item.link) {
+        <a
+          class="main-nav-link"
+          [routerLink]="'/' + item.link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{
+            paths: 'exact',
+            queryParams: 'ignored',
+            matrixParams: 'ignored',
+            fragment: 'ignored',
+          }"
+          (click)="closeMenu()"
+        >
+          {{ item.title | transloco }}
+          <span class="link-indicator"></span>
+        </a>
+      }
     </div>
 
     <!-- Desktop Actions -->
     <div class="nav-actions-desktop">
-      <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
-        <fa-icon [icon]="isDark ? iconSun : iconMoon"></fa-icon>
+      <button
+        type="button"
+        class="theme-toggle"
+        (click)="toggleTheme()"
+        [attr.aria-label]="
+          (isDark() ? 'NAVBAR.ARIA.TO_LIGHT' : 'NAVBAR.ARIA.TO_DARK')
+            | transloco
+        "
+      >
+        <fa-icon [icon]="isDark() ? iconSun : iconMoon"></fa-icon>
       </button>
-      <button class="settings-btn" (click)="open()" aria-label="Settings">
+      <button
+        type="button"
+        class="settings-btn"
+        (click)="open()"
+        [attr.aria-label]="'NAVBAR.ARIA.SETTINGS' | transloco"
+      >
         <fa-icon [icon]="iconGear"></fa-icon>
       </button>
     </div>

@@ -40,3 +40,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Local build logs
+build-errors.txt
+
+# Claude Code local tooling
+.claude/

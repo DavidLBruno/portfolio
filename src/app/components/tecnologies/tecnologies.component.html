@@ -5,21 +5,28 @@
   </div>
 
   <div class="skills-grid">
-    <div class="skill-category" *ngFor="let category of tecnologies; let i = index"
-         [style.animation-delay]="i * 0.1 + 's'">
-      <div class="category-header">
-        <div class="category-icon">
-          <fa-icon [icon]="category.icon"></fa-icon>
+    @for (category of tecnologies; track category.key; let i = $index) {
+      <div class="skill-category" [style.animation-delay]="i * 0.1 + 's'">
+        <div class="category-header">
+          <div class="category-icon">
+            <fa-icon [icon]="category.icon"></fa-icon>
+          </div>
+          <h3 class="category-title">{{ category.key | transloco }}</h3>
         </div>
-        <h3 class="category-title">{{ category.title }}</h3>
+        <div class="category-tags">
+          @for (item of category.items; track item.title; let j = $index) {
+            <button
+              type="button"
+              class="skill-tag"
+              [style.animation-delay]="i * 0.1 + j * 0.03 + 's'"
+              [attr.title]="'TECHNOLOGIES.HINT' | transloco"
+              (click)="filterExperience(item.title)"
+            >
+              {{ item.title }}
+            </button>
+          }
+        </div>
       </div>
-      <div class="category-tags">
-        <span class="skill-tag" *ngFor="let item of category.items; let j = index"
-              [style.animation-delay]="(i * 0.1 + j * 0.03) + 's'"
-              (click)="filterExperience(item.title)">
-          {{ item.title }}
-        </span>
-      </div>
-    </div>
+    }
   </div>
 </section>

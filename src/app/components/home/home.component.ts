@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { Component, signal } from '@angular/core';
+import { TranslocoModule } from '@jsverse/transloco';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faLocationDot, faEnvelope, faArrowRight, faDownload } from '@fortawesome/free-solid-svg-icons';
+import {
+  faLocationDot,
+  faEnvelope,
+  faArrowRight,
+  faDownload,
+} from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { RouterModule } from '@angular/router';
 import { ContactModalComponent } from '../contact-modal/contact-modal.component';
@@ -11,34 +15,40 @@ import { ContactModalComponent } from '../contact-modal/contact-modal.component'
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  standalone: true,
-  imports: [CommonModule, TranslocoModule, FontAwesomeModule, RouterModule, ContactModalComponent],
+  imports: [
+    TranslocoModule,
+    FontAwesomeModule,
+    RouterModule,
+    ContactModalComponent,
+  ],
 })
 export class HomeComponent {
   faLocation = faLocationDot;
   faEnvelope = faEnvelope;
   faArrow = faArrowRight;
   faDownload = faDownload;
-  faLinkedin = faLinkedin;
-  faGithub = faGithub;
 
-  showContactModal = false;
+  showContactModal = signal(false);
 
   socialLinks = [
-    { icon: this.faGithub, url: 'https://github.com/DavidLBruno', label: 'GitHub' },
-    { icon: this.faLinkedin, url: 'https://www.linkedin.com/in/bruno-developer/', label: 'LinkedIn' },
+    { icon: faGithub, url: 'https://github.com/DavidLBruno', label: 'GitHub' },
+    {
+      icon: faLinkedin,
+      url: 'https://www.linkedin.com/in/bruno-developer/',
+      label: 'LinkedIn',
+    },
   ];
 
   openContactModal() {
-    this.showContactModal = true;
-    // Prevent body scrolling
+    this.showContactModal.set(true);
+    // Prevent body scrolling while the modal is open
     if (typeof document !== 'undefined') {
       document.body.style.overflow = 'hidden';
     }
   }
 
   closeContactModal() {
-    this.showContactModal = false;
+    this.showContactModal.set(false);
     if (typeof document !== 'undefined') {
       document.body.style.overflow = '';
     }
