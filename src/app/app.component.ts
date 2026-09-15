@@ -1,35 +1,21 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Event, NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { filter } from 'rxjs';
+import { Component, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ChangeSettingService } from './services/change-settings/change-settings.service';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, FooterComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'Bruno David – Full Stack Developer';
-  routeAct = '';
 
-  constructor(
-    private router: Router,
-    private settingsService: ChangeSettingService,
-  ) {
-    this.settingsService.setLanguage();
-    this.settingsService.initTheme();
-
-    this.router.events
-      .pipe(filter((event: Event) => event instanceof NavigationEnd))
-      .subscribe((event: Event) => {
-        this.routeAct = (event as NavigationEnd).url;
-      });
+  constructor() {
+    const settings = inject(ChangeSettingService);
+    settings.setLanguage();
+    settings.initTheme();
   }
-
-  ngOnInit(): void {}
 }

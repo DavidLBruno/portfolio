@@ -8,10 +8,14 @@
 
   <div class="hero-content">
     <div class="hero-text">
-      <p class="hero-greeting animate-item">{{ 'HOME.GREETING' | transloco }}</p>
+      <p class="hero-greeting animate-item">
+        {{ 'HOME.GREETING' | transloco }}
+      </p>
       <h1 class="hero-name animate-item">{{ 'HOME.NAME' | transloco }}</h1>
       <h2 class="hero-role animate-item">{{ 'HOME.ROLE' | transloco }}</h2>
-      <p class="hero-description animate-item">{{ 'HOME.DESCRIPTION' | transloco }}</p>
+      <p class="hero-description animate-item">
+        {{ 'HOME.DESCRIPTION' | transloco }}
+      </p>
 
       <div class="hero-location animate-item">
         <fa-icon [icon]="faLocation"></fa-icon>
@@ -27,32 +31,52 @@
           <span>{{ 'HOME.CTA_PROJECTS' | transloco }}</span>
           <fa-icon [icon]="faArrow"></fa-icon>
         </a>
-        <a href="/assets/cv.pdf" target="_blank" rel="noopener" class="btn-secondary-hero">
+        <a
+          href="/assets/cv.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-secondary-hero"
+        >
           <fa-icon [icon]="faDownload"></fa-icon>
           <span>{{ 'HOME.CTA_CV' | transloco }}</span>
         </a>
       </div>
 
       <div class="hero-socials animate-item">
-        <a *ngFor="let link of socialLinks" [href]="link.url" target="_blank" rel="noopener" class="social-link"
-          [attr.aria-label]="link.label">
-          <fa-icon [icon]="link.icon"></fa-icon>
-        </a>
+        @for (link of socialLinks; track link.url) {
+          <a
+            [href]="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+            [attr.aria-label]="link.label"
+          >
+            <fa-icon [icon]="link.icon"></fa-icon>
+          </a>
+        }
       </div>
     </div>
 
     <div class="hero-visual animate-item">
       <div class="avatar-container">
         <div class="avatar-ring"></div>
-        <img src="/assets/images/bruno-david.jpg" alt="Bruno David" class="avatar-img" />
+        <img
+          src="/assets/images/bruno-david.jpg"
+          [alt]="'HOME.AVATAR_ALT' | transloco"
+          class="avatar-img"
+          width="280"
+          height="280"
+          fetchpriority="high"
+        />
       </div>
       <div class="status-badge">
         <span class="status-dot"></span>
-        <span>Available for work</span>
+        <span>{{ 'HOME.AVAILABLE' | transloco }}</span>
       </div>
     </div>
   </div>
 </section>
 
-<app-contact-modal *ngIf="showContactModal" (closeModal)="closeContactModal()">
-</app-contact-modal>
+@if (showContactModal()) {
+  <app-contact-modal (closeModal)="closeContactModal()"></app-contact-modal>
+}

@@ -6,115 +6,196 @@
   </div>
 
   <!-- Filter Banner -->
-  <div class="filter-banner" *ngIf="selectedTech">
-    <span>Resaltando experiencia con: <strong>{{ selectedTech }}</strong></span>
-    <button (click)="clearFilter()" class="btn-clear">Mostrar todo</button>
-  </div>
+  @if (selectedTech(); as tech) {
+    <div class="filter-banner">
+      <span
+        >{{ 'FILTER.EXPERIENCE_LABEL' | transloco }}
+        <strong>{{ tech }}</strong></span
+      >
+      <button (click)="clearFilter()" class="btn-clear">
+        {{ 'FILTER.SHOW_ALL' | transloco }}
+      </button>
+    </div>
+  }
 
   <div class="timeline">
-    <div class="timeline-item" *ngFor="let job of workExperience; let i = index"
-         [style.animation-delay]="i * 0.15 + 's'"
-         [class.dimmed]="selectedTech && !hasTechJob(job)">
-      <div class="timeline-marker">
-        <div class="marker-dot" [class.active]="job.current"></div>
-        <div class="marker-line" *ngIf="i < workExperience.length - 1"></div>
-      </div>
-      <div class="timeline-content">
-        <div class="timeline-header">
-          <div class="timeline-title-group">
-            <h3 class="job-title">{{ job.title }}</h3>
-            <span class="job-company">{{ job.company }}</span>
-          </div>
-          <div class="timeline-meta">
-            <span class="job-period">{{ job.period }}</span>
-            <span class="current-badge" *ngIf="job.current">Actual</span>
-          </div>
+    @for (job of workExperience(); track job.key; let i = $index) {
+      <div
+        class="timeline-item"
+        [style.animation-delay]="i * 0.15 + 's'"
+        [class.dimmed]="selectedTech() && !hasTechJob(job)"
+      >
+        <div class="timeline-marker">
+          <div class="marker-dot" [class.active]="job.current"></div>
+          @if (i < workExperience().length - 1) {
+            <div class="marker-line"></div>
+          }
         </div>
-        <p class="job-description">{{ job.description }}</p>
-        <ul class="job-responsibilities">
-          <li *ngFor="let resp of job.responsibilities">{{ resp }}</li>
-        </ul>
-        <div class="job-tags">
-          <span class="tag" *ngFor="let tag of job.tags"
-                [class.tech-match]="selectedTech && tag.toLowerCase() === selectedTech.toLowerCase()">
-            {{ tag }}
-          </span>
-        </div>
-
-        <!-- Sub-Projects -->
-        <div class="job-sub-projects" *ngIf="job.subProjects && job.subProjects.length > 0">
-          <h4 class="sub-projects-title">Proyectos Destacados</h4>
-          <div class="sub-projects-grid">
-            <div class="sub-project-card" *ngFor="let sub of job.subProjects">
-              <h5 class="sub-project-title">{{ sub.title }}</h5>
-              <p class="sub-project-description">{{ sub.description }}</p>
-              <div class="job-tags" style="margin-top: 0.6rem">
-                <span class="tag" *ngFor="let tag of sub.tags"
-                      [class.tech-match]="selectedTech && tag.toLowerCase() === selectedTech.toLowerCase()">
-                  {{ tag }}
-                </span>
-              </div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <div class="timeline-title-group">
+              <h3 class="job-title">{{ job.key + '.TITLE' | transloco }}</h3>
+              <span class="job-company">{{
+                job.key + '.COMPANY' | transloco
+              }}</span>
+            </div>
+            <div class="timeline-meta">
+              <span class="job-period">{{
+                job.key + '.PERIOD' | transloco
+              }}</span>
+              @if (job.current) {
+                <span class="current-badge">{{
+                  'EXPERIENCE.CURRENT' | transloco
+                }}</span>
+              }
             </div>
           </div>
+          <p class="job-description">
+            {{ job.key + '.DESCRIPTION' | transloco }}
+          </p>
+          <ul class="job-responsibilities">
+            @for (resp of responsibilityKeys(job); track resp) {
+              <li>{{ resp | transloco }}</li>
+            }
+          </ul>
+          <div class="job-tags">
+            @for (tag of job.tags; track tag) {
+              <span class="tag" [class.tech-match]="isMatch(tag)">
+                {{ tag }}
+              </span>
+            }
+          </div>
+
+          <!-- Sub-Projects -->
+          @if (job.subProjects && job.subProjects.length > 0) {
+            <div class="job-sub-projects">
+              <h4 class="sub-projects-title">
+                {{ 'EXPERIENCE.FEATURED_PROJECTS' | transloco }}
+              </h4>
+              <div class="sub-projects-grid">
+                @for (sub of job.subProjects; track sub.key) {
+                  <div class="sub-project-card">
+                    <h5 class="sub-project-title">
+                      {{ sub.key + '.TITLE' | transloco }}
+                    </h5>
+                    <p class="sub-project-description">
+                      {{ sub.key + '.DESCRIPTION' | transloco }}
+                    </p>
+                    <div class="job-tags" style="margin-top: 0.6rem">
+                      @for (tag of sub.tags; track tag) {
+                        <span class="tag" [class.tech-match]="isMatch(tag)">
+                          {{ tag }}
+                        </span>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          }
         </div>
       </div>
-    </div>
+    }
   </div>
 
   <!-- Projects Section -->
   <div class="section-header projects-header">
-    <h1 class="section-title">{{ 'PROJECTS.PROJECTS.TITLE' | transloco }}</h1>
-    <p class="section-subtitle">{{ 'PROJECTS.PROJECTS.SUBTITLE' | transloco }}</p>
+    <h1 class="section-title">{{ 'PROJECTS.TITLE' | transloco }}</h1>
+    <p class="section-subtitle">{{ 'PROJECTS.SUBTITLE' | transloco }}</p>
   </div>
 
   <div class="projects-grid">
-    <div class="project-card" *ngFor="let project of projects; let i = index"
-         [style.animation-delay]="i * 0.1 + 's'"
-         [class.dimmed]="selectedTech && !hasTechProject(project)">
-      <!-- Image if available -->
-      <div class="project-image" *ngIf="project.image">
-        <img [src]="project.image" [alt]="project.title" loading="lazy" />
-        <div class="project-overlay">
-          <div class="project-links">
-            <a *ngIf="project.repository" [href]="project.repository" target="_blank" rel="noopener" class="project-link-btn"
-               aria-label="Repository">
-              <fa-icon [icon]="faCode"></fa-icon>
-              <span>{{ 'PROJECTS.PROJECTS.CARDS.BUTTONS.REPOSITORY' | transloco }}</span>
-            </a>
-            <a *ngIf="project.deploy" [href]="project.deploy" target="_blank" rel="noopener" class="project-link-btn"
-               aria-label="Live Demo">
-              <fa-icon [icon]="faExternal"></fa-icon>
-              <span>{{ 'PROJECTS.PROJECTS.CARDS.BUTTONS.DEPLOY' | transloco }}</span>
-            </a>
+    @for (project of projects(); track project.key; let i = $index) {
+      <div
+        class="project-card"
+        [style.animation-delay]="i * 0.1 + 's'"
+        [class.dimmed]="selectedTech() && !hasTechProject(project)"
+      >
+        <!-- Image if available -->
+        @if (project.image) {
+          <div class="project-image">
+            <img
+              [src]="project.image"
+              [alt]="project.key + '.TITLE' | transloco"
+              loading="lazy"
+            />
+            <div class="project-overlay">
+              <div class="project-links">
+                @if (project.repository) {
+                  <a
+                    [href]="project.repository"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="project-link-btn"
+                  >
+                    <fa-icon [icon]="faCode"></fa-icon>
+                    <span>{{ 'PROJECTS.BUTTONS.REPOSITORY' | transloco }}</span>
+                  </a>
+                }
+                @if (project.deploy) {
+                  <a
+                    [href]="project.deploy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="project-link-btn"
+                  >
+                    <fa-icon [icon]="faExternal"></fa-icon>
+                    <span>{{ 'PROJECTS.BUTTONS.DEPLOY' | transloco }}</span>
+                  </a>
+                }
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        } @else {
+          <div class="project-image project-no-image">
+            <div class="no-image-icon">
+              <fa-icon [icon]="faBriefcase"></fa-icon>
+            </div>
+          </div>
+        }
 
-      <!-- No image placeholder -->
-      <div class="project-image project-no-image" *ngIf="!project.image">
-        <div class="no-image-icon">
-          <fa-icon [icon]="faBriefcase"></fa-icon>
+        <div class="project-info">
+          <h3 class="project-title">
+            {{ project.key + '.TITLE' | transloco }}
+          </h3>
+          <p class="project-description">
+            {{ project.key + '.DESCRIPTION' | transloco }}
+          </p>
+          <div class="project-tags">
+            @for (tag of project.tags; track tag) {
+              <span class="tag" [class.tech-match]="isMatch(tag)">
+                {{ tag }}
+              </span>
+            }
+          </div>
+          @if (!project.image && (project.repository || project.deploy)) {
+            <div class="project-actions">
+              @if (project.repository) {
+                <a
+                  [href]="project.repository"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="project-link-inline"
+                >
+                  <fa-icon [icon]="faCode"></fa-icon>
+                  {{ 'PROJECTS.BUTTONS.REPOSITORY' | transloco }}
+                </a>
+              }
+              @if (project.deploy) {
+                <a
+                  [href]="project.deploy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="project-link-inline"
+                >
+                  <fa-icon [icon]="faExternal"></fa-icon>
+                  {{ 'PROJECTS.BUTTONS.DEPLOY' | transloco }}
+                </a>
+              }
+            </div>
+          }
         </div>
       </div>
-
-      <div class="project-info">
-        <h3 class="project-title">{{ project.title }}</h3>
-        <p class="project-description">{{ project.description }}</p>
-        <div class="project-tags">
-          <span class="tag" *ngFor="let tag of project.tags"
-                [class.tech-match]="selectedTech && tag.toLowerCase() === selectedTech.toLowerCase()">
-            {{ tag }}
-          </span>
-        </div>
-        <div class="project-actions" *ngIf="!project.image && (project.repository || project.deploy)">
-          <a *ngIf="project.repository" [href]="project.repository" target="_blank" rel="noopener" class="project-link-inline">
-            <fa-icon [icon]="faCode"></fa-icon> Repo
-          </a>
-          <a *ngIf="project.deploy" [href]="project.deploy" target="_blank" rel="noopener" class="project-link-inline">
-            <fa-icon [icon]="faExternal"></fa-icon> Demo
-          </a>
-        </div>
-      </div>
-    </div>
+    }
   </div>
 </section>

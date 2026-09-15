@@ -24,16 +24,27 @@
       "PROJECTS": "Experience",
       "ABOUT": "Education",
       "TECNOLOGIES": "Skills"
+    },
+    "ARIA": {
+      "LOGO": "Go to home",
+      "SETTINGS": "Settings",
+      "MENU": "Open menu",
+      "CLOSE_MENU": "Close menu",
+      "TO_LIGHT": "Switch to light mode",
+      "TO_DARK": "Switch to dark mode"
     }
   },
   "HOME": {
     "GREETING": "Hi, I'm",
     "NAME": "Bruno David",
     "ROLE": "Full Stack Developer",
-    "DESCRIPTION": "Developer with a growth mindset and strong technical background, focused on building scalable and efficient solutions. Expert in JavaScript/TypeScript ecosystems with experience in modernizing critical systems.",
+    "DESCRIPTION": "Developer focused on delivering scalable, high-quality software with strong security standards. I have a solid foundation in algorithms and problem solving, and I stand out for translating complex client requirements into stable technical solutions. I mentor teams, apply sound architecture patterns and keep a fluent, results-oriented communication.",
     "LOCATION": "Rosario, Santa Fe, Argentina",
+    "AVAILABLE": "Available for work",
     "CTA_CONTACT": "Get in Touch",
-    "CTA_PROJECTS": "View Projects"
+    "CTA_PROJECTS": "View Experience",
+    "CTA_CV": "Download CV",
+    "AVATAR_ALT": "Photo of Bruno David"
   },
   "CONTACT": {
     "TITLE": "Send me a message",
@@ -44,46 +55,164 @@
     "MIN_CHARS": "min. characters",
     "SEND": "Send message",
     "SENDING": "Sending...",
+    "CLOSE": "Close",
     "SUCCESS_TITLE": "Message sent!",
     "SUCCESS_MSG": "Thanks for reaching out. I'll get back to you as soon as possible.",
     "ERROR_TITLE": "Failed to send",
     "ERROR_MSG": "Something went wrong. Please try again or email me directly at bruno.david9914@gmail.com",
     "RETRY": "Try again"
   },
+  "FILTER": {
+    "EXPERIENCE_LABEL": "Highlighting experience with:",
+    "EDUCATION_LABEL": "Highlighting training in:",
+    "SHOW_ALL": "Show all"
+  },
   "EXPERIENCE": {
     "TITLE": "Work Experience",
-    "SUBTITLE": "My professional journey"
+    "SUBTITLE": "My professional journey",
+    "CURRENT": "Current",
+    "FEATURED_PROJECTS": "Featured Projects",
+    "JOBS": {
+      "THELABIT": {
+        "TITLE": "Full Stack Developer",
+        "COMPANY": "TheLabit",
+        "PERIOD": "August 2023 – Present",
+        "DESCRIPTION": "Ongoing development and maintenance of complex digital products, native mobile apps and microservice ecosystems for multiple institutional clients.",
+        "RESPONSIBILITIES": {
+          "1": "Architectural leadership and migration of Java microservices to NestJS on Cloud infrastructure (OpenShift RedHat / AWS).",
+          "2": "End-to-end development of React Native and Angular applications covering data capture, QR scanning and digital identity management.",
+          "3": "Continuous requirements analysis and direct communication with clients to turn business needs into solid, secure code.",
+          "4": "Technical mentoring for junior profiles / new hires and promotion of development best practices within agile methodologies."
+        },
+        "PROJECTS": {
+          "INSPECTIA": {
+            "TITLE": "InspectIA",
+            "DESCRIPTION": "B2B platform for insurance companies that automates vehicle inspections using artificial intelligence."
+          },
+          "CREDENTIAL_WALLET": {
+            "TITLE": "Credential Wallet",
+            "DESCRIPTION": "Digital credential wallet with QR validation, designed for multi-company institutional use."
+          },
+          "ATSA": {
+            "TITLE": "Union App (ATSA)",
+            "DESCRIPTION": "All-in-one app for union members. Manages family permits, raffle/event sign-ups and includes a real-time union news feed."
+          }
+        }
+      },
+      "DEPSYS": {
+        "TITLE": "FrontEnd Developer Angular",
+        "COMPANY": "Depsys Informática (IberaSoft)",
+        "PERIOD": "October 2022 – August 2023",
+        "DESCRIPTION": "ERP modernization, development of third-party applications and report design.",
+        "RESPONSIBILITIES": {
+          "1": "Migration of a legacy Visual Basic ERP to a modern Angular architecture.",
+          "2": "Design and development of SPA (Single Page Application) websites for third-party clients.",
+          "3": "Design and structuring of technical reports with JasperSoft."
+        }
+      }
+    }
   },
   "PROJECTS": {
-    "WORK-EXPERIENCE": {
-      "TITLE": "Work Experience",
-      "CARDS": {
-        "1": {}
-      }
+    "TITLE": "Projects & Ventures",
+    "SUBTITLE": "Personal and collaborative projects",
+    "BUTTONS": {
+      "REPOSITORY": "Repository",
+      "DEPLOY": "Live Demo"
     },
-    "PROJECTS": {
-      "TITLE": "Projects & Ventures",
-      "SUBTITLE": "Personal and collaborative projects",
-      "INDIVIDUAL-PROJECT": "Individual Project",
-      "GROUP-PROJECT": "Group Project",
-      "CARDS": {
-        "BUTTONS": {
-          "REPOSITORY": "Repository",
-          "DEPLOY": "Live Demo"
-        }
+    "ITEMS": {
+      "PORTFOLIO": {
+        "TITLE": "Portfolio",
+        "DESCRIPTION": "Web application showcasing UI/UX skills."
+      },
+      "WALLET": {
+        "TITLE": "Virtual Wallet",
+        "DESCRIPTION": "Financial application developed as a team."
+      },
+      "VLIXES": {
+        "TITLE": "Vlixes E-commerce",
+        "DESCRIPTION": "Sportswear store built with team coordination."
+      },
+      "POKEMON": {
+        "TITLE": "Pokémon App",
+        "DESCRIPTION": "Full Stack development with filters, search and data creation."
+      },
+      "SHARED_EXPENSES": {
+        "TITLE": "Shared Expenses",
+        "DESCRIPTION": "Expense tracking and metrics app with shared dashboards."
+      },
+      "FOOD_CODE": {
+        "TITLE": "Food Code",
+        "DESCRIPTION": "100% mobile web app (PWA) for QR menu management, guided table ordering and integrated payments (cash/digital)."
       }
     }
   },
   "TECHNOLOGIES": {
     "TITLE": "Technical Skills",
-    "SUBTITLE": "Technologies and tools I work with"
+    "SUBTITLE": "Technologies and tools I work with",
+    "HINT": "Click a technology to see where I used it",
+    "CATEGORIES": {
+      "LANGUAGES": "Languages",
+      "BACKEND": "Backend",
+      "FRONTEND": "Frontend",
+      "MOBILE": "Mobile",
+      "DATABASES": "Databases",
+      "TOOLS": "Tools & Infra"
+    }
   },
   "ABOUT": {
     "TITLE": "Education & Training",
-    "SUBTITLE": "My academic background"
+    "SUBTITLE": "My academic background",
+    "CURRENT": "Ongoing",
+    "VIEW_CERTIFICATE": "View Certificate",
+    "INTERESTS": "Interests",
+    "EDUCATION": {
+      "UAI": {
+        "TITLE": "Computer Systems Engineering",
+        "INSTITUTION": "UAI – Universidad Abierta Interamericana",
+        "PERIOD": "April 2025 – Ongoing",
+        "DESCRIPTION": "Comprehensive training in computer systems with a focus on software engineering."
+      },
+      "EFSET": {
+        "TITLE": "English Certificate (A2 level) & In-Company Classes",
+        "INSTITUTION": "EF Standard English Test (EF SET)",
+        "PERIOD": "Continuous training (present)",
+        "DESCRIPTION": "Weekly technical courses sponsored by my employer. Focus on daily conversation, reading technical documentation and formal IT writing."
+      },
+      "UNR": {
+        "TITLE": "University Technical Degree in Artificial Intelligence",
+        "INSTITUTION": "Universidad Nacional de Rosario",
+        "PERIOD": "February 2023 – 2024",
+        "DESCRIPTION": "Coursework completed (no degree awarded). Study of AI fundamentals, machine learning and data processing."
+      },
+      "TC_ARG": {
+        "TITLE": "Competitive Programming Training Camp",
+        "INSTITUTION": "TC ARG",
+        "PERIOD": "July 2023",
+        "DESCRIPTION": "Intensive 2-week training focused on solving complex problems, algorithm design and data structures."
+      },
+      "HENRY": {
+        "TITLE": "Full Stack Web Developer",
+        "INSTITUTION": "Henry Bootcamp",
+        "PERIOD": "December 2021 – August 2022",
+        "DESCRIPTION": "Intensive 700-hour program covering the PERN stack (PostgreSQL, Express, React, Node.js)."
+      },
+      "ALKEMY": {
+        "TITLE": "SkillUp Node.js",
+        "INSTITUTION": "Alkemy",
+        "PERIOD": "November 2022",
+        "DESCRIPTION": "Specialized program in backend development with Node.js."
+      }
+    },
+    "HOBBIES": {
+      "COMPETITIVE_PROGRAMMING": "Competitive Programming",
+      "CHESS": "Chess",
+      "PC_HARDWARE": "PC Hardware",
+      "SPORTS": "Sports"
+    }
   },
   "FOOTER": {
-    "ABOUT_ME": "About Me",
+    "ROLE": "Full Stack Developer",
+    "LOCATION": "Rosario, Santa Fe, Argentina",
     "SOCIAL": "Social",
     "CONTACT": "Contact",
     "RIGHTS": "All rights reserved."

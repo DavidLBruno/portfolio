@@ -5,10 +5,10 @@
       <!-- About Column -->
       <div class="footer-col">
         <h3 class="footer-heading">Bruno David</h3>
-        <p class="footer-description">Full Stack Developer</p>
+        <p class="footer-description">{{ 'FOOTER.ROLE' | transloco }}</p>
         <div class="footer-location">
           <fa-icon [icon]="faLocation"></fa-icon>
-          <span>Rosario, Santa Fe, Argentina</span>
+          <span>{{ 'FOOTER.LOCATION' | transloco }}</span>
         </div>
       </div>
 
@@ -16,15 +16,18 @@
       <div class="footer-col">
         <h4 class="footer-heading">{{ 'FOOTER.SOCIAL' | transloco }}</h4>
         <div class="footer-social-grid">
-          <a *ngFor="let link of socialLinks"
-             [href]="link.url"
-             target="_blank"
-             rel="noopener"
-             class="social-icon-link"
-             [attr.aria-label]="link.label"
-             [attr.title]="link.label">
-            <fa-icon [icon]="link.icon"></fa-icon>
-          </a>
+          @for (link of socialLinks; track link.url) {
+            <a
+              [href]="link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-icon-link"
+              [attr.aria-label]="link.label"
+              [attr.title]="link.label"
+            >
+              <fa-icon [icon]="link.icon"></fa-icon>
+            </a>
+          }
         </div>
       </div>
 
@@ -32,14 +35,17 @@
       <div class="footer-col">
         <h4 class="footer-heading">{{ 'FOOTER.CONTACT' | transloco }}</h4>
         <div class="footer-contact-list">
-          <a *ngFor="let link of contactLinks"
-             [href]="link.url"
-             target="_blank"
-             rel="noopener"
-             class="contact-link">
-            <fa-icon [icon]="link.icon"></fa-icon>
-            <span>{{ link.label }}</span>
-          </a>
+          @for (link of contactLinks; track link.url) {
+            <a
+              [href]="link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="contact-link"
+            >
+              <fa-icon [icon]="link.icon"></fa-icon>
+              <span>{{ link.label }}</span>
+            </a>
+          }
         </div>
       </div>
     </div>

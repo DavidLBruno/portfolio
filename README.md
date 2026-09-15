@@ -1,27 +1,28 @@
-# Portfolio
+# Portfolio – Bruno David
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.1.
+Sitio personal en [bruno-david.com](https://www.bruno-david.com). Angular 22 con SSR/prerender, i18n (ES/EN) con Transloco, tema claro/oscuro y formulario de contacto vía EmailJS.
 
-## Development server
+## Scripts
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+| Comando | Descripción |
+| --- | --- |
+| `npm start` | Servidor de desarrollo en `http://localhost:4200` |
+| `npm run build` | Build de producción en `dist/portfolio` (browser prerenderizado + server) |
+| `npm test` | Tests unitarios (Vitest + jsdom) |
+| `npm run serve:ssr:portfolio` | Sirve el build con Express (SSR) en `http://localhost:4000` |
+| `node tools/cv/build-cv.js` | Generador alternativo desde HTML (requiere Chrome; sobrescribe el PDF de Canva) |
 
-## Code scaffolding
+## Contenido
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Todo el texto vive en `src/assets/i18n/es.json` y `en.json`; los componentes solo guardan claves, links, tags e imágenes. Al cambiar experiencia, proyectos o educación:
 
-## Build
+1. Editar ambos JSON (las claves deben coincidir; los tests fallan si falta una traducción).
+2. Actualizar el [CV en Canva](https://www.canva.com/design/DAFJ_al7SH8/ReO1xqN0Gv_MoWYAqzRJRQ/edit), descargar todas las páginas como PDF digital y reemplazar `src/assets/cv.pdf`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+El CV publicado proviene de Canva. `tools/cv/cv.html` y su generador se conservan como alternativa; no regenerar el PDF desde HTML si se quiere mantener el diseño de Canva.
 
-## Running unit tests
+## Deploy
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Vercel sirve `dist/portfolio/browser` como sitio estático. `vercel.json` define los headers de seguridad (CSP, HSTS, etc.) y el fallback a `index.html`.
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Los IDs de EmailJS son públicos por diseño; el abuso se limita restringiendo **Allowed origins** al dominio de producción en el dashboard de EmailJS.

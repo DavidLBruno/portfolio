@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Bruno David – CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fff; }
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
+    color: #0f172a; font-size: 9.6pt; line-height: 1.42;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .page { width: 210mm; height: 296.5mm; overflow: hidden; padding: 13mm 14mm 12mm; }
+  .page + .page { page-break-before: always; }
+  a { color: #6d28d9; text-decoration: none; }
+
+  /* Header */
+  .header { display: flex; align-items: center; gap: 7mm; padding-bottom: 5mm; border-bottom: 2px solid #8b5cf6; margin-bottom: 5mm; }
+  .photo { width: 27mm; height: 27mm; border-radius: 50%; object-fit: cover; border: 2.5px solid #8b5cf6; flex-shrink: 0; }
+  .name { font-size: 24pt; font-weight: 800; letter-spacing: -0.02em; color: #0f172a; line-height: 1.05; }
+  .role { font-size: 12.5pt; font-weight: 600; color: #6d28d9; margin-top: 1mm; }
+  .contacts { display: flex; flex-wrap: wrap; gap: 1.2mm 5mm; margin-top: 2.5mm; font-size: 8.6pt; color: #475569; }
+  .contacts span::before { content: '▪'; color: #8b5cf6; margin-right: 1.5mm; font-size: 7pt; }
+
+  /* Layout */
+  .cols { display: grid; grid-template-columns: 1fr 58mm; gap: 8mm; }
+  h2 { font-size: 10.5pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #6d28d9; border-bottom: 1px solid #e2e8f0; padding-bottom: 1.2mm; margin: 0 0 3mm; }
+  section + section { margin-top: 5mm; }
+  p { color: #334155; }
+
+  /* Experience */
+  .job { margin-bottom: 3.6mm; page-break-inside: avoid; }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; }
+  .job-title { font-weight: 700; font-size: 10.3pt; }
+  .job-company { color: #6d28d9; font-weight: 600; font-size: 9.2pt; }
+  .job-period { color: #64748b; font-size: 8.4pt; white-space: nowrap; }
+  .job p { margin: 1mm 0 1.2mm; }
+  ul { padding-left: 4mm; color: #334155; }
+  li { margin-bottom: 0.8mm; }
+  li::marker { color: #8b5cf6; }
+  .sub { margin-top: 1.6mm; padding-left: 3mm; border-left: 2px solid #ede9fe; }
+  .sub-title { font-weight: 600; font-size: 9pt; color: #0f172a; }
+  .sub p { margin: 0 0 1mm; font-size: 9pt; }
+  .tags { display: flex; flex-wrap: wrap; gap: 1.2mm; margin-top: 1.4mm; }
+  .tag { font-size: 7.4pt; font-weight: 500; color: #5b21b6; background: #f3effe; border: 1px solid #ddd6fe; border-radius: 10mm; padding: 0.4mm 2mm; }
+
+  /* Projects */
+  .project { margin-bottom: 2.6mm; page-break-inside: avoid; }
+  .project-title { font-weight: 700; font-size: 9.4pt; }
+  .project p { font-size: 9pt; }
+  .links { font-size: 8pt; color: #64748b; margin-top: 0.4mm; }
+  .links a { margin-right: 3mm; }
+
+  /* Sidebar */
+  .side section + section { margin-top: 4.5mm; }
+  .skill-group { margin-bottom: 2.4mm; }
+  .skill-group h3 { font-size: 8.6pt; font-weight: 700; color: #0f172a; margin-bottom: 1mm; }
+  .edu { margin-bottom: 3mm; page-break-inside: avoid; }
+  .edu-title { font-weight: 700; font-size: 9pt; line-height: 1.3; }
+  .edu-inst { color: #6d28d9; font-size: 8.4pt; font-weight: 600; }
+  .edu-period { color: #64748b; font-size: 8pt; }
+  .edu p { font-size: 8.3pt; margin-top: 0.6mm; }
+  .plain li { list-style: none; margin-bottom: 0.8mm; }
+  .plain li b { color: #0f172a; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="header">
+    <img class="photo" src="{{PHOTO}}" alt="Bruno David" />
+    <div>
+      <div class="name">Bruno David</div>
+      <div class="role">Desarrollador Full Stack</div>
+      <div class="contacts">
+        <span>Rosario, Santa Fe, Argentina</span>
+        <span><a href="mailto:bruno.david9914@gmail.com">bruno.david9914@gmail.com</a></span>
+        <span><a href="https://www.bruno-david.com">bruno-david.com</a></span>
+        <span><a href="https://www.linkedin.com/in/bruno-developer/">linkedin.com/in/bruno-developer</a></span>
+        <span><a href="https://github.com/DavidLBruno">github.com/DavidLBruno</a></span>
+        <span><a href="https://wa.me/543412705762">+54 341 270-5762</a></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="cols">
+    <main>
+      <section>
+        <h2>Perfil</h2>
+        <p>Desarrollador enfocado en entregar software escalable, de máxima calidad y con altos estándares de seguridad. Cuento con bases sólidas en algoritmia y resolución de problemas, y destaco por mi capacidad para traducir requerimientos complejos de clientes en soluciones técnicas estables. Mentoreo equipos, aplico patrones sólidos de arquitectura y mantengo una comunicación fluida orientada a resultados.</p>
+      </section>
+
+      <section>
+        <h2>Experiencia laboral</h2>
+
+        <div class="job">
+          <div class="job-head">
+            <div><span class="job-title">Full Stack Developer</span> · <span class="job-company">TheLabit</span></div>
+            <div class="job-period">Agosto 2023 – Actualidad</div>
+          </div>
+          <p>Desarrollo y mantenimiento continuo de productos digitales complejos, aplicaciones móviles nativas y ecosistemas de microservicios para múltiples clientes institucionales.</p>
+          <ul>
+            <li>Liderazgo arquitectónico y migración de microservicios Java a NestJS en infraestructuras Cloud (OpenShift RedHat / AWS).</li>
+            <li>Desarrollo integral de aplicaciones React Native y Angular abarcando captura de datos, lectura de QR y gestión de identidades digitales.</li>
+            <li>Análisis constante de requerimientos y comunicación directa con clientes para traducir demandas comerciales en código sólido y seguro.</li>
+            <li>Mentoría técnica orientada a perfiles iniciales / nuevos ingresos e impulso de buenas prácticas de desarrollo en metodologías ágiles.</li>
+          </ul>
+          <div class="sub">
+            <div class="sub-title">InspectIA</div>
+            <p>Plataforma B2B para compañías de seguros que automatiza la inspección de vehículos usando inteligencia artificial. <i>Angular, NestJS, Prisma, FastAPI, Python, Docker, AWS.</i></p>
+            <div class="sub-title">Credential Wallet</div>
+            <p>Billetera digital de credenciales con sistema de validación QR, diseñada para multi-empresa institucional. <i>React Native, NestJS, MySQL.</i></p>
+            <div class="sub-title">App Sindical (ATSA)</div>
+            <p>Aplicación integral para afiliados: gestión de permisos familiares, inscripción a sorteos/eventos y feed de noticias en tiempo real del gremio. <i>React Native, Angular, NestJS, TypeORM, MySQL.</i></p>
+          </div>
+          <div class="tags">
+            <span class="tag">Angular</span><span class="tag">React Native</span><span class="tag">NestJS</span><span class="tag">Python</span><span class="tag">AWS</span><span class="tag">OpenShift</span><span class="tag">MySQL</span><span class="tag">OracleSQL</span><span class="tag">Git</span><span class="tag">Jira</span>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="job-head">
+            <div><span class="job-title">FrontEnd Developer Angular</span> · <span class="job-company">Depsys Informática (IberaSoft)</span></div>
+            <div class="job-period">Octubre 2022 – Agosto 2023</div>
+          </div>
+          <p>Modernización de sistemas ERP, desarrollo de aplicaciones para terceros y diseño de reportes.</p>
+          <ul>
+            <li>Migración de un ERP legacy en Visual Basic hacia una arquitectura moderna en Angular.</li>
+            <li>Diseño y desarrollo de páginas web del tipo SPA (Single Page Applications) para clientes de terceros.</li>
+            <li>Diseño y estructuración de informes técnicos con JasperSoft.</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">Angular</span><span class="tag">TypeScript</span><span class="tag">JasperSoft</span><span class="tag">Visual Basic</span><span class="tag">HTML5</span><span class="tag">CSS3</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="side">
+      <section>
+        <h2>Habilidades</h2>
+        <div class="skill-group"><h3>Lenguajes</h3><div class="tags"><span class="tag">JavaScript</span><span class="tag">TypeScript</span><span class="tag">Python</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">C#</span><span class="tag">Visual Basic</span><span class="tag">SQL</span></div></div>
+        <div class="skill-group"><h3>Backend</h3><div class="tags"><span class="tag">Node.js</span><span class="tag">NestJS</span><span class="tag">Express</span><span class="tag">FastAPI</span><span class="tag">TypeORM</span><span class="tag">Prisma</span><span class="tag">Sequelize</span><span class="tag">.NET Framework</span></div></div>
+        <div class="skill-group"><h3>Frontend &amp; Mobile</h3><div class="tags"><span class="tag">Angular</span><span class="tag">React</span><span class="tag">React Native</span><span class="tag">Redux</span><span class="tag">SSR</span><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">SCSS</span></div></div>
+        <div class="skill-group"><h3>Bases de datos</h3><div class="tags"><span class="tag">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">OracleSQL</span></div></div>
+        <div class="skill-group"><h3>Herramientas &amp; Infra</h3><div class="tags"><span class="tag">Git</span><span class="tag">Docker</span><span class="tag">Linux</span><span class="tag">Bash</span><span class="tag">AWS</span><span class="tag">OpenShift</span><span class="tag">Jira</span><span class="tag">JasperSoft</span><span class="tag">IA</span></div></div>
+      </section>
+
+      <section>
+        <h2>Idiomas</h2>
+        <ul class="plain">
+          <li><b>Español</b> · Nativo</li>
+          <li><b>Inglés</b> · Nivel A2 certificado (EF SET) · Clases técnicas in-company semanales</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Intereses</h2>
+        <ul class="plain">
+          <li>Programación competitiva (Codeforces)</li>
+          <li>Ajedrez (Lichess)</li>
+          <li>Hardware de PC</li>
+          <li>Deportes</li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+</div>
+
+<div class="page">
+  <div class="cols">
+    <main>
+      <section>
+        <h2>Proyectos y emprendimientos</h2>
+
+        <div class="project">
+          <div class="project-title">Food Code <span class="job-period">· Grupal</span></div>
+          <p>Web app 100% mobile (PWA) para gestión de menú QR, pedidos guiados en mesa y pagos integrados (efectivo/digital). <i>Angular, NestJS, TypeORM, PostgreSQL.</i></p>
+          <div class="links"><a href="https://food-code-front.pages.dev/">food-code-front.pages.dev</a></div>
+        </div>
+
+        <div class="project">
+          <div class="project-title">Gastos Compartidos <span class="job-period">· Personal</span></div>
+          <p>Aplicación para seguimiento de gastos y métricas con paneles compartidos. <i>Angular, NestJS, PostgreSQL, SCSS.</i></p>
+          <div class="links"><a href="https://vps-4441022-x.dattaweb.com/auth">Demo en vivo</a></div>
+        </div>
+
+        <div class="project">
+          <div class="project-title">Portfolio <span class="job-period">· Personal</span></div>
+          <p>Sitio personal con SSR, prerender, i18n (ES/EN) y tema claro/oscuro. <i>Angular, SSR, SCSS.</i></p>
+          <div class="links"><a href="https://www.bruno-david.com">bruno-david.com</a><a href="https://github.com/DavidLBruno/portfolio">github.com/DavidLBruno/portfolio</a></div>
+        </div>
+
+        <div class="project">
+          <div class="project-title">App Pokémon <span class="job-period">· Personal</span></div>
+          <p>Desarrollo Full Stack con filtros, búsquedas y creación de datos. <i>React, Redux, Express, PostgreSQL, Sequelize.</i></p>
+          <div class="links"><a href="https://pi-pokemon-eta.vercel.app/">pi-pokemon-eta.vercel.app</a><a href="https://github.com/DavidLBruno/PI-POKEMON">github.com/DavidLBruno/PI-POKEMON</a></div>
+        </div>
+
+        <div class="project">
+          <div class="project-title">E-commerce Vlixes <span class="job-period">· Grupal</span></div>
+          <p>Tienda de ropa deportiva desarrollada con coordinación de equipo. <i>React, Node.js, Redux.</i></p>
+          <div class="links"><a href="https://pf-vlixes-main.vercel.app/">pf-vlixes-main.vercel.app</a></div>
+        </div>
+
+        <div class="project">
+          <div class="project-title">Billetera Virtual <span class="job-period">· Grupal</span></div>
+          <p>Aplicación financiera desarrollada en equipo. <i>Node.js, React, PostgreSQL.</i></p>
+          <div class="links"><a href="https://github.com/DavidLBruno/grupo-n-1">github.com/DavidLBruno/grupo-n-1</a></div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="side">
+      <section>
+        <h2>Educación y formación</h2>
+
+        <div class="edu">
+          <div class="edu-title">Ingeniería en Sistemas Informáticos</div>
+          <div class="edu-inst">UAI – Universidad Abierta Interamericana</div>
+          <div class="edu-period">Abril 2025 – En curso</div>
+          <p>Formación integral en sistemas informáticos con enfoque en la ingeniería de software.</p>
+        </div>
+
+        <div class="edu">
+          <div class="edu-title">Tecnicatura Universitaria en Inteligencia Artificial</div>
+          <div class="edu-inst">Universidad Nacional de Rosario</div>
+          <div class="edu-period">Febrero 2023 – 2024</div>
+          <p>Cursada finalizada (sin titulación). Fundamentos de IA, machine learning y procesamiento de datos.</p>
+        </div>
+
+        <div class="edu">
+          <div class="edu-title">Training Camp de Programación Competitiva</div>
+          <div class="edu-inst">TC ARG</div>
+          <div class="edu-period">Julio 2023</div>
+          <p>Entrenamiento intensivo de 2 semanas en resolución de problemas, algoritmos y estructuras de datos.</p>
+        </div>
+
+        <div class="edu">
+          <div class="edu-title">SkillUp Node.js</div>
+          <div class="edu-inst">Alkemy</div>
+          <div class="edu-period">Noviembre 2022</div>
+          <p>Programa especializado en desarrollo backend con Node.js.</p>
+        </div>
+
+        <div class="edu">
+          <div class="edu-title">Full Stack Web Developer</div>
+          <div class="edu-inst">Henry Bootcamp</div>
+          <div class="edu-period">Diciembre 2021 – Agosto 2022</div>
+          <p>Programa intensivo de 700 horas cubriendo el stack PERN (PostgreSQL, Express, React, Node.js).</p>
+        </div>
+
+        <div class="edu">
+          <div class="edu-title">English Certificate (A2) &amp; Clases In-Company</div>
+          <div class="edu-inst">EF Standard English Test (EF SET)</div>
+          <div class="edu-period">Formación continua</div>
+        </div>
+      </section>
+    </aside>
+  </div>
+</div>
+</body>
+</html>

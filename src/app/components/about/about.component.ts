@@ -1,165 +1,141 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {
   faGraduationCap,
-  faGamepad,
   faChess,
   faMicrochip,
-  faAppleWhole,
   faDumbbell,
   faCertificate,
 } from '@fortawesome/free-solid-svg-icons';
 import { faJs } from '@fortawesome/free-brands-svg-icons';
 
+/** `key` points to ABOUT.EDUCATION.* in assets/i18n; the template resolves the texts. */
 interface Education {
-  title: string;
-  institution: string;
+  key: string;
   institutionLink: string;
-  period: string;
   current: boolean;
-  description: string;
   tags?: string[];
   certificate?: string;
 }
 
 interface Hobby {
-  title: string;
-  icon: any;
+  key: string;
+  icon: IconDefinition;
 }
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
-  imports: [CommonModule, TranslocoModule, FontAwesomeModule],
-  standalone: true,
+  imports: [TranslocoModule, FontAwesomeModule],
 })
 export class AboutComponent implements OnInit {
   faGrad = faGraduationCap;
   faCert = faCertificate;
 
-  selectedTech: string | null = null;
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-  ) {}
+  selectedTech = signal<string | null>(null);
+  estudios = signal<Education[]>([]);
 
-  originalEstudios: Education[] = [];
+  hobbies: Hobby[] = [
+    { key: 'ABOUT.HOBBIES.COMPETITIVE_PROGRAMMING', icon: faJs },
+    { key: 'ABOUT.HOBBIES.CHESS', icon: faChess },
+    { key: 'ABOUT.HOBBIES.PC_HARDWARE', icon: faMicrochip },
+    { key: 'ABOUT.HOBBIES.SPORTS', icon: faDumbbell },
+  ];
 
   ngOnInit() {
-    this.originalEstudios = [...this.estudios];
+    this.route.queryParams
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(params => {
+        const tech = params['tech'] || null;
+        this.selectedTech.set(tech);
 
-    this.route.queryParams.subscribe(params => {
-      this.selectedTech = params['tech'] || null;
-
-      if (this.selectedTech) {
-        this.estudios = [...this.originalEstudios].sort(
-          (a, b) => (this.hasTechEdu(b) ? 1 : 0) - (this.hasTechEdu(a) ? 1 : 0),
-        );
-
-        if (typeof window !== 'undefined') {
-          const doc = document.getElementById('education-section');
-          if (doc) doc.scrollIntoView({ behavior: 'smooth' });
+        if (tech) {
+          this.estudios.set(
+            [...EDUCATION].sort(
+              (a, b) => Number(this.hasTechEdu(b)) - Number(this.hasTechEdu(a)),
+            ),
+          );
+          if (typeof window !== 'undefined') {
+            document
+              .getElementById('education-section')
+              ?.scrollIntoView({ behavior: 'smooth' });
+          }
+        } else {
+          this.estudios.set([...EDUCATION]);
         }
-      } else {
-        this.estudios = [...this.originalEstudios];
-      }
-    });
+      });
+  }
+
+  isMatch(tag: string): boolean {
+    const tech = this.selectedTech();
+    return !!tech && tag.toLowerCase() === tech.toLowerCase();
   }
 
   hasTechEdu(edu: Education): boolean {
-    if (!this.selectedTech) return true;
-    if (!edu.tags) return false;
-    return edu.tags.some(
-      t => t.toLowerCase() === this.selectedTech?.toLowerCase(),
-    );
+    if (!this.selectedTech()) return true;
+    return (edu.tags ?? []).some(t => this.isMatch(t));
   }
 
   clearFilter() {
     this.router.navigate(['/about']);
   }
-
-  estudios: Education[] = [
-    {
-      title: 'Ingeniería en Sistemas Informáticos',
-      institution: 'UAI – Universidad Abierta Interamericana',
-      institutionLink: 'https://uai.edu.ar/',
-      period: '2024 – En curso',
-      current: true,
-      description:
-        'Formación integral en sistemas informáticos con enfoque en la ingeniería de software.',
-      tags: ['C', 'C#', '.NET Framework', 'SQL', 'Git'],
-    },
-    {
-      title: 'English Certificate (Nivel A2) & Clases In-Company',
-      institution: 'EF Standard English Test (EF SET)',
-      institutionLink: 'https://www.efset.org/',
-      period: 'Formación Continua (Actualidad)',
-      current: true,
-      description:
-        'Cursos técnicos semanales propiciados corporativamente. Enfoque en conversación diaria, lectura de documentación técnica y escritura formal IT.',
-      certificate: 'https://cert.efset.org/A9gUpb',
-    },
-    {
-      title: 'Tecnicatura Universitaria en Inteligencia Artificial',
-      institution: 'Universidad Nacional de Rosario',
-      institutionLink: 'https://unr.edu.ar/',
-      period: 'Febrero 2023 – 2024',
-      current: false,
-      description:
-        'Cursada finalizada (sin titulación). Estudio de fundamentos de IA, machine learning y procesamiento de datos.',
-      tags: ['Python', 'Bash', 'Docker', 'Linux', 'Git'],
-    },
-    {
-      title: 'Training Camp de Programación Competitiva',
-      institution: 'TC ARG',
-      institutionLink: 'https://www.pc-arg.com/tc-arg',
-      period: 'Julio 2023',
-      current: false,
-      description:
-        'Entrenamiento intensivo de 2 semanas enfocado en resolución de problemas complejos, diseño de algoritmos y structures de datos.',
-      tags: ['C++'],
-      certificate: '/assets/certificates/tc-arg.pdf',
-    },
-    {
-      title: 'Full Stack Web Developer',
-      institution: 'Henry Bootcamp',
-      institutionLink: 'https://www.soyhenry.com/',
-      period: 'Diciembre 2021 – Agosto 2022',
-      current: false,
-      description:
-        'Programa intensivo de 700 horas cubriendo el stack PERN (PostgreSQL, Express, React, Node.js).',
-      tags: [
-        'JavaScript',
-        'React',
-        'Node.js',
-        'Express',
-        'PostgreSQL',
-        'Sequelize',
-        'Git',
-      ],
-      certificate: '/assets/certificates/henry.pdf',
-    },
-    {
-      title: 'SkillUp Node.js',
-      institution: 'Alkemy',
-      institutionLink: 'https://www.alkemy.org/',
-      period: 'Noviembre 2022',
-      current: false,
-      description: 'Programa especializado en desarrollo backend con Node.js.',
-      tags: ['Node.js', 'Express', 'TypeScript', 'Git'],
-      certificate: '/assets/certificates/alkemy.pdf',
-    },
-  ];
-
-  hobbies: Hobby[] = [
-    { title: 'Programación Competitiva', icon: faJs },
-    { title: 'Ajedrez', icon: faChess },
-    { title: 'Hardware de PC', icon: faMicrochip },
-    { title: 'Deportes', icon: faDumbbell },
-  ];
 }
+
+const EDUCATION: Education[] = [
+  {
+    key: 'ABOUT.EDUCATION.UAI',
+    institutionLink: 'https://uai.edu.ar/',
+    current: true,
+    tags: ['C', 'C#', '.NET Framework', 'SQL', 'Git'],
+  },
+  {
+    key: 'ABOUT.EDUCATION.EFSET',
+    institutionLink: 'https://www.efset.org/',
+    current: true,
+    certificate: 'https://cert.efset.org/A9gUpb',
+  },
+  {
+    key: 'ABOUT.EDUCATION.UNR',
+    institutionLink: 'https://unr.edu.ar/',
+    current: false,
+    tags: ['Python', 'Bash', 'Docker', 'Linux', 'Git'],
+  },
+  {
+    key: 'ABOUT.EDUCATION.TC_ARG',
+    institutionLink: 'https://www.pc-arg.com/tc-arg',
+    current: false,
+    tags: ['C++'],
+    certificate: '/assets/certificates/tc-arg.pdf',
+  },
+  {
+    key: 'ABOUT.EDUCATION.HENRY',
+    institutionLink: 'https://www.soyhenry.com/',
+    current: false,
+    tags: [
+      'JavaScript',
+      'React',
+      'Node.js',
+      'Express',
+      'PostgreSQL',
+      'Sequelize',
+      'Git',
+    ],
+    certificate: '/assets/certificates/henry.pdf',
+  },
+  {
+    key: 'ABOUT.EDUCATION.ALKEMY',
+    institutionLink: 'https://www.alkemy.org/',
+    current: false,
+    tags: ['Node.js', 'Express', 'TypeScript', 'Git'],
+    certificate: '/assets/certificates/alkemy.pdf',
+  },
+];

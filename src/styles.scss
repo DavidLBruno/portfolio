@@ -1,8 +1,25 @@
 @use 'variables' as *;
-@import 'bootstrap/scss/bootstrap';
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
-@import './assets/scss/components/card.scss';
-@import './assets/scss/components/button.scss';
+
+// ============================================
+// Bootstrap (only the parts ng-bootstrap and the settings modal need).
+// Bootstrap 5 still relies on @import internally, so the `import`
+// deprecation is silenced for this file in angular.json.
+// ============================================
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+@import 'bootstrap/scss/root';
+@import 'bootstrap/scss/reboot';
+@import 'bootstrap/scss/forms/labels';
+@import 'bootstrap/scss/buttons';
+@import 'bootstrap/scss/transitions';
+@import 'bootstrap/scss/dropdown';
+@import 'bootstrap/scss/close';
+@import 'bootstrap/scss/modal';
+@import 'bootstrap/scss/utilities/api';
 
 // ============================================
 // Global Reset & Base
@@ -212,16 +229,6 @@ a {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);
-}
-
-// ============================================
-// Card Override (bootstrap)
-// ============================================
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: var(--card-shadow);
-  transition: all $transition-normal;
 }
 
 // ============================================

@@ -1,21 +1,81 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
-
-import { ProjectsComponent } from './projects.component'
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, Router, provideRouter } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { ProjectsComponent } from './projects.component';
+import { getTranslocoTestingModule } from '../../testing/transloco-testing';
 
 describe('ProjectsComponent', () => {
-  let component: ProjectsComponent
-  let fixture: ComponentFixture<ProjectsComponent>
+  let fixture: ComponentFixture<ProjectsComponent>;
+  let component: ProjectsComponent;
+  let queryParams: BehaviorSubject<Record<string, string>>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [ProjectsComponent],
-    })
-    fixture = TestBed.createComponent(ProjectsComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
-  })
+  beforeEach(async () => {
+    queryParams = new BehaviorSubject<Record<string, string>>({});
+    await TestBed.configureTestingModule({
+      imports: [ProjectsComponent, getTranslocoTestingModule()],
+      providers: [
+        provideRouter([]),
+        {
+          provide: ActivatedRoute,
+          useValue: { queryParams: queryParams.asObservable() },
+        },
+      ],
+    }).compileComponents();
+    fixture = TestBed.createComponent(ProjectsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
-})
+  it('renders every job and project with translated text', () => {
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelectorAll('.timeline-item').length).toBe(2);
+    expect(el.querySelectorAll('.project-card').length).toBe(6);
+    expect(el.querySelector('.job-title')?.textContent).toContain(
+      'Full Stack Developer',
+    );
+    expect(el.querySelector('.current-badge')?.textContent).toContain('Actual');
+    expect(el.querySelectorAll('.job-responsibilities li').length).toBe(7);
+    expect(el.textContent).not.toMatch(/EXPERIENCE\.|PROJECTS\./);
+  });
+
+  it('sorts matches first and dims the rest when a tech filter is set', () => {
+    queryParams.next({ tech: 'nestjs' });
+    fixture.detectChanges();
+
+    expect(component.selectedTech()).toBe('nestjs');
+    const projects = component.projects();
+    const matches = projects.filter(p => component.hasTechProject(p));
+    expect(matches.length).toBe(2);
+    expect(projects.slice(0, 2)).toEqual(matches);
+
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('.filter-banner')?.textContent).toContain('nestjs');
+    expect(el.querySelectorAll('.project-card.dimmed').length).toBe(4);
+    expect(el.querySelectorAll('.tech-match').length).toBeGreaterThan(0);
+  });
+
+  it('matches jobs through their sub-projects', () => {
+    queryParams.next({ tech: 'Prisma' });
+    fixture.detectChanges();
+    const [thelabit, depsys] = component.workExperience();
+    expect(component.hasTechJob(thelabit)).toBe(true);
+    expect(component.hasTechJob(depsys)).toBe(false);
+  });
+
+  it('restores the original order when the filter is cleared', () => {
+    const original = component.projects().map(p => p.key);
+    queryParams.next({ tech: 'NestJS' });
+    fixture.detectChanges();
+    queryParams.next({});
+    fixture.detectChanges();
+    expect(component.projects().map(p => p.key)).toEqual(original);
+    expect(component.selectedTech()).toBeNull();
+  });
+
+  it('navigates to /projects without params on clear', () => {
+    const router = TestBed.inject(Router);
+    const spy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+    component.clearFilter();
+    expect(spy).toHaveBeenCalledWith(['/projects']);
+  });
+});

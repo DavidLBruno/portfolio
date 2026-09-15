@@ -1,13 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCode, faServer, faPaintBrush, faMobileScreen, faDatabase, faToolbox } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import {
+  faCode,
+  faServer,
+  faPaintBrush,
+  faMobileScreen,
+  faDatabase,
+  faToolbox,
+} from '@fortawesome/free-solid-svg-icons';
 
+/** `key` points to TECHNOLOGIES.CATEGORIES.* in assets/i18n. */
 interface TechCategory {
-  title: string;
-  icon: any;
+  key: string;
+  icon: IconDefinition;
   items: { title: string }[];
 }
 
@@ -15,14 +23,22 @@ interface TechCategory {
   selector: 'app-tecnologies',
   templateUrl: './tecnologies.component.html',
   styleUrls: ['./tecnologies.component.scss'],
-  imports: [CommonModule, TranslocoModule, FontAwesomeModule],
-  standalone: true,
+  imports: [TranslocoModule, FontAwesomeModule],
 })
 export class TecnologiesComponent {
-  constructor(private router: Router) {}
+  private router = inject(Router);
 
   filterExperience(tech: string) {
-    const eduOnlyTechs = ['C', 'C++', 'C#', '.NET Framework', 'Bash', 'Linux', 'SQL', 'JavaScript'];
+    const eduOnlyTechs = [
+      'C',
+      'C++',
+      'C#',
+      '.NET Framework',
+      'Bash',
+      'Linux',
+      'SQL',
+      'JavaScript',
+    ];
     if (eduOnlyTechs.includes(tech)) {
       this.router.navigate(['/about'], { queryParams: { tech } });
     } else {
@@ -32,7 +48,7 @@ export class TecnologiesComponent {
 
   tecnologies: TechCategory[] = [
     {
-      title: 'Lenguajes',
+      key: 'TECHNOLOGIES.CATEGORIES.LANGUAGES',
       icon: faCode,
       items: [
         { title: 'JavaScript' },
@@ -46,7 +62,7 @@ export class TecnologiesComponent {
       ],
     },
     {
-      title: 'Backend',
+      key: 'TECHNOLOGIES.CATEGORIES.BACKEND',
       icon: faServer,
       items: [
         { title: 'Node.js' },
@@ -60,7 +76,7 @@ export class TecnologiesComponent {
       ],
     },
     {
-      title: 'Frontend',
+      key: 'TECHNOLOGIES.CATEGORIES.FRONTEND',
       icon: faPaintBrush,
       items: [
         { title: 'Angular' },
@@ -73,14 +89,12 @@ export class TecnologiesComponent {
       ],
     },
     {
-      title: 'Mobile',
+      key: 'TECHNOLOGIES.CATEGORIES.MOBILE',
       icon: faMobileScreen,
-      items: [
-        { title: 'React Native' },
-      ],
+      items: [{ title: 'React Native' }],
     },
     {
-      title: 'Bases de Datos',
+      key: 'TECHNOLOGIES.CATEGORIES.DATABASES',
       icon: faDatabase,
       items: [
         { title: 'PostgreSQL' },
@@ -89,7 +103,7 @@ export class TecnologiesComponent {
       ],
     },
     {
-      title: 'Herramientas & Infra',
+      key: 'TECHNOLOGIES.CATEGORIES.TOOLS',
       icon: faToolbox,
       items: [
         { title: 'Git' },

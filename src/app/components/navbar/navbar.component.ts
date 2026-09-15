@@ -1,26 +1,30 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router, NavigationEnd, RouterModule } from '@angular/router';
-import { Item } from '../../interfaces/items.interface';
+import { Component, HostListener, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { RouterModule } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SettingsComponent } from '../settings/settings.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faGear, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
+import { map } from 'rxjs';
+import { Item } from '../../interfaces/items.interface';
+import { SettingsComponent } from '../settings/settings.component';
 import { ChangeSettingService } from '../../services/change-settings/change-settings.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  imports: [CommonModule, RouterModule, FontAwesomeModule, TranslocoModule],
-  standalone: true,
+  imports: [RouterModule, FontAwesomeModule, TranslocoModule],
 })
 export class NavbarComponent {
-  hamburguer: boolean = false;
-  routeActually = '';
-  scrolled = false;
-  isDark = true;
+  private modalService = inject(NgbModal);
+  private settingsService = inject(ChangeSettingService);
+
+  hamburguer = signal(false);
+  scrolled = signal(false);
+  isDark = toSignal(this.settingsService.theme$.pipe(map(t => t === 'dark')), {
+    initialValue: true,
+  });
 
   items: Item[] = [
     { title: 'NAVBAR.BUTTONS.HOME', link: '' },
@@ -33,32 +37,17 @@ export class NavbarComponent {
   iconSun = faSun;
   iconMoon = faMoon;
 
-  constructor(
-    private router: Router,
-    private modalService: NgbModal,
-    private settingsService: ChangeSettingService,
-  ) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.routeActually = this.router.url;
-      }
-    });
-
-    this.settingsService.theme$.subscribe(theme => {
-      this.isDark = theme === 'dark';
-    });
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', () => {
-        this.scrolled = window.scrollY > 20;
-      });
-    }
+  @HostListener('window:scroll')
+  onScroll() {
+    this.scrolled.set(window.scrollY > 20);
   }
 
-  ngOninit() {}
-
   handleMenu() {
-    this.hamburguer = !this.hamburguer;
+    this.hamburguer.update(open => !open);
+  }
+
+  closeMenu() {
+    this.hamburguer.set(false);
   }
 
   open() {
