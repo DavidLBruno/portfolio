@@ -12,8 +12,13 @@
         {{ 'HOME.GREETING' | transloco }}
       </p>
       <h1 class="hero-name animate-item">{{ 'HOME.NAME' | transloco }}</h1>
-      <h2 class="hero-role animate-item">{{ 'HOME.ROLE' | transloco }}</h2>
-      <p class="hero-description animate-item">
+      <h2 class="hero-role animate-item" data-language-motion="hero-role">
+        {{ 'HOME.ROLE' | transloco }}
+      </h2>
+      <p
+        class="hero-description animate-item"
+        data-language-motion="hero-description"
+      >
         {{ 'HOME.DESCRIPTION' | transloco }}
       </p>
 

@@ -1,0 +1,228 @@
+// Native route snapshots keep the navbar in place while sections move beneath it.
+:root {
+  --route-enter-x: 90px;
+  --route-exit-x: -55px;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root[data-route-direction='backward'] {
+  --route-enter-x: -90px;
+  --route-exit-x: 55px;
+}
+
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-old(root) {
+  animation: route-out 320ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(root) {
+  animation: route-in 650ms var(--motion-ease) both;
+}
+
+::view-transition-group(site-nav) {
+  z-index: 2;
+  animation: none;
+}
+
+::view-transition-old(site-nav) {
+  display: none;
+}
+
+::view-transition-new(site-nav) {
+  animation: none;
+}
+
+::view-transition-group(nav-marker) {
+  z-index: 3;
+  animation-duration: 650ms;
+  animation-timing-function: var(--motion-ease);
+}
+
+::view-transition-old(nav-marker),
+::view-transition-new(nav-marker) {
+  animation: none;
+  height: 100%;
+}
+
+@keyframes route-out {
+  to {
+    opacity: 0;
+    transform: translate3d(var(--route-exit-x), -8px, 0) scale(0.975);
+  }
+}
+
+@keyframes route-in {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--route-enter-x), 18px, 0) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+// Local entrances work even in browsers without native view transitions.
+
+// Preference changes capture one complete surface, including an open modal.
+html[data-preference-motion] {
+  .main-nav,
+  .main-nav-link.active .link-indicator {
+    view-transition-name: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}
+
+html[data-preference-motion='theme'] {
+  &::view-transition-old(root),
+  &::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+  &::view-transition-old(root) {
+    z-index: 1;
+  }
+  &::view-transition-new(root) {
+    z-index: 2;
+    animation: theme-reveal 850ms cubic-bezier(0.65, 0, 0.2, 1) both;
+  }
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--reveal-x) var(--reveal-y));
+  }
+  to {
+    clip-path: circle(var(--reveal-radius) at var(--reveal-x) var(--reveal-y));
+  }
+}
+
+// One shared timeline: the light marks the exact boundary between both languages.
+.language-scan {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    180deg,
+    transparent calc(50% - 18px),
+    rgba(139, 92, 246, 0.12) calc(50% - 5px),
+    rgba(167, 139, 250, 0.75) calc(50% - 1px),
+    rgba(45, 212, 191, 0.95) 50%,
+    rgba(45, 212, 191, 0.15) calc(50% + 3px),
+    transparent calc(50% + 18px)
+  );
+}
+
+html[data-preference-motion='language'] {
+  --language-duration: 900ms;
+  --language-ease: cubic-bezier(0.45, 0, 0.55, 1);
+
+  .language-scan {
+    opacity: 1;
+    view-transition-name: language-scan;
+  }
+
+  &::view-transition-group(root),
+  &::view-transition-group(language-scan) {
+    animation: none;
+  }
+
+  &::view-transition-group(language-scan) {
+    z-index: 4;
+    overflow: clip;
+  }
+
+  &::view-transition-old(language-scan) {
+    display: none;
+  }
+
+  &::view-transition-old(root),
+  &::view-transition-new(root),
+  &::view-transition-new(language-scan) {
+    animation-duration: var(--language-duration);
+    animation-timing-function: var(--language-ease);
+    animation-fill-mode: both;
+    mix-blend-mode: normal;
+  }
+
+  &::view-transition-old(root) {
+    animation-name: language-wipe-out;
+  }
+
+  &::view-transition-new(root) {
+    animation-name: language-wipe-in;
+  }
+
+  &::view-transition-new(language-scan) {
+    animation-name: language-scan-pass;
+  }
+}
+
+@keyframes language-wipe-out {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(100% 0 0 0); }
+}
+
+@keyframes language-wipe-in {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes language-scan-pass {
+  from { transform: translateY(-50%); }
+  to { transform: translateY(50%); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  main .section-header {
+    animation: section-heading-in 700ms var(--motion-ease) both;
+  }
+
+  main .project-card,
+  main .timeline-item,
+  main .skill-category {
+    animation-timing-function: var(--motion-ease);
+    animation-duration: 700ms;
+  }
+}
+
+@keyframes section-heading-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --route-enter-x: 36px;
+    --route-exit-x: -24px;
+  }
+  :root[data-route-direction='backward'] {
+    --route-enter-x: -36px;
+    --route-exit-x: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+

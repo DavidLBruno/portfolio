@@ -13,6 +13,9 @@ import {
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Button } from '../../interfaces/button.interface';
 import { ChangeSettingService } from '../../services/change-settings/change-settings.service';
+import { PreferenceMotionService } from '../../services/preference-motion.service';
+import { TranslocoService } from '@jsverse/transloco';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-settings',
@@ -24,6 +27,8 @@ export class SettingsComponent implements OnInit {
   activeModal = inject(NgbActiveModal);
   private settingsService = inject(ChangeSettingService);
   private destroyRef = inject(DestroyRef);
+  private motion = inject(PreferenceMotionService);
+  private transloco = inject(TranslocoService);
 
   settings = new FormGroup({
     languaje: new FormControl(''),
@@ -57,19 +62,44 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.settings.patchValue(
       {
-        languaje: this.settingsService.getLanguaje(),
+        languaje:
+          this.transloco.getActiveLang() || this.settingsService.getLanguaje(),
         theme: this.settingsService.getTheme(),
       },
       { emitEvent: false },
     );
 
+    this.settingsService.theme$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(theme =>
+        this.settings.controls.theme.setValue(theme, { emitEvent: false }),
+      );
+
     this.settings.controls.languaje.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(value => this.settingsService.change(value || 'es'));
+      .subscribe(value => {
+        const lang = value || 'es';
+        this.motion.run('language', () => {
+          if (
+            this.transloco.getTranslation(lang) &&
+            Object.keys(this.transloco.getTranslation(lang)).length
+          ) {
+            this.settingsService.change(lang);
+            return;
+          }
+          return firstValueFrom(this.transloco.load(lang)).then(() =>
+            this.settingsService.change(lang),
+          );
+        });
+      });
 
     this.settings.controls.theme.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(value => this.settingsService.setTheme(value || 'dark'));
+      .subscribe(value =>
+        this.motion.run('theme', () =>
+          this.settingsService.setTheme(value || 'dark'),
+        ),
+      );
   }
 
   currentValue(form: string): string {

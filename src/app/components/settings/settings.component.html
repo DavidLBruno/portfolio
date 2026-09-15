@@ -12,8 +12,12 @@
     >
       <fa-icon [icon]="closeIcon"></fa-icon>
     </button>
-    <h2 id="settings-title">{{ 'SETTINGS.TITLE' | transloco }}</h2>
-    <p id="settings-description">{{ 'SETTINGS.SUBTITLE' | transloco }}</p>
+    <h2 id="settings-title" data-language-motion="dialog-title">
+      {{ 'SETTINGS.TITLE' | transloco }}
+    </h2>
+    <p id="settings-description" data-language-motion="dialog-description">
+      {{ 'SETTINGS.SUBTITLE' | transloco }}
+    </p>
   </header>
   <form [formGroup]="settings" class="settings-form">
     @for (param of configsParams; track param.form) {
@@ -23,9 +27,14 @@
             [icon]="param.form === 'theme' ? themeIcon : languageIcon"
             aria-hidden="true"
           ></fa-icon>
-          {{ param.title | transloco }}
+          <span [attr.data-language-motion]="param.form + '-label'">{{
+            param.title | transloco
+          }}</span>
         </legend>
-        <p class="setting-hint">
+        <p
+          class="setting-hint"
+          [attr.data-language-motion]="param.form + '-hint'"
+        >
           {{
             (param.form === 'theme'
               ? 'SETTINGS.THEME_HINT'
@@ -61,7 +70,11 @@
                 </span>
               }
               <span class="option-caption">
-                <span class="option-name">{{ item.title | transloco }}</span>
+                <span
+                  class="option-name"
+                  [attr.data-language-motion]="'option-' + item.value"
+                  >{{ item.title | transloco }}</span
+                >
                 <span class="selection-indicator" aria-hidden="true">
                   @if (currentValue(param.form) === item.value) {
                     <fa-icon [icon]="checkIcon"></fa-icon>
@@ -77,10 +90,12 @@
   <footer class="settings-footer">
     <p>
       <fa-icon [icon]="checkIcon" aria-hidden="true"></fa-icon>
-      {{ 'SETTINGS.AUTO_SAVE' | transloco }}
+      <span data-language-motion="saved">{{
+        'SETTINGS.AUTO_SAVE' | transloco
+      }}</span>
     </p>
     <button type="button" class="done-settings" (click)="activeModal.close()">
-      {{ 'SETTINGS.DONE' | transloco }}
+      <span data-language-motion="done">{{ 'SETTINGS.DONE' | transloco }}</span>
     </button>
   </footer>
 </div>

@@ -9,6 +9,7 @@ import { map } from 'rxjs';
 import { Item } from '../../interfaces/items.interface';
 import { SettingsComponent } from '../settings/settings.component';
 import { ChangeSettingService } from '../../services/change-settings/change-settings.service';
+import { PreferenceMotionService } from '../../services/preference-motion.service';
 
 @Component({
   selector: 'app-navbar',
@@ -19,6 +20,7 @@ import { ChangeSettingService } from '../../services/change-settings/change-sett
 export class NavbarComponent {
   private modalService = inject(NgbModal);
   private settingsService = inject(ChangeSettingService);
+  private motion = inject(PreferenceMotionService);
 
   hamburguer = signal(false);
   scrolled = signal(false);
@@ -60,7 +62,7 @@ export class NavbarComponent {
     });
   }
 
-  toggleTheme() {
-    this.settingsService.toggleTheme();
+  toggleTheme(event?: Event) {
+    this.motion.run('theme', () => this.settingsService.toggleTheme(), event);
   }
 }

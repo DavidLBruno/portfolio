@@ -2,7 +2,11 @@ import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import {
+  provideRouter,
+  withInMemoryScrolling,
+  withViewTransitions,
+} from '@angular/router';
 import {
   provideClientHydration,
   withNoIncrementalHydration,
@@ -12,6 +16,7 @@ import { provideTransloco } from '@jsverse/transloco';
 import { routes } from './app.routes';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { environment } from '../environments/environment';
+import { onRouteTransition } from './route-motion';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +24,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withInMemoryScrolling({ scrollPositionRestoration: 'top' }),
+      withViewTransitions({
+        skipInitialTransition: true,
+        onViewTransitionCreated: onRouteTransition,
+      }),
     ),
     provideClientHydration(withNoIncrementalHydration()),
     provideHttpClient(withFetch()),
