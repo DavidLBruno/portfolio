@@ -1,40 +1,86 @@
-<div class="settings modal-body">
-  <h1>{{ 'SETTINGS.TITLE' | transloco }}</h1>
-  <form
-    [formGroup]="settings"
-    class="container-form d-flex flex-column align-items-center p-1"
-  >
+<div class="settings">
+  <header class="settings-header">
+    <span class="settings-mark" aria-hidden="true"
+      ><fa-icon [icon]="settingsIcon"></fa-icon
+    ></span>
+    <button
+      type="button"
+      class="close-settings"
+      (click)="activeModal.close()"
+      [attr.aria-label]="'SETTINGS.CLOSE' | transloco"
+      ngbAutofocus
+    >
+      <fa-icon [icon]="closeIcon"></fa-icon>
+    </button>
+    <h2 id="settings-title">{{ 'SETTINGS.TITLE' | transloco }}</h2>
+    <p id="settings-description">{{ 'SETTINGS.SUBTITLE' | transloco }}</p>
+  </header>
+  <form [formGroup]="settings" class="settings-form">
     @for (param of configsParams; track param.form) {
-      <div
-        class="setting-item d-flex gap-3 align-items-center justify-content-between w-100"
-      >
-        <label [for]="'setting-' + param.form" class="form-label m-0">
+      <fieldset class="setting-group">
+        <legend>
+          <fa-icon
+            [icon]="param.form === 'theme' ? themeIcon : languageIcon"
+            aria-hidden="true"
+          ></fa-icon>
           {{ param.title | transloco }}
-        </label>
-        <div ngbDropdown class="d-inline-block">
-          <button
-            type="button"
-            class="btn custom-dropdown d-flex align-items-center gap-2"
-            [id]="'setting-' + param.form"
-            ngbDropdownToggle
-          >
-            {{ getOptions(param.option, currentValue(param.form)) | transloco }}
-            <fa-icon class="icon" [icon]="faChevronDown"></fa-icon>
-          </button>
-          <div ngbDropdownMenu [attr.aria-labelledby]="'setting-' + param.form">
-            @for (item of param.option; track item.value) {
-              <button
-                type="button"
-                [class.active]="currentValue(param.form) === item.value"
-                (click)="changeForm(item, param.form)"
-                ngbDropdownItem
-              >
-                {{ item.title | transloco }}
-              </button>
-            }
-          </div>
+        </legend>
+        <p class="setting-hint">
+          {{
+            (param.form === 'theme'
+              ? 'SETTINGS.THEME_HINT'
+              : 'SETTINGS.LANGUAGE_HINT'
+            ) | transloco
+          }}
+        </p>
+        <div class="setting-options">
+          @for (item of param.option; track item.value) {
+            <label
+              class="setting-option"
+              [class.selected]="currentValue(param.form) === item.value"
+            >
+              <input
+                type="radio"
+                [formControlName]="param.form"
+                [value]="item.value"
+                [attr.value]="item.value"
+                [attr.name]="param.form"
+              />
+              @if (param.form === 'theme') {
+                <span
+                  class="theme-preview"
+                  [class.preview-light]="item.value === 'light'"
+                  aria-hidden="true"
+                >
+                  <span class="preview-sidebar"></span>
+                  <span class="preview-content"
+                    ><span class="preview-heading"></span
+                    ><span class="preview-line"></span
+                    ><span class="preview-cards"><i></i><i></i></span
+                  ></span>
+                </span>
+              }
+              <span class="option-caption">
+                <span class="option-name">{{ item.title | transloco }}</span>
+                <span class="selection-indicator" aria-hidden="true">
+                  @if (currentValue(param.form) === item.value) {
+                    <fa-icon [icon]="checkIcon"></fa-icon>
+                  }
+                </span>
+              </span>
+            </label>
+          }
         </div>
-      </div>
+      </fieldset>
     }
   </form>
+  <footer class="settings-footer">
+    <p>
+      <fa-icon [icon]="checkIcon" aria-hidden="true"></fa-icon>
+      {{ 'SETTINGS.AUTO_SAVE' | transloco }}
+    </p>
+    <button type="button" class="done-settings" (click)="activeModal.close()">
+      {{ 'SETTINGS.DONE' | transloco }}
+    </button>
+  </footer>
 </div>

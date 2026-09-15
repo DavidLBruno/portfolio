@@ -12,7 +12,7 @@
         [attr.aria-label]="'NAVBAR.ARIA.LOGO' | transloco"
       >
         <img
-          src="/assets/images/main.png"
+          src="/assets/images/brand-mark.svg"
           alt=""
           class="logo"
           width="48"
@@ -69,6 +69,7 @@
           class="main-nav-link"
           [routerLink]="'/' + item.link"
           routerLinkActive="active"
+          ariaCurrentWhenActive="page"
           [routerLinkActiveOptions]="{
             paths: 'exact',
             queryParams: 'ignored',

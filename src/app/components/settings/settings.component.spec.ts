@@ -27,31 +27,33 @@ describe('SettingsComponent', () => {
 
   it('shows the language and theme that are actually active', () => {
     const el = fixture.nativeElement as HTMLElement;
-    const toggles = Array.from(el.querySelectorAll('.custom-dropdown')).map(b =>
-      b.textContent?.trim(),
-    );
-    expect(toggles).toEqual(['Español', 'Oscuro']);
+    const selected = Array.from(
+      el.querySelectorAll<HTMLInputElement>('input:checked'),
+    ).map(input => input.value);
+    expect(selected).toEqual(['es', 'dark']);
   });
 
   it('applies a language change and re-renders in the new language', () => {
-    fixture.componentInstance.changeForm(
-      { title: '', value: 'en' },
-      'languaje',
-    );
+    const english = fixture.nativeElement.querySelector(
+      'input[value="en"]',
+    ) as HTMLInputElement;
+    english.click();
     fixture.detectChanges();
     expect(service.getLanguaje()).toBe('en');
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.querySelector('h1')?.textContent).toContain('Settings');
-    expect(el.querySelector('.custom-dropdown')?.textContent).toContain(
+    expect(el.querySelector('h2')?.textContent).toContain('Preferences');
+    expect(el.querySelector('.setting-option.selected')?.textContent).toContain(
       'English',
     );
   });
 
   it('applies a theme change', () => {
-    fixture.componentInstance.changeForm(
-      { title: '', value: 'light' },
-      'theme',
-    );
+    const light = fixture.nativeElement.querySelector(
+      'input[value="light"]',
+    ) as HTMLInputElement;
+    light.click();
+    fixture.detectChanges();
+    expect(light.checked).toBe(true);
     expect(service.getTheme()).toBe('light');
     expect(document.body.classList.contains('theme-light')).toBe(true);
   });

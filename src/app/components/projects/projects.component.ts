@@ -3,10 +3,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import {
   faBriefcase,
   faArrowUpRightFromSquare,
-  faCodeBranch,
+  faLaptopCode,
+  faWallet,
+  faBagShopping,
+  faGamepad,
+  faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -28,8 +34,10 @@ interface SubProject {
 
 interface ProjectItem {
   key: string;
+  featured?: boolean;
   image?: string;
-  icon?: string;
+  logo?: string;
+  icon?: IconDefinition;
   repository?: string;
   deploy?: string;
   tags: string[];
@@ -45,7 +53,7 @@ interface ProjectItem {
 export class ProjectsComponent implements OnInit {
   faBriefcase = faBriefcase;
   faExternal = faArrowUpRightFromSquare;
-  faCode = faCodeBranch;
+  faCode = faGithub;
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -178,9 +186,18 @@ const WORK_EXPERIENCE: WorkExperience[] = [
 
 const PROJECTS: ProjectItem[] = [
   {
+    key: 'PROJECTS.ITEMS.SHARED_EXPENSES',
+    featured: true,
+    image: '/assets/images/projects/expense-logo.svg',
+    logo: '/assets/images/projects/expense-logo.svg',
+    deploy: 'https://expense.com.ar/',
+    tags: ['Angular', 'NestJS', 'PostgreSQL', 'Flutter', 'GCP', 'PWA', 'SCSS'],
+    type: 'personal',
+  },
+  {
     key: 'PROJECTS.ITEMS.PORTFOLIO',
-    image: '/assets/images/projects/portfolio.png',
-    icon: '/assets/images/projects/portfolio-icon.png',
+    image: '/assets/images/projects/portfolio-preview.jpg',
+    icon: faLaptopCode,
     repository: 'https://github.com/DavidLBruno/portfolio',
     deploy: 'https://www.bruno-david.com/',
     tags: ['Angular', 'SSR', 'SCSS'],
@@ -189,7 +206,7 @@ const PROJECTS: ProjectItem[] = [
   {
     key: 'PROJECTS.ITEMS.WALLET',
     image: '/assets/images/projects/wallet-digital.png',
-    icon: '/assets/images/projects/wallet-digital-icon.png',
+    icon: faWallet,
     repository: 'https://github.com/DavidLBruno/grupo-n-1',
     tags: ['Node.js', 'React', 'PostgreSQL'],
     type: 'group',
@@ -197,7 +214,7 @@ const PROJECTS: ProjectItem[] = [
   {
     key: 'PROJECTS.ITEMS.VLIXES',
     image: '/assets/images/projects/e-commerce.png',
-    icon: '/assets/images/projects/e-commerce-logo.png',
+    icon: faBagShopping,
     deploy: 'https://pf-vlixes-main.vercel.app/',
     tags: ['React', 'Node.js', 'Redux'],
     type: 'group',
@@ -205,22 +222,16 @@ const PROJECTS: ProjectItem[] = [
   {
     key: 'PROJECTS.ITEMS.POKEMON',
     image: '/assets/images/projects/pokemon.png',
-    icon: '/assets/images/projects/game1.png',
+    icon: faGamepad,
     deploy: 'https://pi-pokemon-eta.vercel.app/',
     repository: 'https://github.com/DavidLBruno/PI-POKEMON',
     tags: ['React', 'Redux', 'Express', 'PostgreSQL', 'Sequelize'],
     type: 'personal',
   },
   {
-    key: 'PROJECTS.ITEMS.SHARED_EXPENSES',
-    image: '/assets/images/projects/gastos_compartidos.png',
-    deploy: 'https://vps-4441022-x.dattaweb.com/auth',
-    tags: ['Angular', 'NestJS', 'PostgreSQL', 'SCSS'],
-    type: 'personal',
-  },
-  {
     key: 'PROJECTS.ITEMS.FOOD_CODE',
     image: '/assets/images/projects/food_code.png',
+    icon: faUtensils,
     deploy: 'https://food-code-front.pages.dev/',
     tags: ['Angular', 'NestJS', 'TypeORM', 'PostgreSQL'],
     type: 'group',

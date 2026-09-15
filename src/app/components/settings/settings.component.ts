@@ -1,11 +1,16 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NgbActiveModal, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faXmark,
+  faCheck,
+  faSliders,
+  faGlobe,
+  faPalette,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { Select } from '../../interfaces/select.interface';
 import { Button } from '../../interfaces/button.interface';
 import { ChangeSettingService } from '../../services/change-settings/change-settings.service';
 
@@ -13,12 +18,7 @@ import { ChangeSettingService } from '../../services/change-settings/change-sett
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
-  imports: [
-    ReactiveFormsModule,
-    NgbDropdownModule,
-    TranslocoPipe,
-    FontAwesomeModule,
-  ],
+  imports: [ReactiveFormsModule, TranslocoPipe, FontAwesomeModule],
 })
 export class SettingsComponent implements OnInit {
   activeModal = inject(NgbActiveModal);
@@ -29,7 +29,11 @@ export class SettingsComponent implements OnInit {
     languaje: new FormControl(''),
     theme: new FormControl(''),
   });
-  faChevronDown = faChevronDown;
+  readonly closeIcon = faXmark;
+  readonly checkIcon = faCheck;
+  readonly settingsIcon = faSliders;
+  readonly languageIcon = faGlobe;
+  readonly themeIcon = faPalette;
 
   configsParams: Button[] = [
     {
@@ -68,15 +72,7 @@ export class SettingsComponent implements OnInit {
       .subscribe(value => this.settingsService.setTheme(value || 'dark'));
   }
 
-  changeForm(select: Select, form: string): void {
-    this.settings.patchValue({ [form]: select.value });
-  }
-
   currentValue(form: string): string {
     return this.settings.get(form)?.value ?? '';
-  }
-
-  getOptions(select: Select[], formValue: string): string {
-    return select.find(element => element.value === formValue)?.title ?? '';
   }
 }

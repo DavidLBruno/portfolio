@@ -91,7 +91,7 @@ export class TecnologiesComponent {
     {
       key: 'TECHNOLOGIES.CATEGORIES.MOBILE',
       icon: faMobileScreen,
-      items: [{ title: 'React Native' }],
+      items: [{ title: 'React Native' }, { title: 'Flutter' }],
     },
     {
       key: 'TECHNOLOGIES.CATEGORIES.DATABASES',
@@ -112,6 +112,7 @@ export class TecnologiesComponent {
         { title: 'Linux' },
         { title: 'Bash' },
         { title: 'AWS' },
+        { title: 'GCP' },
         { title: 'OpenShift' },
         { title: 'JasperSoft' },
         { title: 'IA' },

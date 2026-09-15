@@ -1,6 +1,6 @@
 {
   "SETTINGS": {
-    "TITLE": "Configuraciones",
+    "TITLE": "Preferencias",
     "BUTTONS": {
       "LANGUAJE": {
         "TITLE": "Idioma",
@@ -16,7 +16,13 @@
           "LIGHT": "Claro"
         }
       }
-    }
+    },
+    "SUBTITLE": "Hacé que este espacio se sienta tuyo.",
+    "CLOSE": "Cerrar preferencias",
+    "DONE": "Listo",
+    "AUTO_SAVE": "Los cambios se guardan automáticamente.",
+    "LANGUAGE_HINT": "Elegí el idioma del portfolio.",
+    "THEME_HINT": "Elegí cómo querés verlo."
   },
   "NAVBAR": {
     "BUTTONS": {
@@ -31,14 +37,15 @@
       "MENU": "Abrir menú",
       "CLOSE_MENU": "Cerrar menú",
       "TO_LIGHT": "Cambiar a tema claro",
-      "TO_DARK": "Cambiar a tema oscuro"
+      "TO_DARK": "Cambiar a tema oscuro",
+      "SKIP_CONTENT": "Saltar al contenido"
     }
   },
   "HOME": {
     "GREETING": "Hola, soy",
     "NAME": "Bruno David",
     "ROLE": "Desarrollador Full Stack",
-    "DESCRIPTION": "Desarrollador enfocado en entregar software escalable, de máxima calidad y con altos estándares de seguridad. Cuento con bases sólidas en algoritmia y resolución de problemas, y destaco por mi capacidad para traducir requerimientos complejos de clientes en soluciones técnicas estables. Mentoreo equipos, aplico patrones sólidos de arquitectura y mantengo una comunicación fluida orientada a resultados.",
+    "DESCRIPTION": "Desarrollo aplicaciones web y móviles con Angular, React Native y NestJS. Transformo necesidades de negocio en soluciones claras, desde la arquitectura hasta la entrega, y acompaño a los equipos para construir software mantenible.",
     "LOCATION": "Rosario, Santa Fe, Argentina",
     "AVAILABLE": "Disponible para trabajar",
     "CTA_CONTACT": "Contactame",
@@ -137,14 +144,15 @@
         "DESCRIPTION": "Desarrollo Full Stack con filtros, búsquedas y creación de datos."
       },
       "SHARED_EXPENSES": {
-        "TITLE": "Gastos Compartidos",
-        "DESCRIPTION": "Aplicación para seguimiento de gastos y métricas con paneles compartidos."
+        "TITLE": "Expenses",
+        "DESCRIPTION": "Mi proyecto principal: una plataforma de finanzas personales y compartidas para registrar gastos, repartir cuentas, controlar cuotas de tarjetas y seguir inversiones. La web/PWA permite consultar datos sin conexión e importar gastos desde archivos. Desplegada en Google Cloud Platform (GCP), también cuenta con una app móvil en Flutter, actualmente en prueba cerrada en Google Play."
       },
       "FOOD_CODE": {
         "TITLE": "Food Code",
         "DESCRIPTION": "Web app 100% mobile (PWA) para gestión de menú QR, pedidos guiados en mesa y pagos integrados (efectivo/digital)."
       }
-    }
+    },
+    "FEATURED": "Proyecto principal"
   },
   "TECHNOLOGIES": {
     "TITLE": "Habilidades Técnicas",

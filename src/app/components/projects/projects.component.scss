@@ -190,7 +190,6 @@
 // ---- Modifiers / Filtering ----
 .dimmed {
   opacity: 0.35 !important;
-  pointer-events: none;
   filter: grayscale(80%);
 }
 
@@ -289,6 +288,8 @@
 }
 
 .project-card {
+  display: flex;
+  flex-direction: column;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: $radius-md;
@@ -305,16 +306,12 @@
     .project-image img {
       transform: scale(1.05);
     }
-
-    .project-overlay {
-      opacity: 1;
-    }
   }
 }
 
 .project-image {
   position: relative;
-  height: 200px;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--surface-hover);
 
@@ -322,6 +319,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: top;
     transition: transform 0.4s ease;
   }
 
@@ -338,49 +336,17 @@
   }
 }
 
-.project-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity $transition-normal;
-  backdrop-filter: blur(4px);
-}
-
-.project-links {
-  display: flex;
-  gap: 0.75rem;
-}
-
-.project-link-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.55rem 1.2rem;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: $radius-sm;
-  font-size: 0.85rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all $transition-fast;
-
-  &:hover {
-    background: $accent-primary;
-    border-color: $accent-primary;
-    color: #fff;
-  }
-}
-
 .project-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 1.25rem;
 }
 
 .project-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--text);
@@ -397,16 +363,22 @@
 .project-actions {
   display: flex;
   gap: 1rem;
-  margin-top: 0.75rem;
+  margin-top: auto;
+  padding-top: 1.25rem;
+  flex-wrap: wrap;
 }
 
 .project-link-inline {
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-accent);
+  border-radius: $radius-sm;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--accent);
+  color: var(--tag-text);
   text-decoration: none;
   transition: all $transition-fast;
 
@@ -471,8 +443,70 @@
   .job-title {
     font-size: 1.1rem;
   }
+}
+.project-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border-radius: 0.7rem;
+  color: var(--accent);
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
+}
 
-  .project-image {
-    height: 160px;
+.featured-label {
+  color: var(--tag-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.project-brand-logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.65rem;
+  flex-shrink: 0;
+}
+
+.project-image.project-brand-image {
+  background: #0a0a0b;
+
+  img {
+    object-fit: contain;
+    object-position: center;
+    padding: 2rem;
+  }
+}
+
+.project-featured {
+  grid-column: 1 / -1;
+  border-color: var(--border-accent);
+
+  .project-info {
+    padding: 1.75rem;
+  }
+
+  .project-title {
+    font-size: 1.6rem;
+  }
+
+  @media (min-width: $breakpoint-md) {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+
+    .project-image {
+      aspect-ratio: auto;
+      min-height: 280px;
+
+      img {
+        position: absolute;
+        inset: 0;
+      }
+    }
   }
 }

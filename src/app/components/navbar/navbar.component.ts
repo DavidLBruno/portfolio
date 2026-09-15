@@ -51,7 +51,13 @@ export class NavbarComponent {
   }
 
   open() {
-    this.modalService.open(SettingsComponent);
+    this.modalService.open(SettingsComponent, {
+      centered: true,
+      scrollable: true,
+      windowClass: 'settings-modal',
+      ariaLabelledBy: 'settings-title',
+      ariaDescribedBy: 'settings-description',
+    });
   }
 
   toggleTheme() {

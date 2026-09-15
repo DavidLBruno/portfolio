@@ -1,6 +1,6 @@
 {
   "SETTINGS": {
-    "TITLE": "Settings",
+    "TITLE": "Preferences",
     "BUTTONS": {
       "LANGUAJE": {
         "TITLE": "Language",
@@ -16,7 +16,13 @@
           "LIGHT": "Light"
         }
       }
-    }
+    },
+    "SUBTITLE": "Make this space feel like yours.",
+    "CLOSE": "Close preferences",
+    "DONE": "Done",
+    "AUTO_SAVE": "Changes are saved automatically.",
+    "LANGUAGE_HINT": "Choose the portfolio language.",
+    "THEME_HINT": "Choose your preferred appearance."
   },
   "NAVBAR": {
     "BUTTONS": {
@@ -31,14 +37,15 @@
       "MENU": "Open menu",
       "CLOSE_MENU": "Close menu",
       "TO_LIGHT": "Switch to light mode",
-      "TO_DARK": "Switch to dark mode"
+      "TO_DARK": "Switch to dark mode",
+      "SKIP_CONTENT": "Skip to content"
     }
   },
   "HOME": {
     "GREETING": "Hi, I'm",
     "NAME": "Bruno David",
     "ROLE": "Full Stack Developer",
-    "DESCRIPTION": "Developer focused on delivering scalable, high-quality software with strong security standards. I have a solid foundation in algorithms and problem solving, and I stand out for translating complex client requirements into stable technical solutions. I mentor teams, apply sound architecture patterns and keep a fluent, results-oriented communication.",
+    "DESCRIPTION": "I build web and mobile applications with Angular, React Native and NestJS. I turn business needs into clear solutions, from architecture to delivery, and help teams build maintainable software.",
     "LOCATION": "Rosario, Santa Fe, Argentina",
     "AVAILABLE": "Available for work",
     "CTA_CONTACT": "Get in Touch",
@@ -137,14 +144,15 @@
         "DESCRIPTION": "Full Stack development with filters, search and data creation."
       },
       "SHARED_EXPENSES": {
-        "TITLE": "Shared Expenses",
-        "DESCRIPTION": "Expense tracking and metrics app with shared dashboards."
+        "TITLE": "Expenses",
+        "DESCRIPTION": "My main project: a personal and shared finance platform for tracking expenses, splitting bills, managing credit card installments and following investments. The web app/PWA supports offline access to data and expense imports from files. Deployed on Google Cloud Platform (GCP), it also includes a Flutter mobile app, currently in closed testing on Google Play."
       },
       "FOOD_CODE": {
         "TITLE": "Food Code",
         "DESCRIPTION": "100% mobile web app (PWA) for QR menu management, guided table ordering and integrated payments (cash/digital)."
       }
-    }
+    },
+    "FEATURED": "Main project"
   },
   "TECHNOLOGIES": {
     "TITLE": "Technical Skills",

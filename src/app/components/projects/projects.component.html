@@ -100,7 +100,7 @@
 
   <!-- Projects Section -->
   <div class="section-header projects-header">
-    <h1 class="section-title">{{ 'PROJECTS.TITLE' | transloco }}</h1>
+    <h2 class="section-title">{{ 'PROJECTS.TITLE' | transloco }}</h2>
     <p class="section-subtitle">{{ 'PROJECTS.SUBTITLE' | transloco }}</p>
   </div>
 
@@ -108,43 +108,21 @@
     @for (project of projects(); track project.key; let i = $index) {
       <div
         class="project-card"
+        [class.project-featured]="project.featured"
         [style.animation-delay]="i * 0.1 + 's'"
         [class.dimmed]="selectedTech() && !hasTechProject(project)"
       >
         <!-- Image if available -->
         @if (project.image) {
-          <div class="project-image">
+          <div class="project-image" [class.project-brand-image]="project.logo">
             <img
               [src]="project.image"
               [alt]="project.key + '.TITLE' | transloco"
               loading="lazy"
+              decoding="async"
+              width="800"
+              height="450"
             />
-            <div class="project-overlay">
-              <div class="project-links">
-                @if (project.repository) {
-                  <a
-                    [href]="project.repository"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="project-link-btn"
-                  >
-                    <fa-icon [icon]="faCode"></fa-icon>
-                    <span>{{ 'PROJECTS.BUTTONS.REPOSITORY' | transloco }}</span>
-                  </a>
-                }
-                @if (project.deploy) {
-                  <a
-                    [href]="project.deploy"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="project-link-btn"
-                  >
-                    <fa-icon [icon]="faExternal"></fa-icon>
-                    <span>{{ 'PROJECTS.BUTTONS.DEPLOY' | transloco }}</span>
-                  </a>
-                }
-              </div>
-            </div>
           </div>
         } @else {
           <div class="project-image project-no-image">
@@ -155,7 +133,23 @@
         }
 
         <div class="project-info">
+          @if (project.featured) {
+            <p class="featured-label">{{ 'PROJECTS.FEATURED' | transloco }}</p>
+          }
           <h3 class="project-title">
+            @if (project.logo) {
+              <img
+                class="project-brand-logo"
+                [src]="project.logo"
+                alt=""
+                width="40"
+                height="40"
+              />
+            } @else if (project.icon; as icon) {
+              <span class="project-icon" aria-hidden="true"
+                ><fa-icon [icon]="icon"></fa-icon
+              ></span>
+            }
             {{ project.key + '.TITLE' | transloco }}
           </h3>
           <p class="project-description">
@@ -168,7 +162,7 @@
               </span>
             }
           </div>
-          @if (!project.image && (project.repository || project.deploy)) {
+          @if (project.repository || project.deploy) {
             <div class="project-actions">
               @if (project.repository) {
                 <a
@@ -176,6 +170,11 @@
                   target="_blank"
                   rel="noopener noreferrer"
                   class="project-link-inline"
+                  [attr.aria-label]="
+                    (project.key + '.TITLE' | transloco) +
+                    ': ' +
+                    ('PROJECTS.BUTTONS.REPOSITORY' | transloco)
+                  "
                 >
                   <fa-icon [icon]="faCode"></fa-icon>
                   {{ 'PROJECTS.BUTTONS.REPOSITORY' | transloco }}
@@ -187,6 +186,11 @@
                   target="_blank"
                   rel="noopener noreferrer"
                   class="project-link-inline"
+                  [attr.aria-label]="
+                    (project.key + '.TITLE' | transloco) +
+                    ': ' +
+                    ('PROJECTS.BUTTONS.DEPLOY' | transloco)
+                  "
                 >
                   <fa-icon [icon]="faExternal"></fa-icon>
                   {{ 'PROJECTS.BUTTONS.DEPLOY' | transloco }}
