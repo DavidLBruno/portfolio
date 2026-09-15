@@ -25,4 +25,6 @@ El CV publicado proviene de Canva. `tools/cv/cv.html` y su generador se conserva
 
 Vercel sirve `dist/portfolio/browser` como sitio estático. `vercel.json` define los headers de seguridad (CSP, HSTS, etc.) y el fallback a `index.html`.
 
+El build de producción desactiva `optimization.styles.inlineCritical` para que Angular cargue el CSS sin generar eventos `onload` inline, bloqueados por `script-src 'self'`. `npm run build` verifica automáticamente que el HTML generado sea compatible con esta restricción.
+
 Los IDs de EmailJS son públicos por diseño; el abuso se limita restringiendo **Allowed origins** al dominio de producción en el dashboard de EmailJS.
