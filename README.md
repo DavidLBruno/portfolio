@@ -10,14 +10,16 @@ Sitio personal en [bruno-david.com](https://www.bruno-david.com). Angular 22 con
 | `npm run build` | Build de producción en `dist/portfolio` (browser prerenderizado + server) |
 | `npm test` | Tests unitarios (Vitest + jsdom) |
 | `npm run serve:ssr:portfolio` | Sirve el build con Express (SSR) en `http://localhost:4000` |
-| `node tools/cv/build-cv.js` | Regenera `src/assets/cv.pdf` desde `tools/cv/cv.html` (requiere Chrome) |
+| `node tools/cv/build-cv.js` | Generador alternativo desde HTML (requiere Chrome; sobrescribe el PDF de Canva) |
 
 ## Contenido
 
 Todo el texto vive en `src/assets/i18n/es.json` y `en.json`; los componentes solo guardan claves, links, tags e imágenes. Al cambiar experiencia, proyectos o educación:
 
 1. Editar ambos JSON (las claves deben coincidir; los tests fallan si falta una traducción).
-2. Actualizar `tools/cv/cv.html` y regenerar el PDF.
+2. Actualizar el [CV en Canva](https://www.canva.com/design/DAFJ_al7SH8/ReO1xqN0Gv_MoWYAqzRJRQ/edit), descargar todas las páginas como PDF digital y reemplazar `src/assets/cv.pdf`.
+
+El CV publicado proviene de Canva. `tools/cv/cv.html` y su generador se conservan como alternativa; no regenerar el PDF desde HTML si se quiere mantener el diseño de Canva.
 
 ## Deploy
 
