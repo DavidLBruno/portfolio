@@ -1,3 +1,4 @@
+import { FilterScrollDirective } from '../../directives/filter-scroll.directive';
 import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -31,7 +32,7 @@ interface Hobby {
   selector: 'app-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
-  imports: [TranslocoModule, FontAwesomeModule],
+  imports: [TranslocoModule, FontAwesomeModule, FilterScrollDirective],
 })
 export class AboutComponent implements OnInit {
   faGrad = faGraduationCap;
@@ -58,20 +59,7 @@ export class AboutComponent implements OnInit {
         const tech = params['tech'] || null;
         this.selectedTech.set(tech);
 
-        if (tech) {
-          this.estudios.set(
-            [...EDUCATION].sort(
-              (a, b) => Number(this.hasTechEdu(b)) - Number(this.hasTechEdu(a)),
-            ),
-          );
-          if (typeof window !== 'undefined') {
-            document
-              .getElementById('education-section')
-              ?.scrollIntoView({ behavior: 'smooth' });
-          }
-        } else {
-          this.estudios.set([...EDUCATION]);
-        }
+        this.estudios.set([...EDUCATION]);
       });
   }
 

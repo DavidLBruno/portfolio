@@ -70,6 +70,9 @@
     "RETRY": "Try again"
   },
   "FILTER": {
+    "SCROLL_PENDING": "↓ Scrolling to the first match in a moment",
+    "SCROLL_MOVING": "↓ Scrolling to the first match…",
+    "SCROLL_ARRIVED": "✓ Here is the first match",
     "EXPERIENCE_LABEL": "Highlighting experience with:",
     "EDUCATION_LABEL": "Highlighting training in:",
     "SHOW_ALL": "Show all"

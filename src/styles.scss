@@ -22,10 +22,12 @@
 @import 'bootstrap/scss/modal';
 @import 'bootstrap/scss/utilities/api';
 
+.settings-modal { --bs-modal-width: 540px; }
+
 .settings-modal .modal-content {
   background: var(--surface);
   border: 1px solid var(--border-accent);
-  border-radius: 22px;
+  border-radius: 26px;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
 }
 

@@ -70,6 +70,9 @@
     "RETRY": "Reintentar"
   },
   "FILTER": {
+    "SCROLL_PENDING": "↓ En un momento bajamos hasta la primera coincidencia",
+    "SCROLL_MOVING": "↓ Bajando hasta la primera coincidencia…",
+    "SCROLL_ARRIVED": "✓ Acá está la primera coincidencia",
     "EXPERIENCE_LABEL": "Resaltando experiencia con:",
     "EDUCATION_LABEL": "Resaltando formación en:",
     "SHOW_ALL": "Mostrar todo"

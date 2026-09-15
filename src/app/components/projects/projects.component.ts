@@ -1,3 +1,4 @@
+import { FilterScrollDirective } from '../../directives/filter-scroll.directive';
 import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -48,7 +49,7 @@ interface ProjectItem {
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
-  imports: [TranslocoModule, FontAwesomeModule],
+  imports: [TranslocoModule, FontAwesomeModule, FilterScrollDirective],
 })
 export class ProjectsComponent implements OnInit {
   faBriefcase = faBriefcase;
@@ -70,28 +71,8 @@ export class ProjectsComponent implements OnInit {
         const tech = params['tech'] || null;
         this.selectedTech.set(tech);
 
-        if (tech) {
-          // Matching items first, original order otherwise
-          this.workExperience.set(
-            [...WORK_EXPERIENCE].sort(
-              (a, b) => Number(this.hasTechJob(b)) - Number(this.hasTechJob(a)),
-            ),
-          );
-          this.projects.set(
-            [...PROJECTS].sort(
-              (a, b) =>
-                Number(this.hasTechProject(b)) - Number(this.hasTechProject(a)),
-            ),
-          );
-          if (typeof window !== 'undefined') {
-            document
-              .getElementById('experience-section')
-              ?.scrollIntoView({ behavior: 'smooth' });
-          }
-        } else {
-          this.workExperience.set([...WORK_EXPERIENCE]);
-          this.projects.set([...PROJECTS]);
-        }
+        this.workExperience.set([...WORK_EXPERIENCE]);
+        this.projects.set([...PROJECTS]);
       });
   }
 

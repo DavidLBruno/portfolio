@@ -3,17 +3,21 @@
 }
 .settings {
   color: var(--text);
-  padding: 1.75rem;
+  padding: 0;
 }
 .settings-header {
   position: relative;
-  margin-bottom: 1.75rem;
+    padding: 1.75rem 2rem 1.5rem;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 25px 25px 0 0;
+  background: radial-gradient(ellipse at 5% 0%, var(--tag-bg), transparent 75%);
 }
 .settings-mark {
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 14px;
   color: var(--tag-text);
   background: var(--tag-bg);
@@ -33,14 +37,14 @@ h2 {
 }
 .close-settings {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 44px;
-  height: 44px;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 40px;
+  height: 40px;
   display: grid;
   place-items: center;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 14px;
   color: var(--text-secondary);
   background: var(--surface);
   &:hover {
@@ -50,7 +54,8 @@ h2 {
 }
 .settings-form {
   display: grid;
-  gap: 1.5rem;
+  gap: 1.75rem;
+  padding: 1.5rem 2rem;
 }
 .setting-group {
   min-width: 0;
@@ -82,10 +87,12 @@ legend {
   position: relative;
   display: block;
   cursor: pointer;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid var(--border);
   background: var(--surface);
   transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
     background 150ms ease,
     border-color 150ms ease;
   input {
@@ -101,7 +108,7 @@ legend {
   &.selected {
     border-color: var(--accent);
     background: var(--tag-bg);
-    box-shadow: inset 0 0 0 1px var(--accent);
+    box-shadow: inset 0 0 0 1px var(--accent), 0 4px 18px var(--tag-bg);
   }
   &:has(input:focus-visible) {
     outline: 3px solid var(--accent);
@@ -130,7 +137,7 @@ legend {
   border: 1px solid var(--text-muted);
   font-size: 0.65rem;
   .selected & {
-    background: #7c3aed;
+    background: linear-gradient(135deg, #7c3aed, #5b21b6);
     color: white;
     border-color: #7c3aed;
   }
@@ -138,7 +145,7 @@ legend {
 .theme-preview {
   display: flex;
   gap: 10px;
-  height: 90px;
+  height: 104px;
   margin: 10px 10px 0;
   padding: 12px;
   border-radius: 7px;
@@ -200,8 +207,10 @@ legend {
   justify-content: space-between;
   gap: 1rem;
   border-top: 1px solid var(--border);
-  margin-top: 1.75rem;
-  padding-top: 1.25rem;
+  margin-top: 0;
+  padding: 1.1rem 2rem;
+  background: var(--tag-bg);
+  border-radius: 0 0 25px 25px;
   p {
     margin: 0;
     font-size: 0.75rem;
@@ -217,7 +226,7 @@ legend {
   padding: 0.6rem 1.35rem;
   border-radius: 10px;
   border: 0;
-  background: #7c3aed;
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
   color: white;
   font-size: 0.9rem;
   font-weight: 600;
@@ -225,12 +234,45 @@ legend {
     background: #6d28d9;
   }
 }
-@media (max-width: 400px) {
-  .settings {
-    padding: 1.25rem;
-  }
-  .settings-footer {
-    align-items: stretch;
-    flex-direction: column;
-  }
+.language-code {
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border: 1px solid var(--tag-border);
+  font-size: 0.7rem;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.language-group .option-caption {
+  gap: 0.65rem;
+  padding: 0.7rem;
+  .option-name { flex: 1; }
+}
+.close-settings:focus-visible,
+.done-settings:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .setting-option:hover { transform: translateY(-2px); }
+}
+@media (max-width: 480px) {
+  .settings-header { padding: 1.25rem; }
+  .settings-form { padding: 1.25rem; gap: 1.25rem; }
+  .settings-footer { padding: 1rem 1.25rem; }
+  .close-settings { top: 1rem; right: 1rem; }
+  .language-group .option-caption { gap: 0.4rem; padding: 0.6rem; }
+  .language-code { width: 28px; height: 30px; }
+  .option-name { font-size: 0.82rem; }
+  .selection-indicator { width: 18px; height: 18px; }
+  .theme-preview { height: 84px; }
+}
+@media (max-width: 360px) {
+  .settings-footer { align-items: stretch; flex-direction: column; }
 }

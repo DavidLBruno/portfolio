@@ -38,7 +38,8 @@ describe('ProjectsComponent', () => {
     expect(el.textContent).not.toMatch(/EXPERIENCE\.|PROJECTS\./);
   });
 
-  it('sorts matches first and dims the rest when a tech filter is set', () => {
+  it('keeps all cards in their original order when a skill is selected', () => {
+    const original = component.projects().map(p => p.key);
     queryParams.next({ tech: 'nestjs' });
     fixture.detectChanges();
 
@@ -46,12 +47,27 @@ describe('ProjectsComponent', () => {
     const projects = component.projects();
     const matches = projects.filter(p => component.hasTechProject(p));
     expect(matches.length).toBe(2);
-    expect(projects.slice(0, 2)).toEqual(matches);
+    expect(projects.map(p => p.key)).toEqual(original);
 
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('.filter-banner')?.textContent).toContain('nestjs');
-    expect(el.querySelectorAll('.project-card.dimmed').length).toBe(4);
+    expect(el.querySelectorAll('.project-card').length).toBe(6);
+    expect(el.querySelectorAll('.dimmed').length).toBe(0);
+    expect(el.querySelector('.filter-banner')?.textContent?.trim()).toBe('nestjs');
     expect(el.querySelectorAll('.tech-match').length).toBeGreaterThan(0);
+  });
+
+  it('preserves earlier experience when JasperSoft is selected', () => {
+    queryParams.next({ tech: 'JasperSoft' });
+    fixture.detectChanges();
+    expect(component.workExperience().map(job => job.key)).toEqual([
+      'EXPERIENCE.JOBS.THELABIT', 'EXPERIENCE.JOBS.DEPSYS',
+    ]);
+    const cards = fixture.nativeElement.querySelectorAll('.timeline-item');
+    expect(cards.length).toBe(2);
+    expect(cards[0].classList.contains('skill-match')).toBe(false);
+    expect(cards[1].classList.contains('skill-match')).toBe(true);
+    expect(fixture.nativeElement.querySelector('.dimmed')).toBeNull();
   });
 
   it('matches jobs through their sub-projects', () => {

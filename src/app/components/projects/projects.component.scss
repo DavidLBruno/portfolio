@@ -188,18 +188,22 @@
 }
 
 // ---- Modifiers / Filtering ----
-.dimmed {
-  opacity: 0.35 !important;
-  filter: grayscale(80%);
-}
 
 .filter-banner {
+  position: sticky;
+  top: 6.5rem;
+  z-index: 900;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
   margin-bottom: 2.5rem;
-  background: rgba(139, 92, 246, 0.1);
+  background: var(--navbar-bg);
   border: 1px solid rgba(139, 92, 246, 0.3);
   border-radius: $radius-sm;
   color: var(--text);
@@ -509,4 +513,34 @@
       }
     }
   }
+}
+
+.scroll-status {
+  display: grid;
+  place-items: center;
+  flex: 0 0 32px;
+  height: 32px;
+  margin-inline-start: auto;
+  color: var(--accent);
+  border-radius: 50%;
+  background: var(--tag-bg);
+  opacity: 0;
+  transition: opacity 120ms ease;
+  &.is-active { opacity: 1; }
+}
+
+.scroll-cue {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  .is-active & { animation: scroll-cue-down 550ms ease-in-out infinite; }
+}
+
+@keyframes scroll-cue-down {
+  0%, 100% { transform: translateY(-2px); opacity: 0.55; }
+  50% { transform: translateY(2px); opacity: 1; }
 }

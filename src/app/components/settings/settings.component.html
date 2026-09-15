@@ -21,7 +21,7 @@
   </header>
   <form [formGroup]="settings" class="settings-form">
     @for (param of configsParams; track param.form) {
-      <fieldset class="setting-group">
+      <fieldset class="setting-group" [class.language-group]="param.form === 'languaje'">
         <legend>
           <fa-icon
             [icon]="param.form === 'theme' ? themeIcon : languageIcon"
@@ -70,6 +70,9 @@
                 </span>
               }
               <span class="option-caption">
+                @if (param.form === 'languaje') {
+                  <span class="language-code" aria-hidden="true">{{ item.value }}</span>
+                }
                 <span
                   class="option-name"
                   [attr.data-language-motion]="'option-' + item.value"

@@ -3,20 +3,26 @@
 .main-nav {
   view-transition-name: site-nav;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0.75rem;
+  left: 1rem;
+  right: 1rem;
+  max-width: 1168px;
+  margin-inline: auto;
+  border-radius: 1.5rem;
   z-index: 1000;
-  background: transparent;
-  border-bottom: 1px solid transparent; /* Evita flash de border de color del sistema al animar */
-  transition: all $transition-normal;
+  background: var(--navbar-bg);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--card-shadow);
+  transition: box-shadow $transition-normal, border-color $transition-normal;
 
   &.scrolled,
   &.menu-open {
     background: var(--navbar-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
+    border-color: var(--border-accent);
     box-shadow: 0 1px 20px rgba(0, 0, 0, 0.1);
   }
 }
@@ -193,7 +199,7 @@
   .nav-inner {
     flex-wrap: wrap;
     height: auto;
-    padding: 1rem 1.5rem;
+    padding: 0.75rem 1.25rem;
   }
 
   .nav-brand {

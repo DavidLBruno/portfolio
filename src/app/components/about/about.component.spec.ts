@@ -42,7 +42,8 @@ describe('AboutComponent', () => {
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     expect(component.estudios()[0].key).toBe('ABOUT.EDUCATION.UAI');
-    expect(el.querySelectorAll('.education-card.dimmed').length).toBe(5);
+    expect(el.querySelectorAll('.education-card').length).toBe(6);
+    expect(el.querySelectorAll('.dimmed').length).toBe(0);
     expect(el.querySelectorAll('.tech-match').length).toBe(1);
   });
 });

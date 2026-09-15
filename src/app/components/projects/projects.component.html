@@ -7,13 +7,17 @@
 
   <!-- Filter Banner -->
   @if (selectedTech(); as tech) {
-    <div class="filter-banner">
-      <span
-        >{{ 'FILTER.EXPERIENCE_LABEL' | transloco }}
-        <strong>{{ tech }}</strong></span
-      >
-      <button (click)="clearFilter()" class="btn-clear">
-        {{ 'FILTER.SHOW_ALL' | transloco }}
+    <div class="filter-banner" appFilterScroll #filterScroll="filterScroll">
+      <strong>{{ tech }}</strong>
+      <span class="scroll-status" aria-hidden="true"
+        [class.is-active]="filterScroll.phase() === 'pending' || filterScroll.phase() === 'moving'">
+        <svg class="scroll-cue" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m6 6 6 6 6-6M6 12l6 6 6-6" />
+        </svg>
+
+      </span>
+      <button (click)="clearFilter()" class="btn-clear" [attr.aria-label]="'FILTER.SHOW_ALL' | transloco">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
       </button>
     </div>
   }
@@ -23,7 +27,7 @@
       <div
         class="timeline-item"
         [style.animation-delay]="i * 0.15 + 's'"
-        [class.dimmed]="selectedTech() && !hasTechJob(job)"
+        [class.skill-match]="selectedTech() && hasTechJob(job)"
       >
         <div class="timeline-marker">
           <div class="marker-dot" [class.active]="job.current"></div>
@@ -110,7 +114,7 @@
         class="project-card"
         [class.project-featured]="project.featured"
         [style.animation-delay]="i * 0.1 + 's'"
-        [class.dimmed]="selectedTech() && !hasTechProject(project)"
+        [class.skill-match]="selectedTech() && hasTechProject(project)"
       >
         <!-- Image if available -->
         @if (project.image) {

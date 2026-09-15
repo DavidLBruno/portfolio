@@ -110,16 +110,8 @@ html[data-preference-motion='theme'] {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0;
-  background: linear-gradient(
-    180deg,
-    transparent calc(50% - 18px),
-    rgba(139, 92, 246, 0.12) calc(50% - 5px),
-    rgba(167, 139, 250, 0.75) calc(50% - 1px),
-    rgba(45, 212, 191, 0.95) 50%,
-    rgba(45, 212, 191, 0.15) calc(50% + 3px),
-    transparent calc(50% + 18px)
-  );
+  // This element is always transparent. Only the transition pseudo paints light.
+  background: transparent;
 }
 
 html[data-preference-motion='language'] {
@@ -127,7 +119,6 @@ html[data-preference-motion='language'] {
   --language-ease: cubic-bezier(0.45, 0, 0.55, 1);
 
   .language-scan {
-    opacity: 1;
     view-transition-name: language-scan;
   }
 
@@ -163,6 +154,15 @@ html[data-preference-motion='language'] {
   }
 
   &::view-transition-new(language-scan) {
+    background: linear-gradient(
+      180deg,
+      transparent calc(50% - 18px),
+      rgba(139, 92, 246, 0.12) calc(50% - 5px),
+      rgba(167, 139, 250, 0.75) calc(50% - 1px),
+      rgba(45, 212, 191, 0.95) 50%,
+      rgba(45, 212, 191, 0.15) calc(50% + 3px),
+      transparent calc(50% + 18px)
+    );
     animation-name: language-scan-pass;
   }
 }
@@ -178,8 +178,9 @@ html[data-preference-motion='language'] {
 }
 
 @keyframes language-scan-pass {
-  from { transform: translateY(-50%); }
-  to { transform: translateY(50%); }
+  0% { opacity: 0; transform: translateY(-50%); }
+  8%, 92% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(50%); }
 }
 @media (prefers-reduced-motion: no-preference) {
   main .section-header {
@@ -225,4 +226,3 @@ html[data-preference-motion='language'] {
     animation: none !important;
   }
 }
-
